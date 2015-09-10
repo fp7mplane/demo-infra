@@ -1,0 +1,107 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" 
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  
+  <description>A package for association rule mining over Hadoop, based on the Mahout library</description>
+  <developers>
+    <developer>
+    <name>Luigi Grimaudo</name>
+    <email>grimaudo.luigi@gmail.com</email>
+    <organization>DBDMG - Politecnico di Torino</organization>
+    <organizationUrl>http://dbdmg.polito.it</organizationUrl>
+    </developer>
+  </developers>
+  
+  <organization>
+    <name>Politecnico di Torino</name>
+    <url>http://www.polito.it</url>
+  </organization>
+  
+  <groupId>it.polito.dbdmg.searum</groupId>
+  <artifactId>searum</artifactId>
+  <version>0.0.1</version>
+  <name>SEARUM</name>
+  
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <mahout.version>0.8</mahout.version>
+    <mahout.groupid>org.apache.mahout</mahout.groupid>
+  </properties>
+  
+  <dependencies>
+    <dependency>
+      <groupId>${mahout.groupid}</groupId>
+      <artifactId>mahout-core</artifactId>
+      <version>${mahout.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>${mahout.groupid}</groupId>
+      <artifactId>mahout-math</artifactId>
+      <version>${mahout.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>${mahout.groupid}</groupId>
+      <artifactId>mahout-utils</artifactId>
+      <version>0.5</version>
+    </dependency>
+        <dependency>
+        <groupId>org.apache.hadoop</groupId>
+    <artifactId>hadoop-common</artifactId>
+        <version>0.23.10</version>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.hadoop</groupId>
+        <artifactId>hadoop-core</artifactId>
+        <version>0.20.2</version>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.hadoop</groupId>
+        <artifactId>hadoop-hdfs</artifactId>
+        <version>0.23.10</version>
+    </dependency>
+  </dependencies>
+  <build>
+    <plugins>
+    <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.7</source>
+          <target>1.7</target>
+        </configuration>
+      </plugin>
+            <!-- Maven Assembly Plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.4.1</version>
+                <configuration>
+                    <!-- get all project dependencies -->
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <!-- MainClass in mainfest make a executable jar -->
+                    <archive>
+                      <manifest>
+                        <mainClass>it.polito.dbdmg.searum.Searum</mainClass>
+                      </manifest>
+                    </archive>
+                </configuration>
+                <executions>
+                  <execution>
+                    <id>make-assembly</id>
+                    <!-- bind to the packaging phase -->
+                    <phase>package</phase> 
+                    <goals>
+                        <goal>single</goal>
+                    </goals>
+                  </execution>
+                </executions>
+            </plugin>
+    </plugins>
+  </build>
+  
+  <url>https://github.com/navxt6/SEARUM</url>
+</project>
