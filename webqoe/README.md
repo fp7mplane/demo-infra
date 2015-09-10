@@ -2,4 +2,4 @@
 
 WebQoE reasoner
 ==============
-See https://www.ict-mplane.eu/public/reasoners-and-analysis-modules for further information.
+See https://www.ict-mplane.eu/public/webqoe-reasoner for further information.
