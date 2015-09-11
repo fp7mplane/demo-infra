@@ -30,7 +30,7 @@ to read your RIPE Atlas key from the following file:
 
     datasets/auth
 
-Example
+How to run iGreedy
 -------------
 
      igreedy.py (-i input|-m target) [-o output] [-b browser (false)] 
@@ -53,7 +53,7 @@ Example
      -t threshold (discard disks having latency larger than threshold to bound the error; discouraged)
 
 
-How to run iGreedy
+Example
 -------------
 
 Run iGreedy on existing measurement:
@@ -93,4 +93,5 @@ Run iGreedy on new measurement from RIPE Atlas:
 To run iGreedy on the F root server 192.5.5.241, configure your key (see above) then run:
 
        ./igreedy -m 192.5.5.241 -b
+       
 For more information and results at a glance [anycast project](http://www.infres.enst.fr/~drossi/anycast) 
