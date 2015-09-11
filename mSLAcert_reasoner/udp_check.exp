@@ -1,0 +1,28 @@
+#!/usr/bin/expect -f
+set IPaddressdest [lindex $argv 0]
+set timemeas [lindex $argv 1]
+set measnum [lindex $argv 2]
+set IPsup [lindex $argv 3]
+set seconds "s"
+set sleeptime [expr {$timemeas + 2}]
+set measnumdet [expr {$measnum + 1}]
+spawn ./scripts/mpcli --config ./conf/reasoner.conf
+expect "|mplane|"
+send "getcap https://$IPsup:8890\r"
+expect "|mplane|"
+send "runcap udpsla-average-ip4\r"
+expect "|when| ="
+send "now + $timemeas$seconds / 1s\r"
+expect "destination.ip4 ="
+send "$IPaddressdest\r"
+expect "|mplane|"
+sleep $sleeptime
+expect "|mplane|"
+send "runcap udpsla-detail-ip4\r"
+expect "|mplane|"
+sleep $sleeptime
+send "showmeas udpsla-average-ip4-$measnum\r"
+expect "|mplane|"
+send "showmeas udpsla-detail-ip4-$measnumdet\r"
+expect "|mplane|"
+send "EOF\r\n"
