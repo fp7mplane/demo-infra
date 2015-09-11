@@ -1,0 +1,49 @@
+=pod
+
+=head1 NAME
+
+udm-status	-	retrieve status of a RIPE Atlas measurement
+
+=head1 VERSION
+
+1.0
+
+=head1 DESCRIPTION
+
+A simple script to retrieve the status of a RIPE Atlas measurement 
+using RIPE'S REST APIs.
+A suitable API key might be required depending on the measurement 
+permissions.
+
+=head1 SYNOPSIS
+
+Usage: udm-status --udm=<ID> (--api=<KEY>)
+
+API key is optional
+
+=head1 LICENSE
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>
+
+=head1 ACKNOWLEDGEMENT
+
+This work has been partially funded by the European Commission 
+funded mPlane ICT-318627 project (www.ict-mplane.eu).
+
+=head1 AUTHOR
+
+Pierdomenico Fiadino <fiadino@ftw.at>
+
+Vienna - May, 2014
+

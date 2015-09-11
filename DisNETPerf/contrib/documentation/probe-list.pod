@@ -1,0 +1,133 @@
+=head1 NAME
+
+probe_list	-	retrive lists of RIPE Atlas probes
+
+=head1 DESCRIPTION
+
+Retrieve a list of RIPE Atlas probes using the rest APIs.
+The results can be refined with many filters, e.g.:
+by country, by subnet, by autonomous system.
+
+Additionally, it is possible to search for probes in a
+geographical area specifing the coordinates <lat,lon> (WSG84 format) 
+or a human readable address (e.g. "Piazza di Spagna, Roma")
+along with a radius in Km.
+
+If geographical filters (--coo or --addr with --radius) are used,
+it is a good practice to use --country too. This speeds up the script.
+
+By default, only 'connected' (status code '1') probes will be showed.
+It is possible to get disconnected (code '2') and abandoned (code '3')
+probes using the --status options and specifying the corresponding 
+code (default '1').
+
+For a complete list of available filters check the SYNOPSIS section
+or use the --help option.
+
+=head2 Output
+
+The output is printed on the standard output as a list of tab-separated
+values. The format of the rows is:
+
+ probe_id | probe_IP | subnet | asn | country | lat | lon | status_code
+
+=head2 Requirements
+
+This script uses JSON objects for the Atlas rest APIs. The JSON module
+can be installed through CPAN or by installing the package
+'libjson-perl' on Debian/Ubuntu systems.
+
+For resolving the human readable address, the module Geo::Coder::Googlev3
+is required. It is installable through the CPAN or installing 
+the package 'libgeo-coder-googlev3-perl' on Debian/Ubuntu systems.
+
+=head1 SYNOPSIS
+
+Usage: perl probe_list.pl [OPTIONS]...
+
+If no options are specified, it will print the full list of RIPE
+Atlas probes (and you might not want it).
+
+=head2 Options
+
+=over 12
+
+=item B<--help>
+
+show help message
+
+=item B<--asn>
+
+get probes in a specified Autonomous System
+
+=item B<--area>
+
+fitler by geographical area
+
+=item B<--country>
+
+filter by country (2-digit codes, eg. it, at, uk, etc...)
+
+=item B<--prefix>
+
+filter by subnet (e.g. 54.17/16)
+
+=item B<--status>
+
+filter probes in a specific status (default 1 = active)
+
+=item B<--coo>
+
+filter probes by geo proximity to <lat,lon> (requires --radius)
+
+=item B<--address>
+
+filter probes by geo proximity to a human readable address (requires --radius)
+
+=item B<--radius>
+
+radius in Km required by --coordinates and --address
+
+=item B<--limit>
+
+limit the number of results (shoul be an integer)
+
+=back
+
+=head2 Examples
+
+=over 12
+
+=item (1) [cmd] --country at --coo 48.23,16.41 --radius 100 --limit 10
+
+prints 10 probes in Austria (AT) at no more than 100Km from 48.23,16.41
+
+=item (2) [cmd] --address "Rathausplatz, Vienna" --radius 10 --limit 5
+
+prints 5 probes close (less than 10Km) to the specified address
+
+=item (3) [cmd] --asn 1234 --filter 20
+
+prints 20 probles in the Autonomous System 1234
+
+=back
+
+=head1 LICENSE
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>
+
+=head1 AUTHOR
+
+Pierdomenico Fiadino <fiadino@ftw.at>
+

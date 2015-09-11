@@ -1,0 +1,87 @@
+=head1 NAME
+
+udm-result	-	Get a measurement result from RIPE Atlas in CSV
+
+=head1 DESCRIPTION
+
+Get a text tab-separated result of a User Defined Measurement (UDM)
+from the RIPE Atlas platform using the REST APIs. 
+If the measurement is private, an API key with suitable permissions
+has to be provided.
+
+By default, the program gets all available results associated
+to a measurement. It is also possible to refine the query in 
+a specified time range or just get the latest available result.
+
+The results have different have different output format depending
+on the measurement type, as showed below:
+
+=head2 ping output fields (tab-separated)
+
+	timestamp | probe_id | probe_ip | dst_name | dst_addr | rtt
+
+=head2 dns output fields (tab-separated)
+
+	timestamp | probe_id | probe_ip | dns_server | req_name | res_ip | ttl
+
+=head2 traceroute output fields (tab-separated)
+
+	timestamp | probe_id | probe_ip | dst_name | dst_addr | hop_count
+		hop_num | hop_ip | ttl | avg_rtt
+
+=head1 SYNOPSIS
+
+Usage: udm-result [OPTIONS]...
+
+=head2 Options
+
+=over 12
+
+=item B<--help>
+
+show help
+
+=item B<--udm=<ID>> I<(mandatory)>
+
+the ID of the measurement
+
+=item B<--api-key=<KEY>>
+
+the API key (could be needed for private measurements)
+
+=item B<--latest>
+
+retrieve only latest results
+
+=item B<--start=<TIMESTAMP>>, --stop=<TIMESTAMP>>
+
+retrieve results in specific time-range
+
+=back
+
+=head1 LICENSE
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>
+
+=head1 ACKNOWLEDGEMENT
+
+This work has been partially funded by the European Commission 
+funded mPlane ICT-318627 project (www.ict-mplane.eu).
+
+=head1 AUTHOR
+
+Pierdomenico Fiadino <fiadino@ftw.at>
+
+Vienna - May, 2014
+
