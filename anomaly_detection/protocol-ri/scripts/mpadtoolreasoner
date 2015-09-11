@@ -1,0 +1,61 @@
+#!/usr/bin/env python3
+# vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
+##
+# mPlane Software Development Kit
+# Component runtime
+#
+# This program is free software: you can redistribute it and/or modify it under
+# the terms of the GNU Lesser General Public License as published by the Free
+# Software Foundation, either version 3 of the License, or (at your option) any
+# later version.
+#
+# This program is distributed in the hope that it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+# FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more
+# details.
+#
+# You should have received a copy of the GNU General Public License along with
+# this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+import mplane.model
+import mplane.client
+import mplane.utils
+import mplane.tls
+
+import sys
+import cmd
+import traceback
+import urllib3
+import argparse
+import configparser
+from time import sleep
+
+
+class BaseADReasoner(object):
+    
+    def __init__(self, config):
+        
+        self.config = config
+
+if __name__ == "__main__":
+
+    # look for TLS configuration
+    parser = argparse.ArgumentParser(description="mPlane generic testing client")
+    parser.add_argument('--config', metavar="config-file",
+                        help="Configuration file")
+    args = parser.parse_args()
+
+    # Read the configuration file, if given
+    if args.config:
+        config = configparser.ConfigParser()
+        config.optionxform = str
+        config.read(mplane.utils.search_path(args.config))
+    else:
+        # hack a default configuration together
+        config = {}
+        config["is_default"] = True
+        config["client"] = {}
+        config["client"]["workflow"] = "client-initiated"
+
+    

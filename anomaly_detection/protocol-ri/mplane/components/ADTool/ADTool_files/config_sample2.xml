@@ -1,0 +1,54 @@
+<!-- *************************************************************************************************
+	                                   ADTool CONFIGURATIONS
+*************************************************************************************************  -->
+
+<ADTool_config>
+	
+	<!-- *****************************************************************************************
+					      task description
+	****************************************************************************************** -->
+	<Description>adtool on youtube (ip,vol_down)</Description>
+	
+	<!-- *****************************************************************************************
+	                             settings for database connection 
+	****************************************************************************************** -->
+	<Database host="localhost" port="5440" dbname="dbstream" user="dbstream" password="FT4hhyhL" >
+		<features_table>adtool_mw14_gg11_youtube_features_serverip_600</features_table>
+		<flags_table>adtool_youtube_flags_serverip_600</flags_table>
+	</Database>
+
+	<!-- *****************************************************************************************
+	               analysis settings (time span, granularity, feature name, etc.)
+	****************************************************************************************** -->
+	<Analysis>
+		<start>1396648800</start>		<!-- beginning of analysis -->		
+		<end>0</end>				<!-- end of analysis, 0 means run online -->
+		<granularity>600</granularity>		<!-- time granularity in seconds -->
+		<variable>server_ip</variable>		<!-- variable of the distributions -->
+		<feature>down_gtp_sdu_bytes</feature>		<!-- name of the traffic feature -->
+	</Analysis>
+
+	<!-- *****************************************************************************************
+	                               settings for reference set
+	****************************************************************************************** -->
+	<RefSet>
+		<width>7</width>			<!-- reference set time window in days -->
+		<guard>2</guard>			<!-- guard period in hours -->
+		
+		<min_distr_size>100</min_distr_size>	<!-- min number of samples in distributions -->
+		<min_refset_size>80</min_refset_size>	<!-- min number of distributions in refset -->
+		<slack_var>0.1</slack_var>		<!-- for comparing size of timebins -->
+		<m>50</m>				<!-- usually ~1/4 min_refset_size -->
+		<k>2</k>				<!-- number of clusters for pruning --> <!-- currently unused -->
+	</RefSet>
+
+	<!-- *****************************************************************************************
+	                                       settinfs for AD test 
+	****************************************************************************************** -->
+	<ADTest>
+		<alpha>0.05</alpha>			<!-- sensitivity -->
+	</ADTest>
+	
+
+
+</ADTool_config>

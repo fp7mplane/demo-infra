@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>mPlane Client Frontend</title>
+ 
+    <style>
+    body { font-family:helvetica;}
+    .capsrc-hdr { padding-left: 10px; font-size: 18px; color: black; }
+    .capsrc { padding:2px; border:1px solid gray;}
+    .cap-hdr { padding-left: 30px; font-size: 18px; color: black; }
+    .cap { padding:2px; border:1px dotted gray; }
+    .rec { padding-left: 50px; font-size: 14px; color: orange; }
+    .res-hdr { padding-left: 50px; font-size: 14px; color: blue;}
+    .res-body { padding-left: 60px; font-size: 14px; color: blue;}
+    </style>
+</head>
+
+<body>
+    <div class="capsrc" id="capsrc-0">
+        <div class="capsrc-hdr" id="capsrc-hdr-0">
+            Capability Source http://mplane.corvid.ch/capabilities.json
+            [ <a class="show" id="capsrc-body-0-show">+</a> |
+              <a class="hide" id="capsrc-body-0-hide">-</a> | 
+              <a href="client.py?q=srcrefresh&id=0">reload</a> |
+              <a href="client.py?q=srcforget&id=0">forget</a> ]
+        </div>
+        <div class="capsrc-body" id="capsrc-body-0">
+            <div class="cap" id="cap-0">
+                <div class="cap-hdr" id="cap-hdr-0">
+                    Capability ping-average 
+                    [ <a href="#" class="show" id="capsrc-body-0-show">+</a> |
+                      <a href="#" class="hide" id="capsrc-body-0-hide">-</a> | 
+                      <a href="#" class="show" id="cap-form-0-show">new spec</a> ]
+                </div>
+                <div class="cap-form" id="cap-form-0">
+                    <form action="client.py">
+                        <input type="hidden" name="q" value="newspec"/>
+                        <input type="hidden" name="id" value="0"/>
+                        <input type="text" name="source.ip4" value="1.2.3.4"/><br/>
+                        <input type="submit" value="submit new specification"/>
+                    </form>
+                </div>
+                <div class="cap-body" id="cap-body-0">
+                    <div class="rec" id="rec-0">
+                        Receipt ping-average now + 30s / 1s (2014-10-01 10:06:00.000)
+                        [ <a href="client.py?q=redeem&id=0">redeem</a> |
+                          <a href="client.py?q=recforget&id=0">forget</a> ]
+                    </div>
+                    <div class="rec" id="rec-1">
+                        Receipt ping-average now + 30s / 1s (2014-10-01 10:04:00.000)
+                        [ <a href="client.py?q=redeem&id=1">redeem</a> |
+                          <a href="client.py?q=recforget&id=1">forget</a> ]
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="controls">
+        <form action="client.py">
+            [ <a href="client.py">refresh</a> | 
+              <input type="hidden" name="q" value="newsrc"/>
+              <input type="submit" value="Add capability source:"/>
+              <input type="text" name="url"/> ]
+        <form>
+    </div>
+
+    <script src="jquery-2.1.1.js"/>
+    <script>
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,18 @@
+{
+    "registry-format": "mplane-0",
+    "registry-uri": "http://mplane.corvid.ch/registry/loopback",
+    "registry-revision": 0,
+    "includes": ["http://ict-mplane.eu/registry/core"],
+    "elements": [
+        {
+            "name": "test.input",
+            "prim": "string",
+            "desc": "An input string for a loopback test"
+        },
+        {
+            "name": "test.output",
+            "prim": "string",
+            "desc": "An output string for a loopback test"
+        }
+    ]
+}
