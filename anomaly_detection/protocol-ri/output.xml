@@ -1,0 +1,40 @@
+<ADTool_config>
+	
+	
+	<Description>TEST GORANNNNNN</Description>
+	
+	
+	<Database dbname="dbstream" host="localhost" password="FT4hhyhL" port="5440" user="dbstream">
+		<features_table>adtool_mw14_gg11_youtube_features_serverip_600</features_table>
+		<flags_table>adtool_youtube_flags_serverip_600</flags_table>
+	</Database>
+
+	
+	<Analysis>
+		<start>1396648800</start>				
+		<end>0</end>				
+		<granularity>600</granularity>		
+		<variable>server_ip</variable>		
+		<feature>imsi_cnt</feature>		
+	</Analysis>
+
+	
+	<RefSet>
+		<width>7</width>			
+		<guard>2</guard>			
+		
+		<min_distr_size>100</min_distr_size>	
+		<min_refset_size>80</min_refset_size>	
+		<slack_var>0.1</slack_var>		
+		<m>50</m>				
+		<k>2</k>				 
+	</RefSet>
+
+	
+	<ADTest>
+		<alpha>0.05</alpha>			
+	</ADTest>
+	
+
+
+</ADTool_config>
