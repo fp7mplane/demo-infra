@@ -1,0 +1,104 @@
+{
+  "registry-format": "mplane-0",
+  "registry-revision": 0,
+  "registry-uri": "http://192.168.2.136/adtool-registry.json",
+  "includes": ["http://ict-mplane.eu/registry/demo"],
+  "elements": [
+    {
+      "name": "database.host",
+      "prim": "address",
+      "desc": "Database hostname or address"
+    },
+    {
+      "name": "database.port",
+      "prim": "natural",
+      "desc": "Database port number"
+    },
+    {
+      "name": "database.dbname",
+      "prim": "string",
+      "desc": "Database port number"
+    },
+    {
+      "name": "database.user",
+      "prim": "string",
+      "desc": "Database port number"
+    },
+    {
+      "name": "database.password",
+      "prim": "string",
+      "desc": "Database port number"
+    },
+    {
+      "name": "database.features_table",
+      "prim": "string",
+      "desc": "Database port number"
+    },
+    {
+      "name": "database.flags_table",
+      "prim": "string",
+      "desc": "Database port number"
+    },
+    {
+      "name": "analysis.start",
+      "prim": "natural",
+      "desc": "Database port number"
+    },
+    {
+      "name": "analysis.end",
+      "prim": "natural",
+      "desc": "Database port number"
+    },
+    {
+      "name": "analysis.granularity",
+      "prim": "natural",
+      "desc": "Database port number"
+    },
+    {
+      "name": "analysis.variable",
+      "prim": "string",
+      "desc": "Database port number"
+    },
+    {
+      "name": "analysis.feature",
+      "prim": "string",
+      "desc": "Database port number"
+    },
+    {
+      "name": "refset.width",
+      "prim": "natural",
+      "desc": "Database port number"
+    },
+    {
+      "name": "refset.guard",
+      "prim": "natural",
+      "desc": "Database port number"
+    },
+    {
+      "name": "refset.min_distr_size",
+      "prim": "natural",
+      "desc": "Database port number"
+    },
+    {
+      "name": "refset.min_refset_size",
+      "prim": "natural",
+      "desc": "Database port number"
+    },
+    {
+      "name": "refset.slack_var",
+      "prim": "real",
+      "desc": "Database port number"
+    },
+    {
+      "name": "refset.m",
+      "prim": "natural",
+      "desc": "Database port number"
+    },
+    {
+      "name": "refset.k",
+      "prim": "natural",
+      "desc": "Database port number"
+    }                                                                                                                                    
+    
+  ]
+}

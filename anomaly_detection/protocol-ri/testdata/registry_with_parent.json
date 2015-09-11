@@ -1,0 +1,18 @@
+{
+  "registry-format": "mplane-0",
+  "registry-revision": 0,
+  "registry-uri": "testdata/registry_with_parent.json",
+  "includes": ["http://ict-mplane.eu/registry/core"],
+  "elements": [
+    {
+      "name": "testName",
+      "prim": "time",
+      "desc": "testDesc"
+    },
+    {
+      "name": "end",
+      "prim": "time",
+      "desc": "overwritten end"
+    }
+  ]
+}
