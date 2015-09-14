@@ -1,4 +1,4 @@
-# mPlane Anomaly Detection component proxy and mpAD_Reasoner Reasoner
+# mPlane Anomaly Detection component proxy and mpAD_Reasoner
 
 This module contains anomaly detection component and reasoner developed utilizing mPlane SDK.
 
