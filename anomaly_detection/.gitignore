@@ -1,0 +1,7 @@
+__pycache__/
+*.py[cod]
+*.so
+sphinx/_build/
+.coverage
+.DS_Store?
+.Spotlight-V100
