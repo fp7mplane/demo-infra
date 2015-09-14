@@ -1,4 +1,5 @@
-# mPlane Protocol SDK -- Anomaly Detection and Diagnosis Use Case
+# mPlane Protocol SDK
+Anomaly Detection and Diagnosis Use Case
 
 This module contains the mPlane Software Development Kit. There has been some slight modifications wrt the official mPlane Reference Implementation [https://fp7mplane.github.io/protocol-ri](https://fp7mplane.github.io/protocol-ri), for the specific use case of Anomaly Detection and Diagnosis.
 
