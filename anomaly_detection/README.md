@@ -1,18 +1,13 @@
 # mPlane Anomaly Detection component proxy and mpAD_Reasoner
 
-This module contains anomaly detection component and reasoner developed utilizing mPlane SDK.
-
-
-
-
-Please be aware that THIS IS A BETA VERSION, MAY CONTAIN SOME BUGS.
+This module contains the proxy component to run the Anomaly Detection module and the Reasoner guiding the Anomaly Detection and Diagnosis use case, developed utilizing mPlane SDK.
 
 ## Reasoner
 The __mpadtoolreasoner__ is a Python script based on __mpcli__ and extended to run reasoning tasks triggered by __adtool.pl__ .
 
 ##Supervisor
 
-Supervisor udsed is the one provided by mPlane SDK.
+Supervisor used is the one provided by mPlane SDK.
 
 ##Howto
 
