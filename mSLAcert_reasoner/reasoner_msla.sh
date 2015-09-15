@@ -20,7 +20,7 @@
 ###$$$$$$$|Politecnico di Torino|Fondazione Ugo Bordoni| SSB Progetti| Telecom Italia|&$$$$$$$$$$$$$$$$$$##
 ###$$$$$$$$---------------------&----------------------&-------------&---------------$$$$$$$$$$$$$$$$$$$$##
 ##$$$$________________________&_______&_________________&_______________$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$##
-###$$|Alcatel-Lucent Bell Labs|EURECOM| Telecom Paritech| NEC Europe LTD| $$$$$$$$$$$$$$$$$$$$$$$$] && [] && [&$$##
+###$$|Alcatel-Lucent Bell Labs|EURECOM| Telecom Paritech| NEC Europe LTD| $$$$$$$$$$$$$$$$$$$$$$$$&&&&&$$##
 ###$$$------------------------&-------&-----------------&---------------$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$##
 ##$$________________________________________&________&_____________________________________________$$$$$$##
 ###|Telefonica Investigacion Y Desarrollo Sa|Netvisor|Forschungszentrum Telekommunikation Wien Gmbh|$$$$$##
@@ -44,6 +44,8 @@ rowipaddressdest=1;
 udp=0;
 tcp=0;
 ping=0;
+tcpband=0;
+export PYTHONPATH=.
 while [ $check_var -eq 1 ]
 do
 
@@ -208,6 +210,18 @@ if [ [ $tcpvalidation -gt $tcpvalidation1 ] && [ $tcpvalidation2 -gt $tcpvalidat
 	tcpmax2=`cat ./tcp_check_2_$ipaddressdest.txt| awk 'NR==28 {print $2}'`;
 	tcpsamples2=`cat ./tcp_check_2_$ipaddressdest.txt| awk 'NR==29 {print $2}'`;
 	tcp=1;
+fi
+#verification TCP vs UDP
+
+udptcp=$(echo "scale=2; ($udpclient/10)" | bc)
+tcpudp=$(echo "scale=2; ($udpclient - $tcpmean)" | bc)
+tcpudp2=$(echo "scale=2; ($udpclient2 - $tcpmean2)" | bc)
+tcpudp12=$(echo "scale=2; ($udpclient - $tcpmean2)" | bc)
+tcpudp21=$(echo "scale=2; ($udpclient2 - $tcpmean)" | bc)
+
+if [ [ $tcpudp -gt $udptcp ] || [ $tcpudp2 -gt $udptcp ] || [ $tcpudp21 -gt $udptcp ] || [ $tcpudp12 -gt $udptcp ] ]
+then echo "TCP bandwidth is more than 10% lower than UDP bandwidth"
+tcpband=1
 fi
 
 if [ $tcpmax2 -gt 99 ]
