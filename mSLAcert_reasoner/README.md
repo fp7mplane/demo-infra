@@ -18,6 +18,15 @@ Are needed as minimum requirement some linux tools:
 	4. cupsfilter - sudo apt-get install cups
 	
 >>Run the reasoner
+First configure the sequet files:
+
+		ipaddressdest.in- each row contains the destination IP that have mSLAcert_Agent enabled.
+
+		ipsupervisor.in- on this file it is set the IP of the supervisor that the reasoner will use.
+
+		measnum.in- on this file it is set the default value is "0", please do not change this file.
+
+		timemeas.in- on this file it is set the time of the measurement in seconds, the default value is 40 seconds.
 
 All the reasoner files need to be on the mother directory of mPlane RI code folder. To run the reasoner
 you need first to add executable permission to the ".exp" files and to ".sh" file. Than from the terminal
