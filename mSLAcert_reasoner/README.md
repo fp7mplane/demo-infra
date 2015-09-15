@@ -33,19 +33,22 @@ The main script is composed of four main parts, additional scripts. The first on
 The other scripts "udp\_check.exp", "tcp\_check.exp" and "ping\_check.exp" will check UDP throughput, TCP throughput and RTT, the duration of each test will be as the three test all together of  "reasoner\_check.exp", on "./reasoner\_msla.sh" this is presented as::
 
 ./udp\_check.exp \$ipaddressdest \$timemeas \$measnum \$ipsupervisor> ./udp\_check\_\$ipaddressdest.txt
+
 ./tcp\_check.exp \$ipaddressdest \$timemeas \$measnum \$ipsupervisor> ./tcp\_check\_\$ipaddressdest.txt
+
 ./ping\_check.exp \$ipaddressdest \$timemeas \$measnum \$ipsupervisor> ./ping\_check\_\$ipaddressdest.txt
 
 After every TCP test, the reasoner check if the measure is stable and that there isnt to much variation, if there is it will request an additional TCP check:
 
-if [ [ \$tcpvalidation -gt \$tcpvalidation1 ] \&\& [ \$tcpvalidation2 -gt \$tcpvalidation12 ] ]
+	if [ [ \$tcpvalidation -gt \$tcpvalidation1 ] \&\& [ \$tcpvalidation2 -gt \$tcpvalidation12 ] ]
 	echo "Will repeat TCP test, to much variation into throughput values of the first test!"
 	then ./tcp\_check.exp \$ipaddressdest \$timemeas \$measnum \$ipsupervisor> ./tcp\_check\_2\_\$ipaddressdest.txt
 	.....
 
 TCP throughput it is also checked with UDP throughput, the throughput that the client sees:
-if [ [ \$tcpudp -gt \$udptcp ] || [ \$tcpudp2 -gt \$udptcp ] || [ \$tcpudp21 -gt \$udptcp ] || [ \$tcpudp12 -gt \$udptcp ] ]
-then echo "TCP bandwidth is more than 10\% lower than UDP bandwidth"
+
+	if [ [ \$tcpudp -gt \$udptcp ] || [ \$tcpudp2 -gt \$udptcp ] || [ \$tcpudp21 -gt \$udptcp ] || [ \$tcpudp12 -gt \$udptcp ] ]
+	then echo "TCP bandwidth is more than 10\% lower than UDP bandwidth"
 	./tcp\_check.exp \$ipaddressdest \$timemeas \$measnum \$ipsupervisor> ./tcp\_check\_2\_\$ipaddressdest.txt
     ....
 
