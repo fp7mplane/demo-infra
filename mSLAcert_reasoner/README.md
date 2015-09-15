@@ -1,7 +1,7 @@
 # mPlane mSLAcert reasoner
 SLA reasoner is a script that controlls automatically the supervisor to request new measurements from the probes through a mplane RI client.mSLAcert reasoner will check automatically for RTT, TCP throughput and UDP throughput. To run mSLAcert reasoner are needed minimum two PCs and configured the sequent files:
 
-ipaddressdest.in- each row contains the destination IP that have mSLAcert\_Agent enabled.
+ipaddressdest.in- each row contains the destination IP that have mSLAcert_Agent enabled.
 ipsupervisor.in- on this file is set the IP of the supervisor that the reasoner will use.
 measnum.in- on this file is set the default value is "0", please do not change this file.
 timemeas.in- on this file is set the time of the measurement in seconds, the default value is 40 seconds.
@@ -17,6 +17,8 @@ Are needed as minimum requirement some linux tools:
 
 	4. cupsfilter - sudo apt-get install cups
 	
+>>Run the reasoner
+
 All the reasoner files need to be on the mother directory of mPlane RI code folder. To run the reasoner
 you need first to add executable permission to the ".exp" files and to ".sh" file. Than from the terminal
 set on the path of mother directory of the mPlane RI folder just run:
