@@ -18,6 +18,7 @@ Are needed as minimum requirement some linux tools:
 	4. cupsfilter - sudo apt-get install cups
 	
 >>Run the reasoner
+
 First configure the sequet files:
 
 		ipaddressdest.in- each row contains the destination IP that have mSLAcert_Agent enabled.
@@ -32,7 +33,7 @@ All the reasoner files need to be on the mother directory of mPlane RI code fold
 you need first to add executable permission to the ".exp" files and to ".sh" file. Than from the terminal
 set on the path of mother directory of the mPlane RI folder just run:
 
-"./reasoner\_msla.sh"
+		"./reasoner\_msla.sh"
 
 After which the reasoner will automatically test all the destination IPs set on ipaddressdest.in file.
 First the reasoner will make a test of RTT, TCP and UDP throughput all together. Than will test RTT, TCP and UDP singularly and will confront the results.
