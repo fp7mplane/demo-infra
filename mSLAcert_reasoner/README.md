@@ -6,6 +6,7 @@ ipsupervisor.in- on this file is set the IP of the supervisor that the reasoner 
 measnum.in- on this file is set the default value is "0", please do not change this file.
 timemeas.in- on this file is set the time of the measurement in seconds, the default value is 40 seconds.
 >>Requirements
+
 Are needed as minimum requirement some linux tools:
 
 	1. expect - sudo apt-get install expect
