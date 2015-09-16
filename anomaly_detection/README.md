@@ -13,8 +13,8 @@ Supervisor used is the one provided by mPlane SDK.
 
 Follow these steps to run the use case.
 
-1. Set parameters for supervisor.conf, adtool.conf, client.conf please use mPlane docs on how to set parameters in configuration files.
-2. Run supervisor, open new terminal, enter protocol-ri, and execute:
+1. Set parameters for supervisor.conf, adtool.conf, client.conf. NOTE: use the mPlane docs on how to set parameters in configuration files.
+2. Run the mPlane Supervisor: open new terminal, enter protocol-ri, and execute:
 ```
 $ export PYTHONPATH=.
 $ ./scripts/mpsup --config ./conf/supervisor.conf
@@ -28,12 +28,10 @@ $ ./scripts/mpcom --config ./mplane/components/ADTool/conf/adtool.conf
 
 ```
 
-4. Run reasoner:
+4. Run the mpAD_Reasoner:
 
 ```
 $ export PYTHONPATH=.
 $ ./scripts/mpadtoolreasoner --config ./conf/client.conf
 
 ```
-
-
