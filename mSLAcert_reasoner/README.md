@@ -1,7 +1,7 @@
 ## mPlane mSLAcert reasoner
 
 mSLAcert reasoner is written in bash and expect script language, it automatically controls the supervisor 
-by requesting new measurements. The reasoner checks RTT, TCP throughput and UDP throughput. To run mSLAcert reasoner from the network point of view are needed as minimum two PCs.
+by requesting new measurements. The reasoner checks RTT, TCP throughput and UDP throughput. To run mSLAcert reasoner are needed minimum two PCs.
 
 # Software requirements
 
