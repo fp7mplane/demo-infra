@@ -17,9 +17,11 @@ The following Linux tools are needed to be installed on the machine that will ru
 	
 ### Files that need to be configured:
 
-ipaddressdest.in- On each row insert the destination IP of the PCs that have mSLAcert_Agent enabled.
-ipsupervisor.in- Insert the IP of the supervisor that the reasoner will use.
-timemeas.in- Duration of measurements in seconds, the default value is 40 seconds.
+	ipaddressdest.in- On each row insert the destination IP of the PCs that have mSLAcert_Agent enabled.
+
+	ipsupervisor.in- Insert the IP of the supervisor that the reasoner will use.
+
+	timemeas.in- Duration of measurements in seconds, the default value is 40 seconds.
 
 
 ### Run the reasoner
