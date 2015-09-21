@@ -5,13 +5,13 @@
 
 We give here a brief description about how to setup and launch the mPlane components needed for the Measurements for Multimedia Content Delivery Use Case. The functionality and operation of the RC1 reasoner is described on the [official mPlane website](https://www.ict-mplane.eu/public/rc1-reasoner).
 
-1. Launch supervisor...:
+- **Launch supervisor...:**
 
 ```
 ./scripts/mpsup --config conf/supervisor.conf
 ```
 
-or supervisor GUI:
+**or supervisor GUI:**
 
 ```
 python3 -m mplane.svgui --config conf/svgui.conf
@@ -19,13 +19,13 @@ python3 -m mplane.svgui --config conf/svgui.conf
 
 The configuration file of the `svgui` is backward compatible with those of the supervisor, so `svgui.conf` can be used in place of `supervisor.conf`.)
 
-2. Launch the EZrepo repository:
+- **Launch the EZrepo repository:**
 
 ```
 python3 -m mplane.ezrepo --config conf/ezrepo.conf
 ```
 
-3. Launch the RC1 reasoner:
+- **Launch the RC1 reasoner:**
 
 ```
 python3 -m mplane.rc1 --config conf/rc1.conf
@@ -33,7 +33,7 @@ python3 -m mplane.rc1 --config conf/rc1.conf
 
 Reasoner will output diagnostic results in the launch terminal window. (The functionality to display reasoner messages in supervisor GUI is under further investigation.)
 
-4. Launch the needed probe(s):
+- **Launch the needed probe(s):**
 
 ```
 ./scripts/mpcom --config conf/component.conf
