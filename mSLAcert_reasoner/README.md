@@ -1,4 +1,4 @@
-# mPlane mSLAcert reasoner
+## mPlane mSLAcert reasoner
 
 mSLAcert reasoner is written in bash and expect script language, it automatically controls the supervisor 
 by requesting new measurements. The reasoner checks RTT, TCP throughput and UDP throughput. To run mSLAcert reasoner from the network point of view are needed as minimum two PCs.
@@ -15,7 +15,7 @@ The following Linux tools are needed to be installed on the machine that will ru
 
 	4. cupsfilter - sudo apt-get install cups
 	
->>Files that need to be configured:
+# Files that need to be configured:
 
 ipaddressdest.in- On each row insert the destination IP of the PCs that have mSLAcert_Agent enabled.
 ipsupervisor.in- Insert the IP of the supervisor that the reasoner will use.
@@ -28,4 +28,4 @@ Give executable permission to the ".exp" files and to ".sh" file and from the te
 
 		"./reasoner\_msla.sh"
 
-This will lunch the reasoner, which will store the data locally on a PDF of the mPlane RI directory.
+This will launch the reasoner, which will store the data locally on a PDF of the mPlane RI directory.
