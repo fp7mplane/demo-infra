@@ -26,7 +26,7 @@ The following Linux tools are needed to be installed on the machine that will ru
 
 ### Run the reasoner
 
-Give executable permission to the ".exp" files and to ".sh" file and from the terminal set on the path of mother directory of the mPlane RI folder run the command:
+To run mSLAcert reasoner give executable permission to the ".exp" files and to ".sh" file. From the terminal set on the path of the mother directory of the mPlane RI folder run the command:
 
 		"./reasoner\_msla.sh"
 
