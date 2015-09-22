@@ -51,6 +51,6 @@ repository_uri = udp://91.227.139.40:9000
 ```
 
 
-(https://www.ict-mplane.eu/sites/default/files//public/user-files/janos.bartok/rc1-reasoner.png)
+![reasoner setup config](rc1-reasoner.png)
 
 It is possible to launch several probes which connect to the same supervisor-repository-reasoner triplet, as shown on picture. Their launch parameters depend on the platform the probes run on: e.g. in case of Linux machines you can launch them the same way like shown above, just having adjusted the configuration file before starting them; on Miniprobes one can launch the probes either remotely, or by using Miniprobe's GUI.
