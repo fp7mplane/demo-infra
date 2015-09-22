@@ -35,19 +35,19 @@ Follow these steps:
 
 1. Set the parameters in the files **reasoner.conf** (e.g., path to certificates, supervisor address, client port and address, and roles)
 
-2a. First,  get the supervisor from the reference implementation [mPlane protocol RI](https://github.com/fp7mplane/protocol-ri), and add the capability "repository-top_popular_urls = guest,admin" in [Authorizations] section of the supervisor configuration file (**supervisor.conf**).
+2. First,  get the supervisor from the reference implementation [mPlane protocol RI](https://github.com/fp7mplane/protocol-ri), and add the capability "repository-top_popular_urls = guest,admin" in [Authorizations] section of the supervisor configuration file (**supervisor.conf**).
 
-2b. Run the supervisor:
+3. Run the supervisor:
  
         $ export PYTHONPATH=[PROTOCOL_RI_DIR]
         $ python3 scripts/mpsup --config supervisor.conf
 
-3. Run the tstat-repository
+4. Run the tstat-repository
 
         $ export PYTHONPATH=[PROTOCOL_RI_DIR]
         $ python3 tstatrepository.py --config conf/tstatrepository.conf 
 
-4. Run the reasoner
+5. Run the reasoner
 
         $ export PYTHONPATH=[PROTOCOL_RI_DIR]
         $ python3 reasoner --config reasoner.conf
