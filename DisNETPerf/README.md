@@ -5,9 +5,11 @@ DisNETPerf
 DisNETPerf - a Distributed Internet Paths Performance Analyzer - is a tool that allows one to locate the closest RIPE Atlas box (in terms of minimum RTT) to a given IP. You can either run DisNETPerf for a single IP or for a set of IPs.
 Furthermore, once the closest RIPE Atlas box has been located, DisNETPerf permits to launch traceroutes from this box to a destination IP address provided by the user.
 
-Atlas is a large measurement network composed of geographically distributed probes used to measure Internet connectivity and reachability.
+RIPE Atlas is a large active measurement network composed of geographically distributed probes used to measure Internet connectivity and reachability.
 
-Please be aware that **THIS IS A BETA VERSION, MAY CONTAIN SOME BUGS**.
+Given a certain server, with IP address IP_s, and a target customer, with IP address IP_d, DisNETPerf locates the closest RIPE Atlas probe to IP_s, namely IP_x, and periodically runs traceroute from IP_x to IP_d, collecting different path performance metrics such as RTT per hop, end-to-end RTT, etc. This data collected is then used to troubleshoot ''reverse'' paths, from the server to the target customer.
+
+To select IP_x, DisNETPerf makes use of a combined topological and latency-based approach, using standard pings and BGP routing tables. In a nutshell, it locates the RIPE Atlas probe with minimum RTT to the selected server IP_s, among a set of prefiltered IP_x candidates, which are located at either the same AS of I_Ps or in the neighbor ASes.
 
 #### List of runnable scripts
 
