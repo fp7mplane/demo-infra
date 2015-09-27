@@ -7,9 +7,9 @@ Furthermore, once the closest RIPE Atlas box has been located, DisNETPerf permit
 
 RIPE Atlas is a large active measurement network composed of geographically distributed probes used to measure Internet connectivity and reachability.
 
-Given a certain server, with IP address IP_s, and a target customer, with IP address IP_d, DisNETPerf locates the closest RIPE Atlas probe to IP_s, namely IP_x, and periodically runs traceroute from IP_x to IP_d, collecting different path performance metrics such as RTT per hop, end-to-end RTT, etc. This data collected is then used to troubleshoot ''reverse'' paths, from the server to the target customer.
+Given a certain server, with IP address IP_s, and a target customer, with IP address IP_d, DisNETPerf locates the closest RIPE Atlas probe to IP_s, namely IP_c, and periodically runs traceroute from IP_c to IP_d, collecting different path performance metrics such as RTT per hop, end-to-end RTT, etc. This data collected is then used to troubleshoot ''reverse'' paths, from the server to the target customer.
 
-To select IP_x, DisNETPerf makes use of a combined topological and latency-based approach, using standard pings and BGP routing tables. In a nutshell, it locates the RIPE Atlas probe with minimum RTT to the selected server IP_s, among a set of prefiltered IP_x candidates, which are located at either the same AS of I_Ps or in the neighbor ASes.
+To select IP_c, DisNETPerf makes use of a combined topological and latency-based approach, using standard pings and BGP routing tables. In a nutshell, it locates the RIPE Atlas probe with minimum RTT to the selected server IP_s, among a set of prefiltered IP_c candidates, which are located at either the same AS of IP_s or in the neighbor ASes.
 
 #### List of runnable scripts
 
