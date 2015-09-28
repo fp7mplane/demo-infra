@@ -15,7 +15,9 @@ To select IPc, DisNETPerf makes use of a combined topological and latency-based 
 #### List of runnable scripts
 
 - **find_psbox.py**: locate the closest boxes for a set of IPs
+ 
 - **launch_traceroutes.py**: launch traceroutes from RIPE Atlas boxes to a given destination IP address
+
 - **get_traceroute_results.py**: Retrieve the results of the launched traceroute-measurements
 
 All the scripts whose names are prefixed with **AUX_** cannot be run but are used by the scripts explained above.
