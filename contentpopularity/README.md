@@ -1,4 +1,4 @@
-# Components for the Content Popularity Use Case
+# Content Popularity Components
 
 This folder contains various components developed by the mPlane 
 project against the mPlane SDK for the use case Estimating Content 
