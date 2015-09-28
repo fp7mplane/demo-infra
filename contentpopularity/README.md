@@ -44,6 +44,7 @@ Follow these steps:
         _controller_address = Content Estimation analysis module IP address
         _controller_port = Content Estimation analysis module port
 3. Run the supervisor
+
         $ export PYTHONPATH=[PROTOCOL_RI_DIR]
         $ python3 scripts/mpsup --config supervisor.conf
 
