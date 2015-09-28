@@ -29,9 +29,7 @@ repository and analysis module component.
 **tstatrepository.py** is the mPlane interface for the tstat-repository
 implementing the analysis module for the Content Curation use case.
 
-## Howto
-
-Follow these steps:
+## Howto -- Follow these steps:
 
 1. Set the parameters in the file **reasoner.conf** (e.g., path to certificates, supervisor address, client port and address, and roles)
 
