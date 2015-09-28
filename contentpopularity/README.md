@@ -1,14 +1,10 @@
 # Content Popularity Components
 
-This folder contains various components developed by the mPlane 
-project against the mPlane SDK for the use case Estimating Content 
-Popularity.
+This folder contains various components developed by the mPlane project through the mPlane SDK for the use case Estimating Content Popularity.
 
-The code for the Python3 mPlane protocol Reference Implementation (RI) is 
-available on GitHub under [mPlane protocol RI](https://github.com/fp7mplane/protocol-ri). 
+The code for the Python3 mPlane protocol Reference Implementation (RI) is available on GitHub under [mPlane protocol RI](https://github.com/fp7mplane/protocol-ri).
 
-Here we assume that [PROTOCOL_RI_DIR] is the folder where the GitHub 
-repository of the mPlane protocol reference implementation has been cloned.
+Here we assume that [PROTOCOL_RI_DIR] is the folder where the GitHub repository of the mPlane protocol reference implementation has been cloned.
 
 
 ## Reasoner
