@@ -1,4 +1,4 @@
-Introduction
+iGreedy -- Anycast Enumeration and Geolocation Module
 -------------
 iGreedy is a tool able to detect, enumerate and geolocate anycast replicas with a fistful of pings. 
 This brief readme file describes the basic steps to get started with the tool. The tool
