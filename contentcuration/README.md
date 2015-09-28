@@ -1,4 +1,4 @@
-# Components for the Content Curation Use Case
+# Content Curation Components
 
 This folder contains various components developed by the mPlane 
 project against the mPlane SDK for the use case Passive Content Curation.
@@ -14,7 +14,7 @@ repository of the mPlane protocol reference implementation has been cloned.
 
 **reasoner** is the Python script for the reasoner.
 It periodically runs a query which returns the
-list of the 100 most popular content URLs in the last hour.
+list of the 100 most popular contents (their URLs) in the last hour.
 
 ## Supervisor
 
@@ -33,9 +33,9 @@ implementing the analysis module for the Content Curation use case.
 
 Follow these steps:
 
-1. Set the parameters in the files **reasoner.conf** (e.g., path to certificates, supervisor address, client port and address, and roles)
+1. Set the parameters in the file **reasoner.conf** (e.g., path to certificates, supervisor address, client port and address, and roles)
 
-2. First,  get the supervisor from the reference implementation [mPlane protocol RI](https://github.com/fp7mplane/protocol-ri), and add the capability "repository-top_popular_urls = guest,admin" in [Authorizations] section of the supervisor configuration file (**supervisor.conf**).
+2. Get the supervisor from the reference implementation [mPlane protocol RI](https://github.com/fp7mplane/protocol-ri), and add the capability "repository-top_popular_urls = guest,admin" in [Authorizations] section of the supervisor configuration file (**supervisor.conf**).
 
 3. Run the supervisor:
  
@@ -47,8 +47,7 @@ Follow these steps:
         $ export PYTHONPATH=[PROTOCOL_RI_DIR]
         $ python3 tstatrepository.py --config conf/tstatrepository.conf 
 
-5. Run the reasoner
+5. Run the Reasoner
 
         $ export PYTHONPATH=[PROTOCOL_RI_DIR]
         $ python3 reasoner --config reasoner.conf
-
