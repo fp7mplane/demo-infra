@@ -13,7 +13,7 @@ repository of the mPlane protocol reference implementation has been cloned.
 
 ## Reasoner
 
-**cachereasoner** is the Python script for the reasoner.
+**cachereasoner** is the Python script for the Reasoner.
 It periodically runs the request which returns the
 list of contents to cache in a given server.
 
@@ -22,7 +22,7 @@ list of contents to cache in a given server.
 The Python code for the supervisor is the one provided 
 in the mPlane protocol RI repository, i.e., **scripts/mpsup**.
 
-It receives the requests from the reasoner and forwards them to the 
+It receives the requests from the Reasoner and forwards them to the 
 repository and analysis module component.
 
 ## Repository and Analysis Module
@@ -54,7 +54,7 @@ Follow these steps:
         $ export PYTHONPATH=[PROTOCOL_RI_DIR]
         $ python3 cacheController.py --config cacheController.conf 
 
-5. Run the reasoner (make sure you have set the MPLANE_RI variable)
+5. Run the Reasoner (make sure you have set the MPLANE_RI variable)
 
         $ export PYTHONPATH=[PROTOCOL_RI_DIR]
         $ python3 cachereasoner --config reasoner.conf
