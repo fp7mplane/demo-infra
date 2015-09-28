@@ -33,9 +33,7 @@ contents to cache.
 **tstatrepository.py** integrates the script above with the capabilities
 of communicating with Tstat's proxy.
 
-## Howto
-
-Follow these steps:
+## Howto -- Follow these steps:
 
 1. Set the parameters in the files **supervisor.conf**, **cacheController.conf**, **reasoner.conf** (e.g., path to certificates, supervisor address, client port and address, and roles)
 
@@ -43,9 +41,6 @@ Follow these steps:
 
         _controller_address = Content Estimation analysis module IP address
         _controller_port = Content Estimation analysis module port
-        
-        
-        
         
 3. Run the supervisor
 
