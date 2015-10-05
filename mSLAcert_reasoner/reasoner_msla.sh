@@ -20,7 +20,7 @@
 ###$$$$$$$|Politecnico di Torino|Fondazione Ugo Bordoni| SSB Progetti| Telecom Italia|&$$$$$$$$$$$$$$$$$$##
 ###$$$$$$$$---------------------&----------------------&-------------&---------------$$$$$$$$$$$$$$$$$$$$##
 ##$$$$________________________&_______&_________________&_______________$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$##
-###$$|Alcatel-Lucent Bell Labs|EURECOM| Telecom Paritech| NEC Europe LTD| $$$$$$$$$$$$$$$$$$$$$$$$] && [] && [&$$##
+###$$|Alcatel-Lucent Bell Labs|EURECOM| Telecom Paritech| NEC Europe LTD| $$$$$$$$$$$$$$$$$$$$$$$$&&&&&$$##
 ###$$$------------------------&-------&-----------------&---------------$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$##
 ##$$________________________________________&________&_____________________________________________$$$$$$##
 ###|Telefonica Investigacion Y Desarrollo Sa|Netvisor|Forschungszentrum Telekommunikation Wien Gmbh|$$$$$##
@@ -388,6 +388,40 @@ ps2pdf  UDP_$ipaddressdest.ps UDP_$ipaddressdest.pdf
 rm ./pingvalues_$ipaddressdest.txt
 rm ./tcpvalues_$ipaddressdest.txt
 rm ./udpvalues_$ipaddressdest.txt
+
+echo "###########################################################################################################">>ping_report_#ipaddressdest.output
+echo "###########################################################################################################">>ping_report_#ipaddressdest.output
+echo "##########################################     ########  ######       #####################################">>ping_report_#ipaddressdest.output
+echo "##########################################  ###  ######  #####  #####  ######  ##############    ##########">>ping_report_#ipaddressdest.output
+echo "###############      #####################  #####  ####  ####  #######  #####        ######  ####  ########">>ping_report_#ipaddressdest.output
+echo "############   ;####   ######       ######  ####  #####  #########   #  #####  #####  ####  #####  ########">>ping_report_#ipaddressdest.output
+echo "##########   ########  ####   #####  #####  ##  #######  #######  ####  #####  #####  ####        #########">>ping_report_#ipaddressdest.output
+echo "########   ##########!      #######   ####   ##########  #####  ######  #####  #####  ####  ###############">>ping_report_#ipaddressdest.output
+echo "######   ##############  ###########  ####  ###########  ####  #####    #####  #####  ####  #####  ########">>ping_report_#ipaddressdest.output
+echo "#####  #############################  ####  ###########  #####       #  #####  #####  #####       #########">>ping_report_#ipaddressdest.output
+echo "###########################################################################################################">>ping_report_#ipaddressdest.output
+echo "###########################################################################################################">>ping_report_#ipaddressdest.output
+echo "###########################################################################################################">>ping_report_#ipaddressdest.output
+echo "###########_____________________&______________________&_____________&_______________######################">>ping_report_#ipaddressdest.output
+echo "##########|Politecnico di Torino|Fondazione Ugo Bordoni| SSB Progetti| Telecom Italia|&####################">>ping_report_#ipaddressdest.output
+echo "###########---------------------&----------------------&-------------&---------------######################">>ping_report_#ipaddressdest.output
+echo "######________________________&_______&_________________&_______________###################################">>ping_report_#ipaddressdest.output
+echo "#####|Alcatel-Lucent Bell Labs|EURECOM| Telecom Paritech| NEC Europe LTD| ########################&&&&&####">>ping_report_#ipaddressdest.output
+echo "######------------------------&-------&-----------------&---------------###################################">>ping_report_#ipaddressdest.output
+echo "####________________________________________&________&_____________________________________________########">>ping_report_#ipaddressdest.output
+echo "###|Telefonica Investigacion Y Desarrollo Sa|Netvisor|Forschungszentrum Telekommunikation Wien Gmbh|#######">>ping_report_#ipaddressdest.output
+echo "####----------------------------------------&--------&---------------------------------------------########">>ping_report_#ipaddressdest.output
+echo "##########_______________________&____________________&_____________________________________________#######">>ping_report_#ipaddressdest.output
+echo "#########|Fachhochschule Augsburg||Universite de Liege|Eidgenoessische Technische Hochschule Zurich |######">>ping_report_#ipaddressdest.output
+echo "##########-----------------------&--------------------&---------------------------------------------#######">>ping_report_#ipaddressdest.output
+echo "##########################______________________&_______###################################################">>ping_report_#ipaddressdest.output
+echo "#########################|Alcatel-Lucent Bell Nv|FASTWEB|##################################################">>ping_report_#ipaddressdest.output
+echo "##########################----------------------&-------###################################################">>ping_report_#ipaddressdest.output
+echo "######################################|mPlane Supervisior|#################################################">>ping_report_#ipaddressdest.output
+echo "###########################################################################################################">>ping_report_#ipaddressdest.output
+echo "###########################################################################################################">>ping_report_#ipaddressdest.output
+echo "#******************mSLAcert tests report ,for Ip #ipaddressdest********************************************">>ping_report_#ipaddressdest.output
+echo "###########################################################################################################">>ping_report_#ipaddressdest.output
 
 echo -------------- REPORT FOR RTT fo Ip $ipaddressdest----------------->>ping_report_$ipaddressdest.output
 echo ------------------------------------------------------------------->>ping_report_$ipaddressdest.output
