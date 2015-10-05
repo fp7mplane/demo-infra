@@ -51,7 +51,6 @@ ipaddressdest=$(expr `cat ./ipaddressdest.in | awk NR==$rowipaddressdest`);
 if [ $ipaddressdest -eq 010001010100111101000110 ]
 then	notify-send -t 1200 Finished_controlling_all_IPs
  	exit
-else
 fi
 ipsupervisor=$(expr `cat ./ipsupervisor.in`);
 timemeas=$(expr `cat ./timemeas.in| awk 'NR==1 {print $1}'`);
@@ -91,13 +90,13 @@ if [ "$empty$pingsamples" = "$empty" ]
 then echo "Could not get samples Ping data!"
 fi
 if [ "$empty$tcpmin" = "$empty" ]
-then echo "Could not get min TCP data!"
+then echo "Could not get min TCP data! Possible issue: the destination agent is down!"
 fi
 if [ "$empty$tcpmean" = "$empty" ]
-then echo "Could not get mean TCP data!"
+then echo "Could not get mean TCP data! Possible issue: the destination agent is down!"
 fi
 if [ "$empty$tcpmax" = "$empty" ]
-then echo "Could not get max TCP data!"
+then echo "Could not get max TCP data! Possible issue: the destination agent is down!"
 fi
 if [ $tcpmax -gt 99 ]
 then tcpmax=99
@@ -118,16 +117,16 @@ if [ "$empty$udpsamples" = "$empty" ]
 then echo "Could not get samples UDP data!"
 fi
 if [ "$empty$udpjitter" = "$empty" ]
-then echo "Could not get jitter UDP data!"
+then echo "Could not get jitter UDP data! Possible issue: the destination agent is down!"
 fi
 if [ "$empty$udperror" = "$empty" ]
-then echo "Could not get error UDP data!"
+then echo "Could not get error UDP data! Possible issue: the destination agent is down!"
 fi
 if [ "$empty$udpclient" = "$empty" ]
-then echo "Could not get UDP client data!"
+then echo "Could not get UDP client data! Possible issue: the destination agent is down!"
 fi
 
-if [ [ "$empty$tcpmean" = "$empty" ] && [ "$empty$udpmean" = "$empty" ] && [ "$empty$udpclient" = "$empty" ] ]
+if [ "$empty$tcpmean" = "$empty" ]
 then echo "Could not get any data, possible issue: the destination agent is down!"
 fi
 
@@ -140,7 +139,7 @@ udperror2=`cat ./udp_check_$ipaddressdest.txt| awk 'NR==30 {print $2}'|awk '{pri
 udpclient2=`cat ./udp_check_$ipaddressdest.txt| awk 'NR==31 {print $2}'|awk '{print int($1)}'`;
 udpsamples2=`cat ./udp_check_$ipaddressdest.txt| awk 'NR==32 {print $2}'|awk '{print int($1)}'`;
 
-while [ [ $udpclient -eq -1 ] && [ $retrys20 -lt 3 ] && [ $udpclient2 -eq -1 ] ]
+while [ [ $udpclient2 -eq -1 ] ]
 do
 	echo "Could not retrive the client data, will repeat only the UDP test"
 	./udp_check.exp $ipaddressdest $timemeas $measnum $ipsupervisor> ./udp_check_2_$ipaddressdest.txt
@@ -156,6 +155,9 @@ do
 	then retrys20=$(( retrys20+1 ))
 		echo "Could not retrive the client data, will repeat tests in 20 minutes"
 		sleep 20m
+	fi
+	if [ $retrys20 -eq 3 ]
+	then done
 	fi
 done
 
@@ -203,8 +205,8 @@ tcpvalidation1=$(echo "scale=2; ($tcpmean/10)" | bc)
 tcpvalidation2=$(( tcpmax2 - tcpmin2 ));
 tcpvalidation12=$(echo "scale=2; ($tcpmean2/10)" | bc)
 
-if [ [ $tcpvalidation -gt $tcpvalidation1 ] && [ $tcpvalidation2 -gt $tcpvalidation12 ] ]
-	echo "Will repeat TCP test, to much variation into throughput values of the first test!"
+if [ [ $tcpvalidation2 -gt $tcpvalidation12 ] ]
+	echo "Will repeat TCP test, to much variation into throughput values of the second test!"
 	then ./tcp_check.exp $ipaddressdest $timemeas $measnum $ipsupervisor> ./tcp_check_2_$ipaddressdest.txt
 	tcpmin2=`cat ./tcp_check_2_$ipaddressdest.txt| awk 'NR==26 {print $2}'|awk '{print int($1)}'`;
 	tcpmean2=`cat ./tcp_check_2_$ipaddressdest.txt| awk 'NR==27 {print $2}'|awk '{print int($1)}'`;
@@ -241,7 +243,7 @@ pingvalidation1=$(echo "scale=2; ($pingmean/2)" | bc)
 pingvalidation2=$(( pingmax2 - pingmin2 ));
 pingvalidation12=$(echo "scale=2; ($pingmean2/2)" | bc)
 
-if [ [ $pingvalidation -gt $pingvalidation1 ] && [ $pingvalidation2 -gt $pingvalidation12 ] ]
+if [ [ $pingvalidation2 -gt $pingvalidation12 ] ]
 	echo "Will repeat Ping test!"
 	then ./ping_check.exp $ipaddressdest $timemeas $measnum $ipsupervisor> ./ping_check_2_$ipaddressdest.txt
 	pingmin2=`cat ./ping_check_2_$ipaddressdest.txt| awk 'NR==26 {print $2}'|awk '{print int($1)}'`;
@@ -266,9 +268,9 @@ fi
 
 plotping=0;
 pingrow=43;
-if [ $ping -eq 1 ]
+if [ $ping = 1 ]
 then
-	while [ $plotping -lt $pingsamples2]
+	while [ $plotping -lt $pingsamples2 ]
 	do
 	echo $plotping>> timeping_$ipaddressdest.txt
 	pingvalues=`cat ./ping_check_2_$ipaddressdest.txt| awk NR==$pingrow | awk '{print $2}'`
@@ -276,8 +278,11 @@ then
 	pingrow=$(( pingrow+3 ))
 	plotping=$(( plotping+1 ))
 	done
-else
-while [ $plotping -lt $pingsamples2]
+fi
+
+if [ $ping = 0 ]
+then
+while [ $plotping -lt $pingsamples2 ]
 	do
 	echo $plotping>> timeping_$ipaddressdest.txt
 	pingvalues=`cat ./ping_check_$ipaddressdest.txt| awk NR==$pingrow | awk '{print $2}'`
@@ -290,38 +295,40 @@ fi
 
 plottcp=0;
 tcprow=43;
-if [ $tcp -eq 1 ]
+if [ $tcp -eq 1 ];
 then
-	while [ $plottcp -lt $tcpsamples2]
+	while [ $plottcp -lt $tcpsamples2 ]
 	do
 	echo $plottcp>> timetcp_$ipaddressdest.txt
-	tcpvalues=`cat ./tcp_check_2_$ipaddressdest.txt| awk NR==$tcprow | awk '{print $2}'`
-	if [ $tcpvalues -gt 99 ]
-	then tcpvalues=99
-	fi
+	tcpvalues=`cat ./tcp_check_2_$ipaddressdest.txt| awk NR==$tcprow | awk '{print $2}'`;
+	if [ "$tcpvalues" -gt 99 ];
+	then tcpvalues=99;
+	echo $tcpvalues
+	fi;
 	echo $tcpvalues>> tcpvalues_$ipaddressdest.txt
 	tcprow=$(( tcprow+3 ))
 	plottcp=$(( plottcp+1 ))
 	done
 else
-while [ $plottcp -lt $tcpsamples2]
+	while [ $plottcp -lt $tcpsamples2 ]
 	do
 	echo $plottcp>> timetcp_$ipaddressdest.txt
-	tcpvalues=`cat ./tcp_check_$ipaddressdest.txt| awk NR==$tcprow | awk '{print $2}'`
-	if [ $tcpvalues -gt 99 ]
-	then tcpvalues=99
-	fi
+	tcpvalues=`cat ./tcp_check_$ipaddressdest.txt| awk NR==$tcprow | awk '{print $2}'`;
+	if [ $tcpvalues -gt 99 ];
+	then tcpvalues=99;
+	fi;
 	echo $tcpvalues>> tcpvalues_$ipaddressdest.txt
 	tcprow=$(( tcprow+3 ))
 	plottcp=$(( plottcp+1 ))
-done
-fi
+	done
+fi;
+
 
 plotudp=0;
 udprow=46;
 if [ $udp -eq 1 ]
 then
-	while [ $plotudp -lt $udpsamples2]
+	while [ $plotudp -lt $udpsamples2 ]
 	do
 	echo $plotudp>> timeudp_$ipaddressdest.txt
 	udpvalues=`cat ./udp_check_2_$ipaddressdest.txt| awk NR==$udprow | awk '{print $2}'`
@@ -329,8 +336,11 @@ then
 	udprow=$(( udprow+6 ))
 	plotudp=$(( plotudp+1 ))
 	done
-else
-while [ $plotudp -lt $udpsamples2]
+fi
+
+if [ $udp = 0 ]
+then
+while [ $plotudp -lt $udpsamples2 ]
 	do
 	echo $plotudp>> timeudp_$ipaddressdest.txt
 	udpvalues=`cat ./udp_check_$ipaddressdest.txt| awk NR==$udprow | awk '{print $2}'`
@@ -340,34 +350,39 @@ while [ $plotudp -lt $udpsamples2]
 done
 fi
 
-gnuplot -persist
+gnuplot -persist <<EOF
 set style data linespoints
 show timestamp
-set output "RTT_$ipaddressdest.png"
+set term postscript
+set output "RTT_$ipaddressdest.ps"
 set title "RTT evolution in microsec for ip: $ipaddressdest"
 set xlabel "Time (seconds)"
 set ylabel "Value in microseconds"
 set key right bottom
-set term png size 640,480
-plot "./pingvalues_$ipaddressdest.txt" using $1 title "RTT"
+plot "./pingvalues_$ipaddressdest.txt" title "RTT"
 set style data linespoints
 show timestamp
-set output "TCP_$ipaddressdest.png"
+set term postscript
+set output "TCP_$ipaddressdest.ps"
 set title "TCP Throughput evolution in mbps for ip: $ipaddressdest"
 set xlabel "Time (seconds)"
 set ylabel "Value in mbps"
 set key right bottom
-set term png size 640,480
-plot "./tcpvalues_$ipaddressdest.txt" using $1 title "RTT"
+plot "./tcpvalues_$ipaddressdest.txt" title "TCP throughput"
 set style data linespoints
 show timestamp
-set output "UDP_$ipaddressdest.png"
+set term postscript
+set output "UDP_$ipaddressdest.ps"
 set title "UDP Throughput evolution in mbps for ip: $ipaddressdest"
 set xlabel "Time (seconds)"
 set ylabel "Value in mbps"
 set key right bottom
-set term png size 640,480
-plot "./udpvalues_$ipaddressdest.txt" using $1 title "RTT"
+plot "./udpvalues_$ipaddressdest.txt" title "UDP throughput"
+EOF
+ps2pdf RTT_$ipaddressdest.ps RTT_$ipaddressdest.pdf
+ps2pdf  TCP_$ipaddressdest.ps TCP_$ipaddressdest.pdf
+ps2pdf  UDP_$ipaddressdest.ps UDP_$ipaddressdest.pdf
+
 
 rm ./pingvalues_$ipaddressdest.txt
 rm ./tcpvalues_$ipaddressdest.txt
@@ -422,11 +437,9 @@ echo ------------------------------------------------------------------->>udp_re
 cupsfilter ping_report_$ipaddressdest.output > ping_report_$ipaddressdest.pdf
 cupsfilter tcp_report_$ipaddressdest.output > tcp_report_$ipaddressdest.pdf
 cupsfilter udp_report_$ipaddressdest.output > udp_report_$ipaddressdest.pdf
-convert RTT_$ipaddressdest.png > RTT_$ipaddressdest.pdf
-convert TCP_$ipaddressdest.png > TCP_$ipaddressdest.pdf
-convert UDP_$ipaddressdest.png > UDP_$ipaddressdest.pdf
 
-convert ping_report_$ipaddressdest.pdf RTT_$ipaddressdest.pdf tcp_report_$ipaddressdest.pdf TCP_$ipaddressdest.pdf udp_report_$ipaddressdest.pdf UDP_$ipaddressdest.pdf > Report_for_$ipaddressdest.pdf
+
+convert ping_report_$ipaddressdest.pdf RTT_$ipaddressdest.pdf tcp_report_$ipaddressdest.pdf TCP_$ipaddressdest.pdf udp_report_$ipaddressdest.pdf UDP_$ipaddressdest.pdf Report_for_$ipaddressdest.pdf
 
 rm ping_report_$ipaddressdest.output
 rm tcp_report_$ipaddressdest.output
@@ -434,9 +447,9 @@ rm udp_report_$ipaddressdest.output
 rm ping_report_$ipaddressdest.pdf
 rm tcp_report_$ipaddressdest.pdf
 rm udp_report_$ipaddressdest.pdf
-rm RTT_$ipaddressdest.png
-rm TCP_$ipaddressdest.png
-rm UDP_$ipaddressdest.png
+rm RTT_$ipaddressdest.ps
+rm TCP_$ipaddressdest.ps
+rm UDP_$ipaddressdest.ps
 rm RTT_$ipaddressdest.pdf
 rm TCP_$ipaddressdest.pdf
 rm UDP_$ipaddressdest.pdf
