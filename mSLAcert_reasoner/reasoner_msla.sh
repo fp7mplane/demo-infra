@@ -20,7 +20,7 @@
 ###$$$$$$$|Politecnico di Torino|Fondazione Ugo Bordoni| SSB Progetti| Telecom Italia|&$$$$$$$$$$$$$$$$$$##
 ###$$$$$$$$---------------------&----------------------&-------------&---------------$$$$$$$$$$$$$$$$$$$$##
 ##$$$$________________________&_______&_________________&_______________$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$##
-###$$|Alcatel-Lucent Bell Labs|EURECOM| Telecom Paritech| NEC Europe LTD| $$$$$$$$$$$$$$$$$$$$$$$$&&&&&$$##
+###$$|Alcatel-Lucent Bell Labs|EURECOM| Telecom Paritech| NEC Europe LTD| $$$$$$$$$$$$$$$$$$$$$$$$] && [] && [&$$##
 ###$$$------------------------&-------&-----------------&---------------$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$##
 ##$$________________________________________&________&_____________________________________________$$$$$$##
 ###|Telefonica Investigacion Y Desarrollo Sa|Netvisor|Forschungszentrum Telekommunikation Wien Gmbh|$$$$$##
@@ -44,8 +44,6 @@ rowipaddressdest=1;
 udp=0;
 tcp=0;
 ping=0;
-tcpband=0;
-export PYTHONPATH=.
 while [ $check_var -eq 1 ]
 do
 
@@ -54,102 +52,105 @@ if [ $ipaddressdest -eq 010001010100111101000110 ]
 then	notify-send -t 1200 Finished_controlling_all_IPs
  	exit
 else
+fi
 ipsupervisor=$(expr `cat ./ipsupervisor.in`);
 timemeas=$(expr `cat ./timemeas.in| awk 'NR==1 {print $1}'`);
 measnum=$(expr `cat ./measnum.in`);
-fi
+
 
 echo "Launching RTT, TCP and UDP test!"
 ./reasoner_check.exp $ipaddressdest $timemeas $measnum $ipsupervisor> ./result_check_$ipaddressdest.txt
-pingmin=`cat ./result_check_$ipaddressdest.txt| awk 'NR==26 {print $2}'`;
-pingmean=`cat ./result_check_$ipaddressdest.txt| awk 'NR==27 {print $2}'`;
-pingmax=`cat ./result_check_$ipaddressdest.txt| awk 'NR==28 {print $2}'`;
-pingsamples=`cat ./result_check_$ipaddressdest.txt| awk 'NR==29 {print $2}'`;
-tcpmin=`cat ./result_check_$ipaddressdest.txt| awk 'NR==30 {print $2}'`;
-tcpmean=`cat ./result_check_$ipaddressdest.txt| awk 'NR==31 {print $2}'`;
-tcpmax=`cat ./result_check_$ipaddressdest.txt| awk 'NR==32 {print $2}'`;
-tcpsamples=`cat ./result_check_$ipaddressdest.txt| awk 'NR==33 {print $2}'`;
-udpmin=`cat ./result_check_$ipaddressdest.txt| awk 'NR==34 {print $2}'`;
-udpmean=`cat ./result_check_$ipaddressdest.txt| awk 'NR==35 {print $2}'`;
-udpmax=`cat ./result_check_$ipaddressdest.txt| awk 'NR==36 {print $2}'`;
-udpsamples=`cat ./result_check_$ipaddressdest.txt| awk 'NR==37 {print $2}'`;
-udpjitter=`cat ./result_check_$ipaddressdest.txt| awk 'NR==38 {print $2}'`;
-udperror=`cat ./result_check_$ipaddressdest.txt| awk 'NR==39 {print $2}'`;
-udpclient=`cat ./result_check_$ipaddressdest.txt| awk 'NR==40 {print $2}'`;
+pingmin=`cat ./result_check_$ipaddressdest.txt| awk 'NR==26 {print $2}'|awk '{print int($1)}'`;
+pingmean=`cat ./result_check_$ipaddressdest.txt| awk 'NR==27 {print $2}'|awk '{print int($1)}'`;
+pingmax=`cat ./result_check_$ipaddressdest.txt| awk 'NR==28 {print $2}'|awk '{print int($1)}'`;
+pingsamples=`cat ./result_check_$ipaddressdest.txt| awk 'NR==29 {print $2}'|awk '{print int($1)}'`;
+tcpmin=`cat ./result_check_$ipaddressdest.txt| awk 'NR==30 {print $2}'|awk '{print int($1)}'`;
+tcpmean=`cat ./result_check_$ipaddressdest.txt| awk 'NR==31 {print $2}'|awk '{print int($1)}'`;
+tcpmax=`cat ./result_check_$ipaddressdest.txt| awk 'NR==32 {print $2}'|awk '{print int($1)}'`;
+tcpsamples=`cat ./result_check_$ipaddressdest.txt| awk 'NR==33 {print $2}'|awk '{print int($1)}'`;
+udpmin=`cat ./result_check_$ipaddressdest.txt| awk 'NR==34 {print $2}'|awk '{print int($1)}'`;
+udpmean=`cat ./result_check_$ipaddressdest.txt| awk 'NR==35 {print $2}'|awk '{print int($1)}'`;
+udpmax=`cat ./result_check_$ipaddressdest.txt| awk 'NR==36 {print $2}'|awk '{print int($1)}'`;
+udpsamples=`cat ./result_check_$ipaddressdest.txt| awk 'NR==37 {print $2}'|awk '{print int($1)}'`;
+udpjitter=`cat ./result_check_$ipaddressdest.txt| awk 'NR==38 {print $2}'|awk '{print int($1)}'`;
+udperror=`cat ./result_check_$ipaddressdest.txt| awk 'NR==39 {print $2}'|awk '{print int($1)}'`;
+udpclient=`cat ./result_check_$ipaddressdest.txt| awk 'NR==40 {print $2}'|awk '{print int($1)}'`;
 
-if [ "empty$pingmin" = "empty" ]
+empty=0
+
+if [ "$empty$pingmin" = "$empty" ]
 then echo "Could not get min Ping data!"
 fi
-if [ "empty$pingmean" = "empty" ]
+if [ "$empty$pingmean" = "$empty" ]
 then echo "Could not get mean Ping data!"
 fi
-if [ "empty$pingmax" = "empty" ]
+if [ "$empty$pingmax" = "$empty" ]
 then echo "Could not get max Ping data!"
 fi
-if [ "empty$pingsamples" = "empty" ]
+if [ "$empty$pingsamples" = "$empty" ]
 then echo "Could not get samples Ping data!"
 fi
-if [ "empty$tcpmin" = "empty" ]
+if [ "$empty$tcpmin" = "$empty" ]
 then echo "Could not get min TCP data!"
 fi
-if [ "empty$tcpmean" = "empty" ]
+if [ "$empty$tcpmean" = "$empty" ]
 then echo "Could not get mean TCP data!"
 fi
-if [ "empty$tcpmax" = "empty" ]
+if [ "$empty$tcpmax" = "$empty" ]
 then echo "Could not get max TCP data!"
 fi
 if [ $tcpmax -gt 99 ]
 then tcpmax=99
 fi
-if [ "empty$tcpsamples" = "empty" ]
+if [ "$empty$tcpsamples" = "$empty" ]
 then echo "Could not get samples TCP data!"
 fi
-if [ "empty$udpmin" = "empty" ]
+if [ "$empty$udpmin" = "$empty" ]
 then echo "Could not get min UDP data!"
 fi
-if [ "empty$udpmean" = "empty" ]
+if [ "$empty$udpmean" = "$empty" ]
 then echo "Could not get mean UDP data!"
 fi
-if [ "empty$udpmax" = "empty" ]
+if [ "$empty$udpmax" = "$empty" ]
 then echo "Could not get max UDP data!"
 fi
-if [ "empty$udpsamples" = "empty" ]
+if [ "$empty$udpsamples" = "$empty" ]
 then echo "Could not get samples UDP data!"
 fi
-if [ "empty$udpjitter" = "empty" ]
+if [ "$empty$udpjitter" = "$empty" ]
 then echo "Could not get jitter UDP data!"
 fi
-if [ "empty$udperror" = "empty" ]
+if [ "$empty$udperror" = "$empty" ]
 then echo "Could not get error UDP data!"
 fi
-if [ "empty$udpclient" = "empty" ]
+if [ "$empty$udpclient" = "$empty" ]
 then echo "Could not get UDP client data!"
 fi
 
-if [ [ "empty$tcpmin" = "empty" ] && [ "empty$tcpmean" = "empty" ] && [ "empty$tcpmax" = "empty" ] && [ "empty$tcpsamples" = "empty" ] && [ "empty$udpmin" = "empty" ] && [ "empty$udpmean" = "empty" ] && [ "empty$udpmax" = "empty" ] && [ "empty$udpsamples" = "empty" ] && [ "empty$udpjitter" = "empty" ] && [ "empty$udperror" = "empty" ] && [ "empty$udpclient" = "empty" ] ]
+if [ [ "$empty$tcpmean" = "$empty" ] && [ "$empty$udpmean" = "$empty" ] && [ "$empty$udpclient" = "$empty" ] ]
 then echo "Could not get any data, possible issue: the destination agent is down!"
 fi
 
 ./udp_check.exp $ipaddressdest $timemeas $measnum $ipsupervisor> ./udp_check_$ipaddressdest.txt
-udpmin2=`cat ./udp_check_$ipaddressdest.txt| awk 'NR==26 {print $2}'`;
-udpmean2=`cat ./udp_check_$ipaddressdest.txt| awk 'NR==27 {print $2}'`;
-udpmax2=`cat ./udp_check_$ipaddressdest.txt| awk 'NR==28 {print $2}'`;
-udpjitter2=`cat ./udp_check_$ipaddressdest.txt| awk 'NR==29 {print $2}'`;
-udperror2=`cat ./udp_check_$ipaddressdest.txt| awk 'NR==30 {print $2}'`;
-udpclient2=`cat ./udp_check_$ipaddressdest.txt| awk 'NR==31 {print $2}'`;
-udpsamples2=`cat ./udp_check_$ipaddressdest.txt| awk 'NR==32 {print $2}'`;
+udpmin2=`cat ./udp_check_$ipaddressdest.txt| awk 'NR==26 {print $2}'|awk '{print int($1)}'`;
+udpmean2=`cat ./udp_check_$ipaddressdest.txt| awk 'NR==27 {print $2}'|awk '{print int($1)}'`;
+udpmax2=`cat ./udp_check_$ipaddressdest.txt| awk 'NR==28 {print $2}'|awk '{print int($1)}'`;
+udpjitter2=`cat ./udp_check_$ipaddressdest.txt| awk 'NR==29 {print $2}'|awk '{print int($1)}'`;
+udperror2=`cat ./udp_check_$ipaddressdest.txt| awk 'NR==30 {print $2}'|awk '{print int($1)}'`;
+udpclient2=`cat ./udp_check_$ipaddressdest.txt| awk 'NR==31 {print $2}'|awk '{print int($1)}'`;
+udpsamples2=`cat ./udp_check_$ipaddressdest.txt| awk 'NR==32 {print $2}'|awk '{print int($1)}'`;
 
 while [ [ $udpclient -eq -1 ] && [ $retrys20 -lt 3 ] && [ $udpclient2 -eq -1 ] ]
 do
 	echo "Could not retrive the client data, will repeat only the UDP test"
 	./udp_check.exp $ipaddressdest $timemeas $measnum $ipsupervisor> ./udp_check_2_$ipaddressdest.txt
-	udpmin2=`cat ./udp_check_2_$ipaddressdest.txt| awk 'NR==26 {print $2}'`;
-	udpmean2=`cat ./udp_check_2_$ipaddressdest.txt| awk 'NR==27 {print $2}'`;
-	udpmax2=`cat ./udp_check_2_$ipaddressdest.txt| awk 'NR==28 {print $2}'`;
-	udpjitter2=`cat ./udp_check_2_$ipaddressdest.txt| awk 'NR==29 {print $2}'`;
-	udperror2=`cat ./udp_check_2_$ipaddressdest.txt| awk 'NR==30 {print $2}'`;
-	udpclient2=`cat ./udp_check_2_$ipaddressdest.txt| awk 'NR==31 {print $2}'`;
-	udpsamples2=`cat ./udp_check_2_$ipaddressdest.txt| awk 'NR==32 {print $2}'`;
+	udpmin2=`cat ./udp_check_2_$ipaddressdest.txt| awk 'NR==26 {print $2}'|awk '{print int($1)}'`;
+	udpmean2=`cat ./udp_check_2_$ipaddressdest.txt| awk 'NR==27 {print $2}'|awk '{print int($1)}'`;
+	udpmax2=`cat ./udp_check_2_$ipaddressdest.txt| awk 'NR==28 {print $2}'|awk '{print int($1)}'`;
+	udpjitter2=`cat ./udp_check_2_$ipaddressdest.txt| awk 'NR==29 {print $2}'|awk '{print int($1)}'`;
+	udperror2=`cat ./udp_check_2_$ipaddressdest.txt| awk 'NR==30 {print $2}'|awk '{print int($1)}'`;
+	udpclient2=`cat ./udp_check_2_$ipaddressdest.txt| awk 'NR==31 {print $2}'|awk '{print int($1)}'`;
+	udpsamples2=`cat ./udp_check_2_$ipaddressdest.txt| awk 'NR==32 {print $2}'|awk '{print int($1)}'`;
 	udp=1;
 	if [ $udpclient2 -eq -1 ]
 	then retrys20=$(( retrys20+1 ))
@@ -158,25 +159,25 @@ do
 	fi
 done
 
-if [ "empty$udpmin2" = "empty" ]
+if [ "$empty$udpmin2" = "$empty" ]
 then echo "Could not get min UDP data-2°test!"
 fi
-if [ "empty$udpmean2" = "empty" ]
+if [ "$empty$udpmean2" = "$empty" ]
 then echo "Could not get mean UDP data-2°test!"
 fi
-if [ "empty$udpmax2" = "empty" ]
+if [ "$empty$udpmax2" = "$empty" ]
 then echo "Could not get max UDP data-2°test!"
 fi
-if [ "empty$udpsamples2" = "empty" ]
+if [ "$empty$udpsamples2" = "$empty" ]
 then echo "Could not get samples UDP data-2°test!"
 fi
-if [ "empty$udpjitter2" = "empty" ]
+if [ "$empty$udpjitter2" = "$empty" ]
 then echo "Could not get jitter UDP data-2°test!"
 fi
-if [ "empty$udperror2" = "empty" ]
+if [ "$empty$udperror2" = "$empty" ]
 then echo "Could not get error UDP data-2°test!"
 fi
-if [ "empty$udpclient2" = "empty" ]
+if [ "$empty$udpclient2" = "$empty" ]
 then echo "Could not get UDP client data-2°test!"
 udpclient2=-0
 fi
@@ -188,10 +189,10 @@ if [ $udpclient2 -eq -1 ]
 	fi
 
 ./tcp_check.exp $ipaddressdest $timemeas $measnum $ipsupervisor> ./tcp_check_$ipaddressdest.txt
-tcpmin2=`cat ./tcp_check_$ipaddressdest.txt| awk 'NR==26 {print $2}'`;
-tcpmean2=`cat ./tcp_check_$ipaddressdest.txt| awk 'NR==27 {print $2}'`;
-tcpmax2=`cat ./tcp_check_$ipaddressdest.txt| awk 'NR==28 {print $2}'`;
-tcpsamples2=`cat ./tcp_check_$ipaddressdest.txt| awk 'NR==29 {print $2}'`;
+tcpmin2=`cat ./tcp_check_$ipaddressdest.txt| awk 'NR==26 {print $2}'|awk '{print int($1)}'`;
+tcpmean2=`cat ./tcp_check_$ipaddressdest.txt| awk 'NR==27 {print $2}'|awk '{print int($1)}'`;
+tcpmax2=`cat ./tcp_check_$ipaddressdest.txt| awk 'NR==28 {print $2}'|awk '{print int($1)}'`;
+tcpsamples2=`cat ./tcp_check_$ipaddressdest.txt| awk 'NR==29 {print $2}'|awk '{print int($1)}'`;
 
 if [ $tcpmax2 -gt 99 ]
 then tcpmax2=99
@@ -205,47 +206,35 @@ tcpvalidation12=$(echo "scale=2; ($tcpmean2/10)" | bc)
 if [ [ $tcpvalidation -gt $tcpvalidation1 ] && [ $tcpvalidation2 -gt $tcpvalidation12 ] ]
 	echo "Will repeat TCP test, to much variation into throughput values of the first test!"
 	then ./tcp_check.exp $ipaddressdest $timemeas $measnum $ipsupervisor> ./tcp_check_2_$ipaddressdest.txt
-	tcpmin2=`cat ./tcp_check_2_$ipaddressdest.txt| awk 'NR==26 {print $2}'`;
-	tcpmean2=`cat ./tcp_check_2_$ipaddressdest.txt| awk 'NR==27 {print $2}'`;
-	tcpmax2=`cat ./tcp_check_2_$ipaddressdest.txt| awk 'NR==28 {print $2}'`;
-	tcpsamples2=`cat ./tcp_check_2_$ipaddressdest.txt| awk 'NR==29 {print $2}'`;
+	tcpmin2=`cat ./tcp_check_2_$ipaddressdest.txt| awk 'NR==26 {print $2}'|awk '{print int($1)}'`;
+	tcpmean2=`cat ./tcp_check_2_$ipaddressdest.txt| awk 'NR==27 {print $2}'|awk '{print int($1)}'`;
+	tcpmax2=`cat ./tcp_check_2_$ipaddressdest.txt| awk 'NR==28 {print $2}'|awk '{print int($1)}'`;
+	tcpsamples2=`cat ./tcp_check_2_$ipaddressdest.txt| awk 'NR==29 {print $2}'|awk '{print int($1)}'`;
 	tcp=1;
-fi
-#verification TCP vs UDP
-
-udptcp=$(echo "scale=2; ($udpclient/10)" | bc)
-tcpudp=$(echo "scale=2; ($udpclient - $tcpmean)" | bc)
-tcpudp2=$(echo "scale=2; ($udpclient2 - $tcpmean2)" | bc)
-tcpudp12=$(echo "scale=2; ($udpclient - $tcpmean2)" | bc)
-tcpudp21=$(echo "scale=2; ($udpclient2 - $tcpmean)" | bc)
-
-if [ [ $tcpudp -gt $udptcp ] || [ $tcpudp2 -gt $udptcp ] || [ $tcpudp21 -gt $udptcp ] || [ $tcpudp12 -gt $udptcp ] ]
-then echo "TCP bandwidth is more than 10% lower than UDP bandwidth"
-tcpband=1
 fi
 
 if [ $tcpmax2 -gt 99 ]
 then tcpmax2=99
 fi
 
-if [ "empty$tcpmin2" = "empty" ]
+if [ "$empty$tcpmin2" = "$empty" ]
 then echo "Could not get min TCP data-2°test!"
 fi
-if [ "empty$tcpmean2" = "empty" ]
+if [ "$empty$tcpmean2" = "$empty" ]
 then echo "Could not get mean TCP data-2°test!"
 fi
-if [ "empty$tcpmax2" = "empty" ]
+if [ "$empty$tcpmax2" = "$empty" ]
 then echo "Could not get max TCP data-2°test!"
 fi
-if [ "empty$tcpsamples2" = "empty" ]
+if [ "$empty$tcpsamples2" = "$empty" ]
 then echo "Could not get samples TCP data-2°test!"
 fi
 
 ./ping_check.exp $ipaddressdest $timemeas $measnum $ipsupervisor> ./ping_check_$ipaddressdest.txt
-pingmin2=`cat ./ping_check_$ipaddressdest.txt| awk 'NR==26 {print $2}'`;
-pingmean2=`cat ./ping_check_$ipaddressdest.txt| awk 'NR==27 {print $2}'`;
-pingmax2=`cat ./ping_check_$ipaddressdest.txt| awk 'NR==28 {print $2}'`;
-pingsamples2=`cat ./ping_check_$ipaddressdest.txt| awk 'NR==29 {print $2}'`;
+pingmin2=`cat ./ping_check_$ipaddressdest.txt| awk 'NR==26 {print $2}'|awk '{print int($1)}'`;
+pingmean2=`cat ./ping_check_$ipaddressdest.txt| awk 'NR==27 {print $2}'|awk '{print int($1)}'`;
+pingmax2=`cat ./ping_check_$ipaddressdest.txt| awk 'NR==28 {print $2}'|awk '{print int($1)}'`;
+pingsamples2=`cat ./ping_check_$ipaddressdest.txt| awk 'NR==29 {print $2}'|awk '{print int($1)}'`;
 
 pingvalidation=$(( pingmax - pingmin ));
 pingvalidation1=$(echo "scale=2; ($pingmean/2)" | bc)
@@ -255,23 +244,23 @@ pingvalidation12=$(echo "scale=2; ($pingmean2/2)" | bc)
 if [ [ $pingvalidation -gt $pingvalidation1 ] && [ $pingvalidation2 -gt $pingvalidation12 ] ]
 	echo "Will repeat Ping test!"
 	then ./ping_check.exp $ipaddressdest $timemeas $measnum $ipsupervisor> ./ping_check_2_$ipaddressdest.txt
-	pingmin2=`cat ./ping_check_2_$ipaddressdest.txt| awk 'NR==26 {print $2}'`;
-	pingmean2=`cat ./ping_check_2_$ipaddressdest.txt| awk 'NR==27 {print $2}'`;
-	pingmax2=`cat ./ping_check_2_$ipaddressdest.txt| awk 'NR==28 {print $2}'`;
-	pingsamples2=`cat ./ping_check_2_$ipaddressdest.txt| awk 'NR==29 {print $2}'`;
+	pingmin2=`cat ./ping_check_2_$ipaddressdest.txt| awk 'NR==26 {print $2}'|awk '{print int($1)}'`;
+	pingmean2=`cat ./ping_check_2_$ipaddressdest.txt| awk 'NR==27 {print $2}'|awk '{print int($1)}'`;
+	pingmax2=`cat ./ping_check_2_$ipaddressdest.txt| awk 'NR==28 {print $2}'|awk '{print int($1)}'`;
+	pingsamples2=`cat ./ping_check_2_$ipaddressdest.txt| awk 'NR==29 {print $2}'|awk '{print int($1)}'`;
 	ping=1;
 fi
 
-if [ "empty$pingmin2" = "empty" ]
+if [ "$empty$pingmin2" = "$empty" ]
 then echo "Could not get min Ping data-2°test!"
 fi
-if [ "empty$pingmean2" = "empty" ]
+if [ "$empty$pingmean2" = "$empty" ]
 then echo "Could not get mean Ping data-2°test!"
 fi
-if [ "empty$pingmax2" = "empty" ]
+if [ "$empty$pingmax2" = "$empty" ]
 then echo "Could not get max Ping data-2°test!"
 fi
-if [ "empty$pingsamples2" = "empty" ]
+if [ "$empty$pingsamples2" = "$empty" ]
 then echo "Could not get samples Ping data-2°test!"
 fi
 
