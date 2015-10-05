@@ -408,13 +408,13 @@ echo ----------- REPORT FOR TCP throughput of Ip $ipaddressdest--------->>tcp_re
 echo ------------------------------------------------------------------->>tcp_report_$ipaddressdest.output
 echo ------------------------------------------------------------------->>tcp_report_$ipaddressdest.output
 echo -The minimum TCP throughput observed during two diferent tests was->>tcp_report_$ipaddressdest.output
-echo ------------    $tcpmin usec and $tcpmin2 usec    ----------------->>tcp_report_$ipaddressdest.output
+echo ------------    $tcpmin Mbps and $tcpmin2 Mbps    ----------------->>tcp_report_$ipaddressdest.output
 echo ------------------------------------------------------------------->>tcp_report_$ipaddressdest.output
 echo --The mean TCP throughput observed during two diferent tests was--->>tcp_report_$ipaddressdest.output
-echo ------------    $tcpmean usec and $tcpmean2 usec  ----------------->>tcp_report_$ipaddressdest.output
+echo ------------    $tcpmean Mbps and $tcpmean2 Mbps  ----------------->>tcp_report_$ipaddressdest.output
 echo ------------------------------------------------------------------->>tcp_report_$ipaddressdest.output
 echo ---The max TCP throughput observed during two diferent tests was--->>tcp_report_$ipaddressdest.output
-echo -------------    $tcpmax usec and $tcpmax2 usec    ---------------->>tcp_report_$ipaddressdest.output
+echo -------------    $tcpmax Mbps and $tcpmax2 Mbps    ---------------->>tcp_report_$ipaddressdest.output
 echo ------------------------------------------------------------------->>tcp_report_$ipaddressdest.output
 echo -----Below is the evolotion ,in time of TCP throughput ------------>>tcp_report_$ipaddressdest.output
 echo ------------------------------------------------------------------->>tcp_report_$ipaddressdest.output
@@ -423,13 +423,19 @@ echo ----------- REPORT FOR UDP throughput of Ip $ipaddressdest--------->>udp_re
 echo ------------------------------------------------------------------->>udp_report_$ipaddressdest.output
 echo ------------------------------------------------------------------->>udp_report_$ipaddressdest.output
 echo -The minimum UDP throughput observed during two diferent tests was->>udp_report_$ipaddressdest.output
-echo ------------    $udpmin usec and $udpmin2 usec    ----------------->>udp_report_$ipaddressdest.output
+echo ------------    $udpmin Mbps and $udpmin2 Mbps    ----------------->>udp_report_$ipaddressdest.output
 echo ------------------------------------------------------------------->>udp_report_$ipaddressdest.output
 echo --The mean UDP throughput observed during two diferent tests was--->>udp_report_$ipaddressdest.output
-echo ------------    $udpmean usec and $udpmean2 usec  ----------------->>udp_report_$ipaddressdest.output
+echo ------------    $udpmean Mbps and $udpmean2 Mbps  ----------------->>udp_report_$ipaddressdest.output
 echo ------------------------------------------------------------------->>udp_report_$ipaddressdest.output
 echo ---The max UDP throughput observed during two diferent tests was--->>udp_report_$ipaddressdest.output
-echo -------------    $udpmax usec and $udpmax2 usec    ---------------->>udp_report_$ipaddressdest.output
+echo -------------    $udpmax Mbps and $udpmax2 Mbps    ---------------->>udp_report_$ipaddressdest.output
+echo ------------------------------------------------------------------->>udp_report_$ipaddressdest.output
+echo *******************************************************************>>udp_report_$ipaddressdest.output
+echo ------------------------------------------------------------------->>udp_report_$ipaddressdest.output
+echo ---The max UDP throughput observed from clinet point of view was--->>udp_report_$ipaddressdest.output
+echo -------------    $udpclient Mbps and $udpclient2 Mbps ------------->>udp_report_$ipaddressdest.output
+echo *******************************************************************>>udp_report_$ipaddressdest.output
 echo ------------------------------------------------------------------->>udp_report_$ipaddressdest.output
 echo -----Below is the evolotion ,in time of UDP throughput ------------>>udp_report_$ipaddressdest.output
 echo ------------------------------------------------------------------->>udp_report_$ipaddressdest.output
