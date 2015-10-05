@@ -48,9 +48,9 @@ while [ $check_var -eq 1 ]
 do
 
 ipaddressdest=$(expr `cat ./ipaddressdest.in | awk NR==$rowipaddressdest`);
-if [ $ipaddressdest -eq 010001010100111101000110 ]
+if [ $ipaddressdest -eq 9 ]
 then	notify-send -t 1200 Finished_controlling_all_IPs
- 	exit
+	exit
 fi
 ipsupervisor=$(expr `cat ./ipsupervisor.in`);
 timemeas=$(expr `cat ./timemeas.in| awk 'NR==1 {print $1}'`);
@@ -157,7 +157,8 @@ do
 		sleep 20m
 	fi
 	if [ $retrys20 -eq 3 ]
-	then done
+	echo "Reasoner will shutdown, cannot complet tests"
+	then exit
 	fi
 done
 
@@ -457,7 +458,7 @@ rm UDP_$ipaddressdest.pdf
 
 rowipaddressdest=$(( rowipaddressdest+1 ))
 ipaddressdest=$(expr `cat ./ipaddressdest.in | awk NR==$rowipaddressdest`);
-if $ipaddressdest -eq 010001010100111101000110
+if $ipaddressdest -eq 9
 then check_var=2
 fi
 done
