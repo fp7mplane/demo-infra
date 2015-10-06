@@ -420,7 +420,7 @@ echo "##########################----------------------&-------##################
 echo "######################################|mPlane Supervisior|#################################################">>ping_report_#ipaddressdest.output
 echo "###########################################################################################################">>ping_report_#ipaddressdest.output
 echo "###########################################################################################################">>ping_report_#ipaddressdest.output
-echo "#******************mSLAcert tests report ,for Ip #ipaddressdest********************************************">>ping_report_#ipaddressdest.output
+echo "#******************mSLAcert tests report ,for Ip $ipaddressdest********************************************">>ping_report_#ipaddressdest.output
 echo "###########################################################################################################">>ping_report_#ipaddressdest.output
 
 echo -------------- REPORT FOR RTT fo Ip $ipaddressdest----------------->>ping_report_$ipaddressdest.output
