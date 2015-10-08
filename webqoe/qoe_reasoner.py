@@ -22,7 +22,7 @@ import configparser
 # import signal
 import sys
 import os
-# import time
+import time
 # import random
 
 pri = os.getenv('MPLANE_RI')
@@ -162,18 +162,23 @@ class WebQoEReasoner(object):
 
         self._when = mplane.model.When(when)
         params = params
-
+        #print("params: {}".format(params))
         # Now invoke it
         self._client.invoke_capability(cap.get_token(), self._when, params, None)
 
-        for label in self._client.receipt_labels():
-            res = self._client.result_for(label)
-            # mplane.model.render_text(res)
-            try:
-                results = res.to_dict()['resultvalues']
-            except:
-                continue
-        print("ok")
+        end = False
+
+        while not end:
+            for label in self._client.receipt_labels():
+                res = self._client.result_for(label)
+                # mplane.model.render_text(res)
+                if isinstance(res, mplane.model.Result):
+                    try:
+                        results = res.to_dict()['resultvalues']
+                        end = True
+                    except:
+                        continue
+        return results
 
 
 def signal_handler(signal, frame):
@@ -188,6 +193,8 @@ if __name__ == "__main__":
                                      WebQoE Use Case")
     parser.add_argument('--config', metavar="config-file",
                         help="Configuration file")
+    parser.add_argument('--url', dest='url', metavar="destination.url",
+                        help="url to diagnose")
     args = parser.parse_args()
 
     # Read the configuration file, if given
@@ -205,5 +212,6 @@ if __name__ == "__main__":
     # run the reasoner
     # signal.signal(signal.SIGINT, signal_handler)
     cpr = WebQoEReasoner(config)
-    params = {}
-    cpr.do_runcap(capspec='webqoe-diagnose', when='now + 1s / 1s', params=params)
+    params = {'destination.url': args.url}
+    res = cpr.do_runcap(capspec='webqoe-diagnose', when='now + 1s / 1s', params=params)
+    #print(res)
