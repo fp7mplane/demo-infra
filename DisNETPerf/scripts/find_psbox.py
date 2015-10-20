@@ -14,7 +14,8 @@ import AUX_probe_analysing as pa
 import AUX_check_measurements as cm
 
 # constants - begin
-API_KEY = '182abdea-73f4-4844-adc8-e12c44f6945e'
+# should define the KEY to run RIPE Atlas (Key to create a new user defined measurement)
+API_KEY = 'XXXXXXXXXXXXXXXXXXXXXXXX'
 # constants - end
 
 # global vars - begin
