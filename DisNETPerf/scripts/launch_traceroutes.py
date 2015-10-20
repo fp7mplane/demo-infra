@@ -9,7 +9,8 @@ import time
 import find_psbox as ps
 
 #global vars - begin
-API_KEY = '182abdea-73f4-4844-adc8-e12c44f6945e'
+# should define the KEY to run RIPE Atlas (Key to create a new user defined measurement)
+API_KEY = 'XXXXXXXXXXXXXXXXXXXXXXXX'
 INTERVAL_DEFAULT = 600
 #global vars - end
 
