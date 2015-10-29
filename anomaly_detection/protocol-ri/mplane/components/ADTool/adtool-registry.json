@@ -1,7 +1,7 @@
 {
   "registry-format": "mplane-0",
   "registry-revision": 0,
-  "registry-uri": "http://192.168.2.136/adtool-registry.json",
+  "registry-uri": "http://127.0.0.1/adtool-registry.json",
   "includes": ["http://ict-mplane.eu/registry/demo"],
   "elements": [
     {
@@ -39,6 +39,11 @@
       "prim": "string",
       "desc": "Database port number"
     },
+    {
+      "name": "mPlane.supervisor",
+      "prim": "string",
+      "desc": "Url reasoner/client"
+    }
     {
       "name": "analysis.start",
       "prim": "natural",

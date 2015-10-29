@@ -1,0 +1,33 @@
+{
+	"result": "measure",
+	"version": 0,
+	"registry": "http://ict-mplane.eu/registry/core",
+	"label": "ping-aggregate",
+	"token": "0f31c9033f8fce0c9be41d4942c276e4",
+	"when": "2014-08-25 14:51:02.623 ... 2014-08-25 14:51:32.701 / 1s",
+	"parameters": 
+	{
+		"source.ip4": "192.0.2.19",
+		"destination.ip4": "192.0.2.33"
+	},
+
+	"results": 
+	[
+		"delay.twoway.icmp.us.min",
+		"delay.twoway.icmp.us.mean",
+		"delay.twoway.icmp.us.50pct",
+		"delay.twoway.icmp.us.max",
+		"delay.twoway.icmp.count"
+	],
+
+	"resultvalues": 
+	[
+		[
+			23901,
+			29833,
+			27619,
+			66002,
+			30
+		]			
+	]
+}

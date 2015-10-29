@@ -1,0 +1,139 @@
+=pod
+
+=head1 NAME
+
+udm-create	-	Create a custom User Defined Measurement on RIPE Atlas
+
+=head1 VERSION
+
+1.0
+
+=head1 DESCRIPTION
+
+This program allows to set a custom measurement on RIPE Atlas platform
+using RIPE's REST APIs. To set-up a User Defined Measurement (UDM), an
+API KEY with 'Measurement creation' permissions is required.
+
+Available measurement types are: ping, dns and traceroute.
+
+A DNS UDM instruments Atlas boxes to resolve
+an hostname (i.e. query-argument) using a specified DNS server or
+the probe's default resolver. The query type can be A, AAAA or CNAME.
+
+The list of probes that will run the UDM must be provided either with
+the --probe-file or --probe-list argument. The first allows to load
+a file containing a list of probe IDs one per row 
+(e.g. --probe-file my_probe_list.txt), the latter allows to specify 
+a comma-separated list of probes (e.g. --probe-list 5234,134,1235).
+A list of probes (one-per-row) can be also passed to the STDIN, usefull
+in pipe with the B<probe_list.pl> program, e.g.:
+
+ ./probe_list --country it --limit 3 | ./udm-create.pl --query-arg example.com --api 123
+
+An UDM can be 'one-off' (i.e. executed just once) or executed periodically
+in a specified time-window (see --start, --stop, --interval options).
+
+A DNS query uses UDP protocol by default. TCP is also possibile using
+--protocol TCP option.
+
+For a full list of options, see 'Options' section below.
+
+=head1 SYNOPSIS
+
+Usage: perl udm-create.pl [OPTIONS]...
+
+=head3 Generic options
+
+=over 12
+	
+=item B<--help>
+
+show help
+
+=item B<--api-key=<KEY>> I<(mandatory)>
+
+an API key with 'Measurement creation' permissions
+
+=item B<--type=<dns|ping|traceroute>> I<(mandatory)>
+
+type of measurement (supported ping/traceroute/dns)
+
+=item B<--target=<TARGET>> I<(mandatory)>
+
+for ping/traceroute, it is the target of measurement;
+for dns it is the resolver (use probe's resolver if not specified)
+
+=item B<--private> 
+
+if used, the measurement will be private
+
+=item B<--probe-file=<FILE> or --probe-list=<id1,id2,..>> I<(mandatory)>
+
+load a list of probes from file or pass a CSV list
+
+=item B<--start=<time>, --stop=<time>, --interval=<seconds>>
+
+start, stop timestamps for the measurement and interval in seconds
+(if not specified, run a one-off measurement)
+
+=item B<--protocol=<PROTOCOL>>
+
+for traceroute can be ICMP/TCP/UDM; for dns can be UDP/TCP
+(un-used for ping)
+
+=item B<--packets=<NUM_OF_PACKETS>>
+
+number of packets to send for traceroute and ping
+(un-used for dns)
+
+=back
+
+=head3 DNS-specific options
+
+=over 12
+
+=item B<--dns-arg=<ARG>> I<(mandatory)>
+
+the hostname to resolve (eg. www.example.com)
+
+=item B<--dns-class=<IN|CHAOS>>
+
+the class of the DNS query (default 'IN')
+
+=item B<--query-type=<A|CNAME>>
+
+the DNS query type (default 'A')
+
+=back
+
+=head1 Requirements
+
+This program require the Perl interpreter (which comes with most systems)
+and the libjson-perl library (for the REST APIs).
+
+=head1 LICENSE
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>
+
+=head1 ACKNOWLEDGEMENT
+
+This work has been partially funded by the European Commission 
+funded mPlane ICT-318627 project (www.ict-mplane.eu).
+
+=head1 AUTHOR
+
+Pierdomenico Fiadino <fiadino@ftw.at>
+
+Vienna - May, 2014
+

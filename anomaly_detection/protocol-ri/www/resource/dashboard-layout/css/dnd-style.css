@@ -1,0 +1,144 @@
+@CHARSET "UTF-8";
+.dottedArea {
+	border-width : 2px;
+	border-color : #66B5FF;
+	border-style : dashed;
+	background-color : #F3F3F3;
+	border-radius: 5px;
+}
+
+.backendTableTdtrue{
+	border-left-style: dotted;
+	border-left-color: #DDDDDD;
+	border-left-width: medium;
+}
+.backendTableTdfalse{
+	border:none;
+
+}
+
+.centerDDDiv{
+	margin: 0 auto;
+}
+
+.dummyPanel{
+	background-color: #F7F7F7;
+	border: none;
+}
+
+.dummyPanel .x-panel-body{
+	background-color: #F7F7F7;
+	border:none !important;
+}
+.dummyPanel .x-panel-header{
+	background-color: #EAEAEA;
+	background-image: none !important;
+	border:none !important;
+}
+
+.columnEditOuterDiv{
+	border-left-style: dotted;
+	border-left-color: orange;
+	border-left-width: thin;
+	
+	border-right-style: dotted;
+	border-right-color: orange;
+	border-right-width: thin;
+	
+	
+	background: transparent;
+	
+}
+
+.columnEditorInnerdiv{
+	background: url(../image/transparentDivBG.png) !important;
+}
+
+.columnEditorWindow{
+	background: transparent;
+	border:none !important;
+	margin: -1px !important;
+}
+
+.columnEditorWindow2{
+	background: transparent;
+	border:none !important;
+}
+
+.columnEditorWindow p{
+	font:40px arial,sans-serif;
+	font-weight:bold;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.columnEditorWindowHeader{
+	background: url(../image/transparentDivBG.png) !important;
+	height: 27px;
+	filter:alpha(opacity=100) !important; /* For IE8 and earlier */
+}
+
+.columnAddPin{
+	background: url(../image/addcolIcon.png) !important;
+	width: 24px;
+	height: 24px;
+	position:absolute;
+}
+
+.x-tool-zoom{
+    background-image: url(../image/tools/tool-zoom.png) !important;
+}
+
+.x-tool-over .x-tool-zoom {
+	background-image: url(../image/tools/tool-zoom.png) !important;
+  background-position: -15px;
+}
+
+.floatingGear {
+    position: relative;
+    background-image: url(../image/gear_blue-light.png) !important;
+    z-index: 10000;
+    bottom: 90px;
+ 
+  }
+  
+.floatingGear:hover{
+    position: relative;
+    background-image: url(../image/gear_blue.png) !important;
+    z-index: 10000;
+    bottom: 90px;
+
+ }
+ 
+.floatingMenu {
+    position: relative;
+    background-image: url(../image/transparentDivBG.png) !important;
+    z-index: 10000;
+ 	bottom: 10px;
+    right: 10px;
+  }
+  
+.modalBox {
+    position: fixed;
+    background-image: url(../image/transparentDivBG-lighter.png) !important;
+    z-index: 9999;
+	bottom: 10px;
+	right:10px;
+  },
+
+.NvReadonlyField {
+	background: #f5f5f5 !important;
+	color: #616161 !important;
+	border-color: #c6c6c6 !important;
+}
+
+.NvReadonlyField input{
+	background: #f5f5f5 !important;
+	color: #616161 !important;
+	border-color: #c6c6c6 !important;
+}
+
+.noPaddingToolbar .x-toolbar{
+	padding: 3 0 3 4 !important;
+	border:none;
+}

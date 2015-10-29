@@ -22,7 +22,8 @@ import mplane.model
 import mplane.client
 import mplane.utils
 import mplane.tls
-
+import DisNETPerf.scripts.find_psbox as DNPerf
+import json
 import sys
 import cmd
 import traceback
@@ -30,6 +31,14 @@ import urllib3
 import argparse
 import configparser
 from time import sleep
+import queue
+import re
+import tornado.web
+import threading
+from threading import Thread
+
+
+DEFAULT_REASONER_PORT = 11211
 
 
 class BaseADReasoner(object):
@@ -37,11 +46,403 @@ class BaseADReasoner(object):
     def __init__(self, config):
         
         self.config = config
+        # preload any registries necessary
+        if "client" in config:
+
+            if "registry_preload" in config["client"]:
+                mplane.model.preload_registry(
+                    config["client"]["registry_preload"])
+
+            if "registry_uri" in config["client"]:
+                registry_uri = config["client"]["registry_uri"]
+            else:
+                registry_uri = None
+        else:
+            registry_uri = None
+            
+        if "reasoner" in config:
+
+            if "refprobe" in config["reasoner"]:
+                self.refprobe = config["reasoner"]["refprobe"]   
+          
+            else:
+                self.refprobe = "249"
+            if "refip" in config["reasoner"]:
+                self.refip = config["reasoner"]["refip"]   
+          
+            else:
+                self.refip = "173.194.40.50"
+        else:
+            #registry_uri = None
+            pass
+        
+        # load default registry
+        mplane.model.initialize_registry(registry_uri)
+        
+        tls_state = mplane.tls.TlsState(self.config)
+        
+        self.from_cli = queue.Queue()
+        self._io_loop = tornado.ioloop.IOLoop.instance()
+        
+        if "client" in config:
+            if "workflow" in config["client"]:
+                self._workflow = config["client"]["workflow"]
+
+        if self._workflow == "component-initiated":
+            self._client = mplane.client.HttpListenerClient(config=config,
+                                                            tls_state=tls_state)
+        elif self._workflow == "client-initiated":
+            self._client = mplane.client.HttpInitiatorClient(config=config,
+                                                             tls_state=tls_state)
+
+        else:
+            raise ValueError("workflow setting in " + args.CONF +
+                             " can only be 'client-initiated' or 'component-initiated'")
+
+
+        if "client" in config and self._workflow != "component-initiated":
+            if "default-url" in config["client"]:
+                self.do_seturl(config["client"]["default-url"])
+
+            if "capability-url" in config["client"]:
+                self.getCaps(config["client"]["capability-url"])
+                
+        self.listCaps()
+        self._reasoner = ReasonerHttpListener(config=config,exporter=self.from_cli,io_loop=self._io_loop)
+        
+        if "adtool-log_tcp_complete" in sorted(self._client.capability_labels()):
+            print("[DEBUG]  We are running ADTool capability")
+            self.runcap_adtool()
+        else:
+            print("[DEBUG]  ADTool capability not registered to supervisor")
+            print("[DEBUG]  Elvis left the building")
+            return
+            
+        self.run()
+
+
+    def run(self):
+        
+        t_listen = Thread(target=self.listen_in_background)
+        t_listen.daemon = True
+        t_listen.start()
+       
+        while True:
+            if not self.from_cli.empty():
+                jo = self.from_cli.get()
+                # get list of IP addresses
+                #hardl = ["www.google.com","www.facebook.com","www.standard.at","www.welt.com","www.faz.net","www.bild.net"]
+                hardl = ["www.google.com"]
+                #ips = jo["list"]
+                ips = ["171.80.95.41","122.247.92.24","77.130.144.25"]
+                t_dis = Thread(target=self.run_dis_net_perf,args=[ips])
+                t_dis.daemon = True
+                t_dis.start()
+                print("[DEBUG] IP list length: " + str(len(ips)))
+                print("Got message from adtool: " + str(ips))
+                for adr in ips:
+                    t_ripe = Thread(target=self.process_ripe_atlas,args=(adr,self.refprobe,"traceroute"))
+                    t_ripe.daemon = True
+                    t_ripe.start()
+                    sleep(3)
+                #t_ripe = Thread(target=self.process_ripe_atlas,args=(hardl,"ping",))
+                #t_ripe.daemon = True
+                #t_ripe.start()
+            sleep(0.2)
+            
+            
+    def listen_in_background(self):
+        """ Start the listening server """
+        self._io_loop.start()
+ 
+ 
+    def run_dis_net_perf(self,ip_list):
+        #print("in disnetperf processing got list: " + str(ip_list))
+        probes = ""
+        psBoxMap = DNPerf.find_psboxes(ip_list, True, False)
+        
+        print("[DEBUG] [DisNetPerf] box map: " + str(psBoxMap))
+
+        if psBoxMap != None and psBoxMap:
+            for IP in ip_list:
+                if IP in psBoxMap:
+                    print("[DEBUG] [DisNetPerf] " + psBoxMap[IP][0])
+                    probes+= psBoxMap[IP][0] + ","
+            if probes.endswith(','):
+                probes  = probes[:-1]
+            print("[DEBUG] [DisNetPerf]:: invoke measurement with: " + probes)
+            self.process_ripe_atlas(self.refip,probes,"traceroute")
+        else:
+            print("[DEBUG] [DisNetPerf] nothing to do box map empty")
+
+      
+        
+        
+    def process_ripe_atlas(self,ip_target,probe,method): 
+        """ Start ripe atlas measurement """
+        print("We got address: " + str(ip_target))
+        print("We got mode: " + method)
+        if "ripeatlas-udm-create" in sorted(self._client.capability_labels()):
+            print("We can create ripe measurement")
+            mid = None
+            relabel = None
+            params = {}
+            params["ripeatlas.optionsline"] = "--api 182abdea-73f4-4844-adc8-e12c44f6945e --target "+ip_target+" --probe-list "+probe+" --type " + method
+            #params["ripeatlas.optionsline"] = "--api 182abdea-73f4-4844-adc8-e12c44f6945e --target www.google.at --probe-list 22094,15878,249 --type ping"
+            cap = self._client.capability_for("ripeatlas-udm-create")
+            ad_when = mplane.model.When("now")
+            spec = self._client.invoke_capability(cap.get_token(), ad_when, params, relabel)
+            
+            print("[DEBUG] Spec ripe create token: " + spec.get_token() )
+            print("[DEBUG] Spec ripe create label: " + spec.get_label() )
+            
+            result1 = self.getResult(spec.get_label())
+            print("[DEBUG] We got rec: " + str(result1))
+            if isinstance(result1, mplane.model.Exception):
+                print(str(result1))
+            else:
+                #mplane.model.render_text(rec)
+                d = result1.to_dict()
+                print(str(d["resultvalues"]))
+                mid = d["resultvalues"][0][0]
+                if mid:
+                    print("[DEBUG] Id of ripe measurement " + mid)
+                    self.checkRipeResult(mid)
+                    print("[DEBUG] We have a result! Invoke ripe result.")
+                    vals = self.readRipeResult(mid)
+                    print("[DEBUG] Result received for target:" + ip_target)
+                    print("[DEBUG] Result received for method:" + method)
+                    print(str(vals))
+                    
+                else:
+                    print("[DEBUG] Error in result message " )
+        else:
+            print("[DEBUG] Ripe component is not registered to supervisor. Cannot start RIPE!")
+    
+    
+    def checkRipeResult(self,mid):
+        relabel = None
+        params = {}
+        params["ripeatlas.optionsline"] = "--udm "+mid
+        cap = self._client.capability_for("ripeatlas-udm-status")
+        ad_when = mplane.model.When("now")
+        spec = self._client.invoke_capability(cap.get_token(), ad_when, params, relabel)
+        result2 = self.getResult(spec.get_label())
+        if isinstance(result2, mplane.model.Exception):
+            print(str(result2))
+            return False
+        else:
+            #mplane.model.render_text(result2)
+            d = result2.to_dict()
+            try:
+                vals = d["resultvalues"]
+            except KeyError:
+                vals = None
+               
+            if vals:
+                print("[DEBUG] length of result: " + str(len(vals)))     
+                check = True
+            
+                for val in vals:
+                    #print(str(val))
+                    if 'Ongoing' in val[0] or 'Scheduled' in val[0]:
+                        check = False
+                if check:    
+                    return True
+                else:
+                    sleep(60)
+                    return self.checkRipeResult(mid)
+            else:
+                sleep(60)
+                return self.checkRipeResult(mid)
+                
+    def readRipeResult(self,mid):            
+        relabel = None
+        params = {}
+        params["ripeatlas.optionsline"] = "--udm "+mid+" --api c7f75ea5-a182-4502-a046-06d0922677c5"
+        cap = self._client.capability_for("ripeatlas-udm-result")
+        ad_when = mplane.model.When("now")
+        spec = self._client.invoke_capability(cap.get_token(), ad_when, params, relabel)
+        result2 = self.getResult(spec.get_label())
+        if isinstance(result2, mplane.model.Exception):
+            print("[DEBUG] Error: " +str(result2))
+        else:
+            d = result2.to_dict()
+            vals = d["resultvalues"]
+            #print("[DEBUG] Result received for target: " + ip_target)
+            #print("[DEBUG] length of result: " + str(len(vals)))
+            #mplane.model.render_text(result2)
+            return vals
+        
+        
+        
+            
+    def getResult(self,label):
+        rec = self._client.result_for(label)
+        if isinstance(rec, mplane.model.Receipt):
+            sleep(2)
+            return self.getResult(label)
+        else:
+            return rec
+                         
+                
+    def getCaps(self, arg):
+        
+        try:
+            url = arg.split()[0]
+            url = urllib3.util.parse_url(url)
+            if url.host is None or url.port is None:
+                print("Bad format for url")
+                return
+        except:
+            print("Usage: getcap [url]")
+            return
+            
+            
+        print("getcap URL: "+ str(url))
+        self._client.retrieve_capabilities(url)
+        
+        
+    def listCaps(self):
+        """
+        List available capabilities by label (if available) or token
+        (for unlabeled capabilities)
+
+        Usage: listcap
+
+        """
+        for label in sorted(self._client.capability_labels()):
+            print("Capability %s (token %s)" %
+                  (label, self._client.capability_for(label).get_token()))
+
+        for token in sorted(self._client.capability_tokens()):
+            cap = self._client.capability_for(token)
+            if cap.get_label() is None:
+                print("Capability (token %s)" % (token))
+
+    def runcap_adtool(self):
+        """
+        Run ADTool
+        """
+        relabel = None
+        params = {}
+        params["database.host"] = "127.0.0.1"
+        params["database.port"] = "1212"
+        params["database.dbname"] = "sasd"
+        params["database.user"] = "goranTEST"
+        params["database.password"] = "passPASS"
+        params["database.features_table"] = "ftab"
+        params["database.flags_table"] = "flag_tasbl"
+        params["mPlane.supervisor"] = "127.0.0.1:11211"
+        params["analysis.start"] = "12213324"
+        params["analysis.end"] = "32413341"
+        params["analysis.granularity"] = "233"
+        params["analysis.variable"] = "variable"
+        params["analysis.feature"] = "wewewq"
+        params["refset.width"] = "232"
+        params["refset.guard"] = "222"
+        params["refset.min_distr_size"] = "123"
+        params["refset.min_refset_size"] = "12"
+        params["refset.slack_var"] = "2323"
+        params["refset.m"] = "2"
+        params["refset.k"] = "4"
+        cap = self._client.capability_for("adtool-log_tcp_complete")
+        ad_when = mplane.model.When("now + 200d")
+        spec = self._client.invoke_capability(cap.get_token(), ad_when, params, relabel)
+        print("[DEBUG] Spec token: " + spec.get_token() )
+        print("[DEBUG] Spec label: " + spec.get_label() )        
+        
+        
+        
+class ReasonerHttpListener():
+
+    def __init__(self, config,exporter=None, io_loop=None):
+        
+        self._port = DEFAULT_REASONER_PORT
+        #self._path = SPECIFICATION_PATH_ELEM
+        
+        self.exportqueue = exporter
+
+        
+
+        application = tornado.web.Application([
+            (r"/", MessagePostHandler,{'listenerclient': self})
+        ])
+        http_server = tornado.httpserver.HTTPServer(
+                        application)
+        http_server.listen(self._port)
+        print("ReasonerHttpListener running on port "+str(self._port))
+        comp_t = Thread(target=self.listen_in_background(io_loop))
+        comp_t.setDaemon(True)
+        comp_t.start()
+
+    def listen_in_background(self, io_loop):
+        """ The component listens for requests in background """
+        if io_loop is None:
+            tornado.ioloop.IOLoop.instance().start()
+
+class MPlaneHandler(tornado.web.RequestHandler):
+    """
+    Abstract tornado RequestHandler that allows a
+    handler to respond with an mPlane Message.
+
+    """
+    
+    def _respond_plain_text(self, code, text = None):
+        """
+        Returns an HTTP response containing a plain text message
+
+        """
+        self.set_status(code)
+        if text is not None:
+            self.set_header("Content-Type", "text/plain")
+            self.write(text)
+        self.finish()
+    
+    
+    def _respond_message(self, msg):
+        self.set_status(200)
+        self.set_header("Content-Type", "application/json")
+        #self.write(msg)
+        msg = {"Status":"OK","ADTool":1}
+        self.write(json.dumps(msg))
+        self.finish()
+
+
+class MessagePostHandler(MPlaneHandler):
+    """
+    Receives mPlane messages POSTed from a client, and passes them to a
+    scheduler for processing. After waiting for a specified delay to see
+    if a Result is immediately available, returns a receipt for future
+    redemption.
+
+    """
+    def initialize(self, listenerclient):
+        self._listenerclient = listenerclient
+        
+    def get(self):
+        print("GET received")
+        #iddd = self.get_argument("id")
+        #self._listenerclient.exportqueue.put("id="+iddd)       
+        self._respond_plain_text(404,"NOT FOUND")
+
+    def post(self):
+        #print("Post received")
+        if (self.request.headers["Content-Type"] != "application/json"):
+            print("[DEBUG] We expect JSON data!")
+            self._respond_plain_text(404,"NOT FOUND")
+        rPost=self.request.body.decode("utf-8")
+        print("[DEBUG] POST message received from ADTool" )
+        jObj = json.loads(rPost)
+        #print("[DEBUG] josnObj: " + str(jObj))
+        self._listenerclient.exportqueue.put(jObj)
+        self._respond_message("ok")
+        
 
 if __name__ == "__main__":
 
     # look for TLS configuration
-    parser = argparse.ArgumentParser(description="mPlane generic testing client")
+    parser = argparse.ArgumentParser(description="mPlane generic client/reasoner")
     parser.add_argument('--config', metavar="config-file",
                         help="Configuration file")
     args = parser.parse_args()
@@ -51,11 +452,15 @@ if __name__ == "__main__":
         config = configparser.ConfigParser()
         config.optionxform = str
         config.read(mplane.utils.search_path(args.config))
+        #config.write(sys.stdout)
     else:
         # hack a default configuration together
         config = {}
         config["is_default"] = True
         config["client"] = {}
         config["client"]["workflow"] = "client-initiated"
+
+    reasoner = BaseADReasoner(config)
+
 
     

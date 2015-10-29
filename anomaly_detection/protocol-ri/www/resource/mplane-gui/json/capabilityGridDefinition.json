@@ -1,0 +1,70 @@
+{
+                "config":{
+                    "fields":[
+                         {
+                            dataIndex:"probe",
+                            type:"string",
+                            text:"Component DN",
+                            width:"200px",
+                            onTable:true
+                        },
+                        {
+                            dataIndex:"label",
+                            type:"string",
+                            text:"Label",
+                            width:"150px",
+                            onTable:true
+                        },
+                        {
+                            dataIndex:"when",
+                            text:"When",
+                            type:"string",
+                            width:"350px"
+                        },
+                        {
+                            dataIndex:"parameterString",
+                            text:"Constant Parameters",
+                            type:"string",
+                            width:"100%"
+                        },
+                        {
+                            dataIndex:"type",
+                            onTable:false,
+                            type:"string"
+                        }
+                    ],
+                    "local":false,
+                    "pageSize":200,
+                    "deletable":false,
+                    "readonly":true,
+                    "selectable":false,
+                    "dataUrl":"autofill",
+            		"refreshIntervall":30,
+                    "uniqueId":"label",
+                    "groupField":"probe",
+                    "filterable":true,
+                    "filterConfig":{
+                        "filters":{
+                            "label":{
+                                "type":"string",
+                                "text":"Label"
+                            },
+                            "type":{
+                                "type":"enum",
+                                "text":"Type",
+                                "enums":[
+                                    {id:"measure",label:"Measure"},
+                                    {id:"query",label:"Query"},
+                                    {id:"*",label:"Measure and Query"}
+                                ]
+                            }
+                        },
+                        "position":"top"
+                    },
+                    "defaultFilters":{
+			            "label":"",
+			            "type":"*"
+			            
+			        }
+                }
+}

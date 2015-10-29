@@ -1,0 +1,44 @@
+@CHARSET "UTF-8";
+
+#content{
+/*	background-image: url("image/abstractBlue.jpg");*/
+	background-repeat: no-repeat;
+}
+
+.chartDiv{
+	/*border-radius: 15px;
+	-moz-border-radius: 15px;*/
+	border-width: 0px;
+	border-style: none;
+}
+
+.chartDivHeader, .chartDivHeader div{
+border-width: 0px;
+border-style: none;
+border-top-left-radius: 15px;
+border-top-right-radius: 15px;
+-moz-border-top-left-radius: 15px;
+-moz-border-top-right-radius: 15px;
+}
+
+.chartDivBody, .chartDivBody div{
+	border-width: 0px;
+border-style: none
+	
+
+}
+
+.blueGradientPanel{
+	background : -webkit-gradient(linear,50% 0,50% 100%,color-stop(0%,#8db9e0),color-stop(100%,#FFFFFF));
+	background : -moz-linear-gradient(top, #FFFFFF, #8db9e0);
+	background : -moz-linear-gradient(top, #FFFFFF, #8db9e0);
+	
+	-webkit-transform-origin-x: 50%;
+	-webkit-transform-origin-y: 50%;
+}
+
+.orangeGradientPanel{
+	background : -webkit-gradient(linear,50% 0,50% 100%,color-stop(0%,#FFFFFF),color-stop(100%,#ffd9a1));
+	background : -moz-linear-gradient(top, #ffd9a1, #FFFFFF);
+	background : -moz-linear-gradient(top, #ffd9a1, #FFFFFF);
+}

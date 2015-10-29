@@ -1,0 +1,46 @@
+<html >
+<head>
+ <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	
+    <title>MPLANE supervisor portal</title>
+    
+    <link rel="stylesheet" type="text/css" href="resource/dashboard-layout/theme/base-blue/base-blue-all.css">      
+    <link rel="stylesheet" type="text/css" href="resource/dashboard-layout/css/dnd-style.css">
+    <link rel="stylesheet" type="text/css" href="resource/mplane-gui/css/mplane.css">
+    
+    <script type="text/javascript" src="lib/sencha-extjs-package.js"></script>
+    <script type="text/javascript" src="lib/ext-ux-package.js"></script>
+
+<script type="text/javascript" src="lib/amchart-package.js"></script>
+<script type="text/javascript" src="lib/dashboard-actionhandler-package.js"></script>
+<script type="text/javascript" src="lib/chart-library-package.js"></script>
+<script type="text/javascript" src="lib/raphael-package.js"></script>
+
+<script type="text/javascript" src="lib/dashboard-layout-package.js"></script>
+
+<script type="text/javascript" src="lib/ajax-scheduler-package.js"></script>
+<script type="text/javascript" src="lib/mplane-gui-package.js"></script>
+
+
+
+<script type="text/javascript">               
+Ext.require([
+             'NV.ext.ux.DataTip',
+             'NV.mplane.gui.Main',
+             'Ext.window.MessageBox'
+         ]);
+Ext.onReady(function() {	
+	Ext.QuickTips.init();
+	delete Ext.tip.Tip.prototype.minWidth;
+	NV.mplane.gui.Main.init();
+	Ext.get('ajax_loader_img').hide();
+
+});
+</script>
+</head>
+	<body>
+		<div style="width:100%; align:middle; height:600px; text-align:center;" id="ajax_loader_img">
+			<img alt="please wait" align="middle" src="resource/mplane-gui/image/ajax_loader.gif" width="200" height="200">
+		</div>
+	</body>
+</html>

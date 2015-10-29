@@ -1,0 +1,22 @@
+{ "users":{
+		"boky":{ "userid":"boky", "password":"boky123" },
+		"bea":{ "userid":"bea", "password":"bea123" },
+		"admin":{ "userid":"admin", "password":"admin123" },
+		"POLITO":{ "userid":"POLITO", "password":"POLITO123" },
+		"IT":{ "userid":"IT", "password":"IT123" },
+		"SSB":{ "userid":"SSB", "password":"SSB123" },
+		"TI":{ "userid":"TI", "password":"TI123" },
+		"FR":{ "userid":"FR", "password":"FR123" },
+		"EURECOM":{ "userid":"EURECOM", "password":"EURECOM123" },
+		"ENST":{ "userid":"ENST", "password":"ENST123" },
+		"UK":{ "userid":"UK", "password":"UK123" },
+		"TID":{ "userid":"TID", "password":"TID123" },
+		"HU":{ "userid":"HU", "password":"HU123" },
+		"NETVISOR":{ "userid":"NETVISOR", "password":"NETVISOR123" },
+		"FTW":{ "userid":"FTW", "password":"FTW123" },
+		"FHA":{ "userid":"FHA", "password":"FHA123" },
+		"ULG":{ "userid":"ULG", "password":"ULG123" },
+		"ETH":{ "userid":"ETH", "password":"ETH123" },
+		"A-LBELL":{ "userid":"A-LBELL", "password":"A-LBELL123" },
+		"FW":{ "userid":"FW", "password":"FW123" }
+}}

@@ -1,0 +1,86 @@
+{
+    "menu":{
+        "file":"File",
+        "dashboard_config":"Edit dashboard",
+        "save":"Save",
+        "insert":"Insert"
+    },
+    "dashboard":{
+        "dashboardParams":"Dashboard parameters"
+    },
+    "dashboardedit":{
+        "column":"column",
+        "properties":"properties",
+        "columnType":"Column type",
+        "name":"Name",
+        "value":"Value",
+        "autoCheck":"Autocheck",
+        "minWidth":"Minimum width",
+        "width":"Width",
+        "apply":"Apply",
+        "newColumn":"New column",
+        "add":"Add",
+        "hasContent":"The column contains portlet!",
+        "flex":"Flexible",
+        "fix":"Fixed",
+        "minOneFlex":"At least one flexible column need!"
+    },
+    messages:{
+        "allPercentError":"All percent sum must be 100!",
+        "currentPercent":"Current configuration sum is ",
+        "columnNotEmpty":"The column is not empty!",
+        "saveSuccess":"Dashboard saved successfull",
+        "missingParams":"The following parameters are missing: ",
+        "missingProperties":"The following properties are missing: ",
+        "confirmDelete":"Confirm delete",
+        "confirmDeleteMessage":"Are you sure want to delete the current items?"
+    },
+    params:{
+        "params":"Params",
+        "type":"Type",
+        "portlet":"Portlet",
+        "value":"Value",
+        "dashboardParam":"Dashboard parameter",
+        "fixParam":"Fix parameter",
+        "newDashboardParam":"New dashboard parameter",
+        "dashboardParamName":"Dashboard parameter name",
+        "paramFromPortlet":"Parameter from other portlet",
+        "save":"Save",
+        "cancel":"Cancel",
+        "label":"Label",
+        "name":"Name"
+    },
+    properties:{
+        "properties":"Properties",
+        "defaultValue":"Default",
+        "customValue":"Custom"
+    },
+    insertPortlet:{
+        name:"Name",
+        category:"Category",
+        description:"Description",
+        sortBy:"Sort by",
+        filter:"Filter",
+        insertPortlet:"Insert portlet",
+        preferedSize:"Prefered size",
+        html:"HTML portlet",
+        iframe:"Iframe portlet",
+        realtime:"Real-time portlet",
+        scheduled:"Scheduled report",
+        timeSeries:"KPI chart"
+    },
+    grid:{
+    	refreshText:"Last refreshed: "
+    },
+    search:{
+    	addFilter:"Add filter",
+    	filters:"Filters",
+    	clearFilters:"Clear",
+    	doFilter:"Filter"    	
+    },
+    cancel:"Cancel",
+    ok:"OK",
+    error:"Error",
+    save:"Save status",
+    saveSuccess:"Changes saved successfully."
+}

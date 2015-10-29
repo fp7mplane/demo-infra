@@ -1,0 +1,19 @@
+/* NV PlusRowExpander grid plugin use this*/
+
+.x-grid-plus-row-expander {
+  background-image: url(images/nvplugins/group-expand.gif);
+  width: 9px;
+  height: 9px;
+  float: left;
+  line-height: 0;
+  margin: 3px 5px 1px 3px;
+}
+
+.x-grid-plus-row-expanded {
+  background-image: url(images/nvplugins/page-next-disabled.gif);
+  width: 9px;
+  height: 9px;
+  float: left;
+  line-height: 0;
+  margin: 3px 5px 1px 3px;
+}

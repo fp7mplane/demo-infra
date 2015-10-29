@@ -1,0 +1,87 @@
+{
+    menu:{
+        "file":"Fájl",
+        "dashboard_config":"Dashboard szerkesztése",
+        "save":"Mentés",
+        "insert":"Beszúrás"
+    },
+    dashboard:{
+        "dashboardParams":"Dashboard paraméterek"
+    },
+    dashboardedit:{
+        "column":"oszlop",
+        "properties":"tulajdonságai",
+        "columnType":"Oszlop típus",
+        "name":"Név",
+        "value":"Érték",
+        "autoCheck":"Automatikus ellenőrzés",
+        "minWidth":"Minimum szélesség",
+        "width":"Szélesség",
+        "apply":"Alkalmaz",
+        "newColumn":"Új oszlop",
+        "add":"Hozzáadás",
+        "hasContent":"Az oszlop portleteket tartalmaz, nem törölhető",
+        "flex":"Rugalmas",
+        "fix":"Fix",
+        "minOneFlex":"Legalább 1 rugalmas oszlopnak maradnia kell!"
+    },
+    messages:{
+        "allPercentError":"A százalékok összegének 100-nak kell lennie!",
+        "currentPercent":"A jelenlegi oszlopok összege ",
+        "columnNotEmpty":"Az oszlop nem üres!",
+        "saveSuccess":"Dashboard sikeresen elmentve",
+        "missingParams":"A következő paraméterek hiányoznak: ",
+        "missingProperties":"A következő tulajdonságok hiányoznak: ",
+        "confirmDelete":"Törlés megerősítése",
+        "confirmDeleteMessage":"Biztosan törölni szeretné a kijelölt elem(ek)et?"
+    },
+    params:{
+        "params":"Paraméterek",
+        "type":"Típus",
+        "value":"Érték",
+        "portlet":"Portlet",
+        "dashboardParam":"Dashboard paraméter",
+        "fixParam":"Fix paraméter",
+        "newDashboardParam":"Új dashboard paraméter",
+        "dashboardParamName":"Dashboard paraméter név",
+        "paramFromPortlet":"Portlet paraméter",
+        "save":"Mentés",
+        "cancel":"Mégsem",
+        "label":"Cimke",
+        "name":"Név"
+    },
+    properties:{
+        "properties":"Tulajdonságok",
+        "defaultValue":"Alapértelmezett",
+        "customValue":"Megadott"
+    },
+    insertPortlet:{
+        name:"Név",
+        category:"Kategória",
+        description:"Leírás",
+        sortBy:"Rendezés",
+        filter:"Szűrő",
+        insertPortlet:"Portlet beszúrása",
+        preferedSize:"Ideális méret",
+        html:"HTML portlet",
+    	iframe:"Iframe portlet",
+    	realtime:"Valós idejű portlet",
+    	scheduled:"Ütemezett riport darabka",
+    	timeSeries:"KPI grafikon"
+    },
+    grid:{
+    	refreshText:"Utoljára frissítve: "
+    },
+    search:{
+    	addFilter:"Szűrő feltétel hozzáadása",
+    	filters:"Szűrések",
+    	clearFilters:"Feltételek törlése",
+    	doFilter:"Szűrés"    	
+    },
+    cancel:"Mégsem",
+    ok:"OK",
+    
+    error:"Hiba",
+    save:"Mentés eredménye",
+    saveSuccess:"A mentés sikeresen megtörtént"
+}

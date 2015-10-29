@@ -149,7 +149,6 @@ class DiscoveryHandler(MPlaneHandler):
     def get(self):
         # capabilities
         path = self.request.path.split("/")[1:]
-        print("DiscoveryHandler: "+ str(path))
         if path[0] == CAPABILITY_PATH_ELEM:
             if (len(path) == 1 or path[1] is None):
                 self._respond_capability_links()
@@ -160,7 +159,6 @@ class DiscoveryHandler(MPlaneHandler):
             raise ValueError("I only know how to handle /"+CAPABILITY_PATH_ELEM+" URLs via HTTP GET")
 
     def _respond_capability_links(self):
-        print("Try to respond with capabiliteis")
         self.set_status(200)
         self.set_header("Content-Type", "text/html")
         self.write("<html><head><title>Capabilities</title></head><body>")
@@ -188,20 +186,16 @@ class MessagePostHandler(MPlaneHandler):
 
     def get(self):
         # message
-        print("MessagePosthandler get request received")
         self.set_status(200)
         self.set_header("Content-Type", "text/html")
         self.write("<html><head><title>mplane.httpsrv</title></head><body>")
         self.write("This is an mplane.httpsrv instance. POST mPlane messages to this URL to use.<br/>")
         self.write("<a href='/"+CAPABILITY_PATH_ELEM+"'>Capabilities</a> provided by this server:<br/>")
-        
         for key in self.scheduler.capability_keys():
-            
             if self.scheduler.azn.check(self.scheduler.capability_for_key(key), self.tls.extract_peer_identity(self.request)):
                 self.write("<br/><pre>")
                 self.write(mplane.model.unparse_json(self.scheduler.capability_for_key(key)))
         self.write("</body></html>")
-        self.set_header("Content-Type", "text/html")
         self.finish()
 
     def post(self):
@@ -244,16 +238,13 @@ class InitiatorHttpComponent(BaseComponent):
             scheme = "https"
 
         host = self.config["component"]["client_host"]
-        print("Host " + host + "")
 
         if "client_port" in config["component"]:
             port = int(config["component"]["client_port"])
         else:
             port = DEFAULT_MPLANE_PORT
-        
-        print("Port "+ str(port) + "")
 
-        self.url = urllib3.util.Url(scheme=scheme, host=host, port=port)
+        self.url = urllib3.util.url.Url(scheme=scheme, host=host, port=port)
         self.registration_path = self.config["component"]["registration_path"]
         if not self.registration_path.startswith("/"):
             self.registration_path = "/" + self.registration_path
@@ -279,12 +270,10 @@ class InitiatorHttpComponent(BaseComponent):
 
         """
         env = mplane.model.Envelope()
-        print("Client/Supervisor url " + str(self.url))
 
         connected = False
         while not connected:
             try:
-                
                 self._client_identity = self.tls.extract_peer_identity(self.url)
                 connected = True
             except:

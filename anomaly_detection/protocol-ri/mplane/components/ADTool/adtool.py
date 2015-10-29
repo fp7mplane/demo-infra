@@ -31,8 +31,7 @@ import psutil
 import sys
 import xml.etree.cElementTree as ET
 import subprocess
-from mplane.components.tstat.tstat_exporters import tstat_rrd_exporter
-from mplane.components.tstat.tstat_exporters import tstat_streaming_exporter
+
 
 
 """
@@ -59,6 +58,22 @@ def adtool_capability():
     cap.add_parameter("database.port")
     cap.add_parameter("database.dbname")
     cap.add_parameter("database.user")
+    cap.add_parameter("database.password")
+    cap.add_parameter("database.features_table")
+    cap.add_parameter("database.flags_table")
+    cap.add_parameter("mPlane.supervisor")
+    cap.add_parameter("analysis.start")
+    cap.add_parameter("analysis.end")
+    cap.add_parameter("analysis.granularity")
+    cap.add_parameter("analysis.variable")
+    cap.add_parameter("analysis.feature")
+    cap.add_parameter("refset.width")
+    cap.add_parameter("refset.guard")
+    cap.add_parameter("refset.min_distr_size")
+    cap.add_parameter("refset.min_refset_size")
+    cap.add_parameter("refset.slack_var")
+    cap.add_parameter("refset.m")
+    cap.add_parameter("refset.k")
     
     return cap
 
@@ -85,22 +100,111 @@ class adToolService(mplane.scheduler.Service):
             sleep(0.5)
         if process is not None:
             parent = psutil.Process(process.pid)
-            for child in parent.children(recursive=True):
-                child.kill()
+            process.kill()
+            #for child in parent.children(recursive=True):
+            #    child.kill()
             parent.kill()
 
         return
     
-    def generateXML(self,spec):
+    def generateXML(self,dt,spec):
+        dbhost=dbport=dbname=dbuser=dbpass=dbfeat=dbflags=msv = None
+        anastart=anaend=anagran=anavar=anafeat = None
+        refwidth=refguard=refmds=refmrs=refslvar=refm=refk = None
+        print(">>generateXML<<   ts: " + dt)
+        outfile = dt + ".xml"
+        
+        
         for el in spec.parameter_names():
             print("params: " + el)
+            val = str(spec.get_parameter_value(el))
+            if el == "database.host":
+                dbhost = val
+            elif el == "database.port":
+                dbport = val
+            elif el == "database.dbname":
+                dbname = val
+            elif el == "database.user":
+                dbuser = val
+            elif el == "database.password":
+                dbpass = val
+            elif el == "database.features_table":
+                dbfeat = val
+            elif el == "database.flags_table":
+                dbflags = val
+            elif el == "mPlane.supervisor":
+                msv = "http://" + val
+            elif el == "analysis.start":
+                anastart = val
+            elif el == "analysis.end":
+                anaend = val
+            elif el == "analysis.granularity":
+                anagran = val
+            elif el == "analysis.variable":
+                anavar = val
+            elif el == "analysis.feature":
+                anafeat = val
+            elif el == "refset.width":
+                refwidth = val
+            elif el == "refset.guard":
+                refguard = val
+            elif el == "refset.min_distr_size":
+                refmds = val
+            elif el == "refset.min_refset_size":
+                refmrs = val
+            elif el == "refset.slack_var":
+                refslvar = val
+            elif el == "refset.m":
+                refm = val
+            elif el == "refset.k":
+                refk = val
+                
         tree = ET.ElementTree(file=self.ad_path)
         for elem in tree.iter():
             print(elem.tag, elem.attrib,elem.text)
             if( "Description"== elem.tag):
-    	        elem.text = "TEST GORANNNNNN"
-        #outFile = open('output.xml', 'wb')
-        tree.write(sys.stdout,encoding="unicode")
+    	        elem.text = "ADTool xml generator"
+            elif( "Database"== elem.tag):
+    	        elem.set("host",dbhost)
+    	        elem.set("port",dbport)
+    	        elem.set("dbname",dbname)
+    	        elem.set("user",dbuser)
+    	        elem.set("password",dbpass)
+            elif("features_table" == elem.tag):
+                elem.text = dbfeat
+            elif("supervisor" == elem.tag):
+                elem.text = msv
+            elif("flags_table" == elem.tag):
+                elem.text = dbflags
+            elif("start" == elem.tag):
+                elem.text = anastart
+            elif("end" == elem.tag):
+                elem.text = anaend
+            elif("granularity" == elem.tag):
+                elem.text = anagran
+            elif("variable" == elem.tag):
+                elem.text = anavar
+            elif("feature" == elem.tag):
+                elem.text = anafeat
+            elif("width" == elem.tag):
+                elem.text = refwidth
+            elif("guard" == elem.tag):
+                elem.text = refguard
+            elif("min_distr_size" == elem.tag):
+                elem.text = refmds
+            elif("min_refset_size" == elem.tag):
+                elem.text = refmrs
+            elif("slack_var" == elem.tag):
+                elem.text = refslvar
+            elif("m" == elem.tag):
+                elem.text = refm
+            elif("k" == elem.tag):
+                elem.text = refk
+    	        
+        outFile = open(outfile, 'wb')
+        print(">>>>>>>>>>>>>>>>>>>>>>>>>generateXML<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
+        #tree.write(sys.stdout,encoding="unicode")
+        tree.write(outFile)
        
 
     def run(self, spec, check_interrupt):
@@ -110,9 +214,12 @@ class adToolService(mplane.scheduler.Service):
         """
         (start_time , end_time) = spec._when.datetimes()
         duration = spec.when().duration().total_seconds()
+        dt = datetime.utcnow()
+        ddt = str(dt.timestamp())
+        print("Current ts: " + ddt)
+        outfile = ddt + ".xml"
 
-        # crate the math code time format
-        time_format = start_time.strftime("%Y-%m-%dT%H:%M:%S")
+        
 
         process = None
         # check which capability family 
@@ -120,17 +227,13 @@ class adToolService(mplane.scheduler.Service):
             # start measurement changing the tstat conf file
             #self.change_conf(spec.get_label(), True)
             print("HOHOHHOHOHOHHOHO")
-            self.generateXML(spec)
-
-        elif "tstat-exporter_log" in spec.get_label():
-            #The math executable for export log
-            repository_url = str(spec.get_parameter_value("repository.url"))
-            curr_dir = os.getcwd()
-            os.chdir(self.math_path)
-            shell_command = 'exec ./math_probe --config math_probe.xml --repoUrl %s --startTime %s' % (repository_url,time_format)
+            self.generateXML(ddt,spec)
+            shell_command = './mplane/components/ADTool/ADTool_files/adtool_dummy.pl  --config=' + outfile
             print ("Command : %s" %shell_command)
-            process = subprocess.Popen(shell_command, stdout=subprocess.PIPE, shell=True)#, preexec_fn=os.setsid)
-            os.chdir(curr_dir)
+            process = subprocess.Popen(shell_command, stdout=subprocess.PIPE, shell=True)
+            
+
+        
        
         else:
             raise ValueError("Capability family doesn't exist")
@@ -138,106 +241,16 @@ class adToolService(mplane.scheduler.Service):
         self.wait_and_stop(end_time, check_interrupt, spec, process)
 
         # wait for specification execution
-        if "tstat-log" in spec.get_label():
-            # terminate measurement changing the tstat conf file
-            self.change_conf(spec.get_label(), False)
-        elif "tstat-exporter_streaming" in spec.get_label() :
-            print("tstat-exporter_streaming Disabled \n")
-        elif "tstat-exporter_rrd" in spec.get_label() :
-            print("tstat-exporter_rrd Disabled \n")
-        elif "tstat-exporter_log" in spec.get_label() :
-            print("tstat-exporter_log Disabled \n")
+        if "adtool-log" in spec.get_label():
+            # terminate adtool measurement
+            print("adtool_log Disabled \n")
+        
 
         res = self.fill_res(spec, start_time, end_time)
 
         return res
 
-    def change_conf(self, cap_label, enable):
-        """
-        Changes the needed flags in the tStat runtime.conf file
 
-        """
-        print("I am in change_conf routine " + self._fileconf)
-        newlines = []
-        f = open(self._fileconf, 'r')
-        
-        for line in f:
-            #print("Line:: " + str(line))	
-            # read parameter names and values (discard comments or empty lines)
-            if (line[0] != '[' and line[0] != '#' and
-                line[0] != '\n' and line[0] != ' '):    
-                param = line.split('#')[0]
-                param_name = param.split(' = ')[0]
-                
-                #print("Line::: " + line)
-                # change flags according to the measurement requested
-                if enable == True:
-
-                    # in order to activate optional sets, the basic set (log_tcp_complete) must be active too
-                    # print("Param name: " + param_name + "Cap label:  " + cap_label)
-                    if ("tstat-log_tcp_complete-core" in cap_label and param_name == 'log_tcp_complete'):
-                        newlines.append(line.replace('0', '1'))
-                        print(str(newlines))
-
-                    elif ("tstat-log_tcp_complete-end_to_end" in cap_label and (
-                        param_name == 'tcplog_end_to_end' 
-                        or param_name == 'log_tcp_complete')):
-                        newlines.append(line.replace('0', '1'))
-
-                    elif ("tstat-log_tcp_complete-tcp_options" in cap_label and (
-                        param_name == 'tcplog_options' or
-                        param_name == 'log_tcp_complete')):
-                        newlines.append(line.replace('0', '1'))
-
-                    elif ("tstat-log_tcp_complete-p2p_stats" in cap_label and (
-                        param_name == 'tcplog_p2p' or
-                        param_name == 'log_tcp_complete')):
-                        newlines.append(line.replace('0', '1'))
-
-                    elif ("tstat-log_tcp_complete-layer7" in cap_label and (
-                        param_name == 'tcplog_layer7' or
-                        param_name == 'log_tcp_complete')):
-                        newlines.append(line.replace('0', '1'))
-
-                    elif ("tstat-log_rrds" in cap_label and 
-                        param_name == 'rrd_engine'):
-                        newlines.append(line.replace('0', '1'))
-
-                    elif ("tstat-log_http_complete" in cap_label and param_name == 'log_http_complete'):
-                        newlines.append(line.replace('0', '1'))
-
-                    else:
-                        newlines.append(line)
-                else:
-                    # print("enable is false Param name: " + param_name)
-                    if ("tstat-log_tcp_complete-end_to_end" in cap_label and param_name == 'tcplog_end_to_end'):
-                        newlines.append(line.replace('1', '0'))
-
-                    elif ("tstat-log_tcp_complete-tcp_options" in cap_label and param_name == 'tcplog_options'):
-                        newlines.append(line.replace('1', '0'))
-
-                    elif ("tstat-log_tcp_complete-p2p_stats" in cap_label and param_name == 'tcplog_p2p'):
-                        newlines.append(line.replace('1', '0'))
-
-                    elif ("tstat-log_tcp_complete-layer7" in cap_label and param_name == 'tcplog_layer7'):
-                        newlines.append(line.replace('1', '0'))
-
-                    elif ("tstat-log_rrds" in cap_label and param_name == 'rrd_engine'):
-                        newlines.append(line.replace('1', '0'))
-
-                    elif ("tstat-log_http_complete" in cap_label and param_name == 'log_http_complete'):
-                        newlines.append(line.replace('1', '0'))
-
-                    else:
-                        newlines.append(line) 
-            else:
-                newlines.append(line)
-        f.close()
-
-        f = open(self._fileconf, 'w')
-        #print("writing!!!!!! ::::  " + str(newlines))
-        f.writelines(newlines)
-        f.close
 
     def fill_res(self, spec, start, end):
         """

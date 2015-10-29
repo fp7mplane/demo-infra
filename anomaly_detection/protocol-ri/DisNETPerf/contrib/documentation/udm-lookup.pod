@@ -1,0 +1,87 @@
+=pod
+
+=head1 NAME
+
+=head1 VERSION
+
+=head1 DESCRIPTION
+
+=head1 SYNOPSIS
+
+	perl udm-lookup [OPTIONS]
+
+If not options are specified, it will print all available measurements
+sorted by UDM ID (don't do that).
+
+=head2 Options
+
+=over 12
+
+=item B<--help>
+
+show help
+
+=item B<--type=<ping|dns|traceroute|sslcert>>
+
+filter results by measurement type 
+
+=item B<--status=<CODE>>
+
+filter results by status code
+
+=item B<--is-oneoff>
+
+get 'one-off' measurement only
+
+=item B<--dst-addr=<IP>>
+
+filter results by destination address
+
+=item B<--dst-name=<NAME>>
+
+filter results by destination name
+
+=item B<--dst-asn=<ASN>>
+
+filter results by destination A.S.
+
+=item B<--start=<TIMESTAMP>>
+
+filter results by start time
+
+=item B<--stop=<TIMESTAMP>>
+
+filter results by stop time
+
+=item B<--creation=<TIMESTAMP>>
+
+filter results by measurement creation time
+
+=back
+
+=head1 LICENSE
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>
+
+=head1 ACKNOWLEDGEMENT
+
+This work has been partially funded by the European Commission 
+funded mPlane ICT-318627 project (www.ict-mplane.eu).
+
+=head1 AUTHOR
+
+Pierdomenico Fiadino <fiadino@ftw.at>
+
+Vienna - May, 2014
+

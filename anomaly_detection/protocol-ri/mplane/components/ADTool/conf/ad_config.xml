@@ -16,6 +16,10 @@
 		<features_table>adtool_mw14_gg11_youtube_features_serverip_600</features_table>
 		<flags_table>adtool_youtube_flags_serverip_600</flags_table>
 	</Database>
+	
+	<mPlane>
+		<supervisor>http://192.168.2.165:11211</supervisor>
+	</mPlane>	
 
 	<!-- *****************************************************************************************
 	               analysis settings (time span, granularity, feature name, etc.)

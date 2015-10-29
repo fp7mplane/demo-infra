@@ -71,16 +71,18 @@ class TlsState:
                 return urllib3.HTTPSConnectionPool(host, port,
                                                     key_file=self._keyfile,
                                                     cert_file=self._certfile,
+                                                    maxsize=100,
                                                     ca_certs=self._cafile)
             else:
-                return urllib3.HTTPConnectionPool(host, port)
+                return urllib3.HTTPConnectionPool(host, port,maxsize=100)
         elif scheme == "http":
-            return urllib3.HTTPConnectionPool(host, port)
+            return urllib3.HTTPConnectionPool(host, port,maxsize=100)
         elif scheme == "https":
             if self._keyfile:
                 return urllib3.HTTPSConnectionPool(host, port,
                                                     key_file=self._keyfile,
                                                     cert_file=self._certfile,
+                                                    maxsize=100,
                                                     ca_certs=self._cafile)
             else:
                 raise ValueError("SSL requested without providing certificate")
@@ -141,15 +143,11 @@ class TlsState:
         Extract an identity from a Tornado's
         HTTPRequest, or from a Urllib3's Url
         """
-        
-        print("In extract peer identity")
         if self._keyfile:
-            print("have keyfile")
-            if isinstance(url_or_req,  urllib3.util.Url):
+            if isinstance(url_or_req,  urllib3.util.url.Url):
                 # extract DN from the certificate retrieved from the url.
                 # Unfortunately, there seems to be no way to do this using urllib3,
                 # thus ssl library is being used
-                print("Is Url create socket")
                 s = socket()
                 c = ssl.wrap_socket(s,cert_reqs=ssl.CERT_REQUIRED,
                                     keyfile=self._keyfile,
@@ -159,11 +157,9 @@ class TlsState:
                 cert = c.getpeercert()
                 c.close()
             elif isinstance(url_or_req, tornado.httpserver.HTTPRequest):
-                print("Tornado request")
                 cert = url_or_req.get_ssl_certificate()
             else:
-                print("Error not url")
-                #raise ValueError("Passed argument is not a urllib3.util.url.Url or tornado.httpserver.HTTPRequest")
+                raise ValueError("Passed argument is not a urllib3.util.url.Url or tornado.httpserver.HTTPRequest")
 
             identity = ""
             for elem in cert.get('subject'):
@@ -173,7 +169,4 @@ class TlsState:
                     identity = identity + "." + str(elem[0][1])
         else:
             identity = DUMMY_DN
-        
-        print("Identity: "+ str(identity))
-        #identity="127.0.0.1"
         return identity

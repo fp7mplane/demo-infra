@@ -1,7 +1,6 @@
-# mPlane Protocol SDK
-# Anomaly Detection and Diagnosis Use Case
+# mPlane Protocol Software Development Kit
 
-This module contains the mPlane Software Development Kit. There has been some slight modifications wrt the official mPlane Reference Implementation [https://fp7mplane.github.io/protocol-ri](https://fp7mplane.github.io/protocol-ri), for the specific use case of Anomaly Detection and Diagnosis.
+This module contains the mPlane Software Development Kit.
 
 The mPlane Protocol provides control and data interchange for passive and active network measurement tasks. It is built around a simple workflow in which __Capabilities__ are published by __Components__, which can accept __Specifications__ for measurements based on these Capabilities, and provide __Results__, either inline or via an indirect export mechanism negotiated using the protocol.
 

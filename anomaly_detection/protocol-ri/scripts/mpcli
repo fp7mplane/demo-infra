@@ -130,7 +130,6 @@ class ClientShell(cmd.Cmd):
         Usage: getcap [url]
 
         """
-        print("getcap: " + arg)
         if self._workflow == "client-initiated":
             try:
                 url = arg.split()[0]
@@ -141,12 +140,10 @@ class ClientShell(cmd.Cmd):
             except:
                 print("Usage: getcap [url]")
                 return
-            
-            
-            print("getcap URL: "+ str(url))
+
             self._client.retrieve_capabilities(url)
 
-            print("do_getcap:ok")
+            print("ok")
         else:
             print("This command can only be used in client-initiated workflows")
             return

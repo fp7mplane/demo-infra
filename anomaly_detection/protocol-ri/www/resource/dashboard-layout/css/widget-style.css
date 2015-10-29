@@ -1,0 +1,82 @@
+.growtotext {
+	display: table; 
+	white-space: nowrap;
+}
+
+.growtotext .x-fieldset-body, .growtotext .x-box-inner {
+	display: table; 
+	white-space: nowrap;
+	overflow: visible;
+	width: 100px;
+}
+
+.disabled-combobox {
+	background: #f5f5f5;
+	color: #616161;
+	border-color: #c6c6c6;
+}
+
+.x-boundlist-item{
+	overflow: visible;
+	padding-right: 20px;
+}
+
+.x-trigger-noedit {
+	color: #616161;
+}
+
+.disabled-combobox .x-boundlist-item, .disabled-combobox .x-boundlist-item-over {
+	background: #f5f5f5;
+	border-color: #f5f5f5;
+	color: #616161;
+	border-width: 1px;
+	padding: 0px;
+	white-space: nowrap;
+	overflow: visible;
+	padding-right: 20px;
+	padding-left: 3px;
+	cursor: default;
+}
+
+.disabled-combobox .x-boundlist-selected {
+	background: #e5e5e5;
+	border-style: dotted;
+	border-color: #cbcbcb;
+}
+
+img.checkboxradio-s, img.checkboxradio-d {
+	width: 16px;
+	height: 13px;
+}
+
+.x-boundlist-item img.checkboxradio-s {
+    background: transparent url('../img/radio-un.gif') no-repeat;
+}
+.x-boundlist-selected img.checkboxradio-s{
+    background: transparent url('../img/radio-in.gif') no-repeat;
+}
+.disabled-combobox .x-boundlist-item img.checkboxradio-s{
+    background: transparent url('../img/radio-d.gif') no-repeat;
+}
+.disabled-combobox .x-boundlist-selected img.checkboxradio-s{
+    background: transparent url('../img/radio-din.gif') no-repeat;
+}
+
+
+
+.x-form-cb-wrap {
+	white-space: nowrap;
+	padding-right: 10px;
+}
+
+.checkboxradio  input.x-form-checkbox{
+	background-image: url('../img/checkboxradio.gif');
+}
+
+tbody.checkboxradio td{
+	padding-bottom: 5px;
+}
+
+table.groupboxfield td.x-form-checkboxgroup-body{
+	padding: 8px;
+}

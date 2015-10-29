@@ -1,0 +1,101 @@
+.leftSubmenu
+{
+	vertical-align: middle;
+	font-size: 14;
+    font-weight: normal;
+    padding: 0px 0px 0px 5px;
+    color: black;
+	cursor: pointer; 
+}
+
+.hoverMenu:hover
+{
+	cursor: pointer;
+	background-color: antiquewhite;
+}
+
+.hoverMenu div:hover
+{
+	cursor: pointer;
+	background-color: antiquewhite;
+}
+
+.chartTab {
+    background-image:url(../image/chart.png) !important;
+}
+
+.gridTab {
+    background-image:url(../image/grid.png) !important;
+}
+
+
+.addMeasurement{
+	background-image: url(../image/plus.png) !important;
+	background-repeat: no-repeat;
+	background-position: center;
+	 opacity: 0.4;
+}
+
+.addMeasurementHover{
+	background-image: url(../image/plus.png) !important;
+	background-repeat: no-repeat;
+	background-position: center;
+	 opacity: 0.7;
+}
+
+.dragableMeasure.x-panel-body {
+	background-color: beige;
+	
+}
+
+.draggableMeasure:hover{
+	background-color: antiquewhite;
+	cursor: pointer;
+}
+
+.replaceMeasurement{
+	background-image: url(../image/refresh.png) !important;
+	background-repeat: no-repeat;
+	background-position: center;
+	 opacity: 0.4;
+}
+
+.replaceMeasurementHover{
+	background-image: url(../image/refresh.png) !important;
+	background-repeat: no-repeat;
+	background-position: center;
+	 opacity: 0.7;
+}
+
+
+.x-dd-drop-ok .x-dd-drop-icon {
+  background-image: url(../image/chart.png) !important;
+}
+
+.x-dd-drop-nodrop .x-dd-drop-icon {
+  background-image: url(../image/chart-nodrop.png) !important;
+}
+
+
+.x-dd-drag-proxy,
+.x-dd-drag-current {
+  z-index: 1000000!important;
+  pointer-events: none;
+  height:32px !important;
+}
+
+/* line 11, ../../../ext-theme-base/sass/src/dd/StatusProxy.scss */
+.x-dd-drag-ghost {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=85);
+  opacity: 0.85;
+  padding: 5px;
+  padding-left: 20px;
+  white-space: nowrap;
+  color: #000;
+  font: normal 12px helvetica, arial, verdana, sans-serif;
+  border: 1px solid;
+  border-color: #ddd #bbb #bbb #ddd;
+  background-color: #fff;
+  width:0px !important;
+  height:0px !important;
+}

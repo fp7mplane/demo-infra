@@ -1,0 +1,47 @@
+{
+  "registry-format": "mplane-0",
+  "registry-revision": 0,
+  "registry-uri": "./mplane/components/ripe-atlas/registry.json",
+  "elements": [
+    {
+      "name": "ripeatlas.db_connect_params",
+      "prim": "string",
+      "desc": "parameter line to connect to Postgres database"
+    },
+    {
+      "name": "ripeatlas.optionsline",
+      "prim": "string",
+      "desc": "sys.args like string line containing options to pass to perl scripts"
+    },
+    {
+      "name": "ripeatlas.list.probe.resultline",
+      "prim": "string",
+      "desc": "Line containing results returned by the perl script, depends on the capability"
+    },
+    {
+      "name": "ripeatlas.udm.lookup.resultline",
+      "prim": "string",
+      "desc": "Line containing results returned by the perl script, depends on the capability"
+    },
+    {
+      "name": "ripeatlas.udm.create.resultline",
+      "prim": "string",
+      "desc": "Line containing results returned by the perl script, depends on the capability"
+    },
+    {
+      "name": "ripeatlas.udm.status.resultline",
+      "prim": "string",
+      "desc": "Line containing results returned by the perl script, depends on the capability"
+    },
+    {
+      "name": "ripeatlas.udm.result.resultline",
+      "prim": "string",
+      "desc": "Line containing results returned by the perl script, depends on the capability"
+    },
+    {
+      "name": "ripeatlas.udm.stop.resultline",
+      "prim": "string",
+      "desc": "Line containing results returned by the perl script, depends on the capability"
+    }
+  ]
+}

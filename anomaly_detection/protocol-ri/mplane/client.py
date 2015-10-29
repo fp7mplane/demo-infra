@@ -516,6 +516,7 @@ class HttpInitiatorClient(BaseClient):
         (cap, spec) = self._spec_for(cap_tol, when, params, relabel)
         spec.validate()
         dst_url = cap.get_link()
+        print("Invoke capability with URL: " + str(dst_url))
         self.send_message(spec, dst_url)
         return spec
 
@@ -559,16 +560,10 @@ class HttpInitiatorClient(BaseClient):
             path = url.path
         else:
             path = "/"
-        
-        
-        print("Client path: "+ path)
         res = pool.request('GET', path)
 
         if res.status == 200:
-            #ctype = res.getheader("Content-Type")
-            ctype = res.headers['content-type']
-            print("Response:    " + str(res.data))
-            print("Response content type: " + str(ctype))
+            ctype = res.getheader("Content-Type")
             if ctype == "application/x-mplane+json":
                 # Probably an envelope. Process the message.
                 self.handle_message(

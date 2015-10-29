@@ -1,0 +1,47 @@
+{
+    "Dummy.Distinguished.Name":[
+        {
+            "result":"measure",
+            "label":"ping-aggregate",
+            "when":"2014-08-2514:51:02.623...2014-08-2514:51:32.701/1s",
+            "token":"ABCDEF1",
+            "parameters":{
+                "source.ip4":"192.0.2.19",
+                "destination.ip4":"192.0.2.33"
+            }
+        },
+        {
+            "result":"measure",
+            "label":"ping-aggregate",
+            "when":"2014-08-26 14:51:02.623 ... 2014-08-26 14:51:32.701 / 1s",
+            "token":"ABCDEF2",
+            "parameters":{
+                "source.ip4":"192.0.2.19",
+                "destination.ip4":"192.0.2.33"
+            }
+        },
+        {
+            "result":"measure",
+            "label":"ping-aggregate",
+            "when":"2014-08-2614:51:02.623...2014-08-2614:51:32.701/1s",
+            "token":"ABCDEF3",
+            "parameters":{
+                "source.ip4":"192.0.2.19",
+                "destination.ip4":"192.0.2.10"
+            }
+        },
+        
+    ],
+    "Masik.Distinguished.Name":[
+        {
+            "result":"measure",
+            "label":"ping-detailed",
+            "when":"2014-08-25 14:51:02.623 ... 2014-08-25 14:51:32.701 / 1s",
+            "token":"ABCDEF4",
+            "parameters":{
+                "source.ip4":"192.0.2.19",
+                "destination.ip4":"192.0.2.01"
+            }
+        }
+    ]
+}
