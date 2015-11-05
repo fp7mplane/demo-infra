@@ -354,7 +354,7 @@ fi
 gnuplot -persist <<EOF
 set style data linespoints
 show timestamp
-set term postscript
+set term postscript eps color
 set output "RTT_$ipaddressdest.ps"
 set title "RTT evolution in microsec for ip: $ipaddressdest"
 set xlabel "Time (seconds)"
