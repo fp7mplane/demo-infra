@@ -12,7 +12,7 @@ def IPToInt(ip):
 
 def mapIPtoAS(IPListArg, IPtoASFilename, verbose):
     """
-    :param IPList: list containing the IPs to be analysed
+    :param IPListArg: list containing the IPs to be analysed
     :param IPtoASFilename: CSV-file containing IP-to-AS mappings (IPs given in range).
                             Line-format: <IP lower bound> <IP upper bound> <AS>
     :return: a dictionary with an IP as key and the corresponding AS as value
@@ -20,12 +20,12 @@ def mapIPtoAS(IPListArg, IPtoASFilename, verbose):
     IPtoASMap = dict()
 
     try:
-        with open(IPtoASFilename,encoding = "ISO-8859-1") as csvfile:
+        with open(IPtoASFilename, encoding = "ISO-8859-1") as csvfile:
             reader = csv.reader(csvfile)
             IPRangeData = list(reader)
     except IOError:
         if verbose:
-            print ("error: Could not open '" + IPtoASFilename + "'\n")
+            print("error: Could not open '" + IPtoASFilename + "'\n")
         return None
     IPList = list(IPListArg)
     IPList.sort(key=IPToInt)
@@ -44,7 +44,7 @@ def mapIPtoAS(IPListArg, IPtoASFilename, verbose):
                 IPtoASMap[ip] = ASdata[0][2:]
                 break
             elif lowerbound > IP: # no match found!
-                IPtoASMap[ip] = 'NA'
+                IPtoASMap[ip] = 'NA_MAP'
                 break
             else:
                 currentIndex += 1

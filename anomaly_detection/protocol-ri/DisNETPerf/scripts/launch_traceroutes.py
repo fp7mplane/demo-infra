@@ -6,10 +6,10 @@ import argparse
 import subprocess
 import datetime
 import time
-import find_psbox as ps
+import DisNETPerf.scripts.find_psbox as ps
 
 #global vars - begin
-API_KEY = '182abdea-73f4-4844-adc8-e12c44f6945e'
+API_KEY = 'XXXXXXXXXXXXXXXXXXXXXXXX'
 INTERVAL_DEFAULT = 600
 #global vars - end
 
@@ -32,9 +32,9 @@ def launch_scheduled_traceroutes(destIP, probes, start, stop, interval, numberOf
     probes = [probes[i:i + 500] for i in range(0, len(probes), 500)]
     currentTime = datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d-%H-%M-%S')
     try:
-        logFile = open('../logs/' + currentTime + '_current_scheduled_traceroutes.log', 'w', 0)
+        logFile = open('DisNETPerf/logs/' + currentTime + '_current_scheduled_traceroutes.log', 'w', 0)
     except IOError:
-        print "error: Could not open/create '../logs/" + ts + "_current_scheduled_traceroutes.log'!\n"
+        print("error: Could not open/create 'DisNETPerf/logs/" + currentTime + "_current_scheduled_traceroutes.log'!\n")
         return
     nbOfConsecutiveFailures = 0
     giveUp = False
@@ -159,9 +159,9 @@ if __name__ == '__main__':
         closestBox = [closestBox]
     else:   # check file
         try:
-            IPfile = open('../input/' + arguments['filename'], 'r')
+            IPfile = open('DisNETPerf/input/' + arguments['filename'], 'r')
         except IOError:
-            print "error: Could not open file '../input/" + arguments['filename'] + "'\n"
+            print("error: Could not open file 'DisNETPerf/input/" + arguments['filename'] + "'\n")
             exit(2)
 
         closestBox = set()
@@ -173,12 +173,12 @@ if __name__ == '__main__':
             if l and not l.isspace():
                 data = l.split('\t')
                 if flag == 1 and data.__len__() < 2:
-                    print 'error: You must specify a RIPE Atlas box to use when -f is set to 1, please refer to ' \
-                          'the manual\n'
+                    print("error: You must specify a RIPE Atlas box to use when -f is set to 1, please refer to ' \
+                          'the manual\n")
                     IPfile.close()
                     exit(3)
                 if ps.checkIP(data[0]) == None:
-                    print 'error: The indicated IPs must be in the format <X.X.X.X> where X is an integer >= 0!\n'
+                    print("error: The indicated IPs must be in the format <X.X.X.X> where X is an integer >= 0!\n")
                     IPfile.close()
                     exit(4)
                 targetIPs.append(data[0])

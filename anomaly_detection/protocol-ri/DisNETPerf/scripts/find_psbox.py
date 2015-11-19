@@ -14,7 +14,8 @@ import DisNETPerf.scripts.AUX_probe_analysing as pa
 import DisNETPerf.scripts.AUX_check_measurements as cm
 
 # constants - begin
-API_KEY = '182abdea-73f4-4844-adc8-e12c44f6945e'
+# should define the KEY to run RIPE Atlas (Key to create a new user defined measurement)
+API_KEY = 'XXXXXXXXXXXXXXXXXXXXXXXX'
 # constants - end
 
 # global vars - begin
@@ -110,7 +111,7 @@ def find_psboxes(IPs, verbose, recovery):
             ASMap = open('DisNETPerf/logs/ID_To_AS.log', 'r')
         except IOError:
             if verbose:
-                print( "error: Could not open/create file '../logs/ID_To_AS.log'\n")
+                print( "error: Could not open/create file 'DisNETPerf/logs/ID_To_AS.log'\n")
             return None
 
         for line in ASMap:
@@ -126,7 +127,7 @@ def find_psboxes(IPs, verbose, recovery):
             logFile = open('DisNETPerf/logs/current_ping_measurementIDs.log', 'r')
         except IOError:
             if verbose:
-                print( "error: Could not open file '../logs/current_ping_measurementIDs.log'\n")
+                print( "error: Could not open file 'DisNETPerf/logs/current_ping_measurementIDs.log'\n")
             return None
 
         cnt = 0
@@ -151,7 +152,7 @@ def find_psboxes(IPs, verbose, recovery):
             ASMap = open('DisNETPerf/logs/ID_To_AS.log', 'w') # clear content of ID-to-AS log
         except IOError:
             if verbose:
-                print( "error: Could not open/create file '../logs/ID_To_AS.log'\n")
+                print( "error: Could not open/create file 'DisNETPerf/logs/ID_To_AS.log'\n")
             return None
         ASMap.close()
 
@@ -164,9 +165,9 @@ def find_psboxes(IPs, verbose, recovery):
     except IOError:
         if verbose:
             if recovery:
-                print( "error: Could not open/create file '../output/" + timeStamp  + "_psbox.txt'\n")
+                print( "error: Could not open/create file 'DisNETPerf/output/" + timeStamp  + "_psbox.txt'\n")
             else:
-                print( "error: Could not open/create file '../output/" + currentTime  + "_psbox.txt'\n")
+                print( "error: Could not open/create file 'DisNETPerf/output/" + currentTime  + "_psbox.txt'\n")
         return None
     # open/create output-file - end
 
@@ -179,7 +180,7 @@ def find_psboxes(IPs, verbose, recovery):
             logFile.write(currentTime + '\n')
     except IOError:
         if verbose:
-            print( "error: Could not open/create file '../logs/current_ping_measurementIDs.log'\n")
+            print( "error: Could not open/create file 'DisNETPerf/logs/current_ping_measurementIDs.log'\n")
         return None
     # open/create log-file - end
 
@@ -188,7 +189,7 @@ def find_psboxes(IPs, verbose, recovery):
         plFile = open('DisNETPerf/lib/probelist.txt', 'r')
     except IOError:
         if verbose:
-            print( "error: Could not open file '../lib/probelist.txt'\n")
+            print( "error: Could not open file 'DisNETPerf/lib/probelist.txt'\n")
         output.close()
         logFile.close()
         return None
@@ -229,10 +230,10 @@ def find_psboxes(IPs, verbose, recovery):
             selectedProbes = [probeList[i][0] for i in idx]
 
             try:
-                ASMap = open('DisNETPerf/logs/ID_To_AS.log', 'a')
+                ASMap = open('DisNETPerf/logs/ID_To_AS.log', 'a', 0)
             except IOError:
                 if verbose:
-                    print( "error: Could not open/create file '../logs/ID_To_AS.log'\n")
+                    print( "error: Could not open/create file 'DisNETPerf/logs/ID_To_AS.log'\n")
                 output.close()
                 logFile.close()
                 return None
@@ -317,7 +318,7 @@ def find_psboxes(IPs, verbose, recovery):
                 ASMap = open('DisNETPerf/logs/ID_To_AS.log', 'a')
             except IOError:
                 if verbose:
-                    print( "error: Could not open/create file '../logs/ID_To_AS.log'\n")
+                    print( "error: Could not open/create file 'DisNETPerf/logs/ID_To_AS.log'\n")
                 output.close()
                 logFile.close()
                 return None
@@ -413,21 +414,21 @@ if __name__ == '__main__':
     arguments = vars(parser.parse_args())
 
     if not arguments['targetIP'] and not arguments['filename']:
-        parser.error("error: You must either specify an IP or a filename of a file containing IPs!")
+        parser.error( "error: You must either specify an IP or a filename of a file containing IPs!")
         exit(1)
 
     # if an IP is specified, we always go for the IP
     if arguments['targetIP']:
         targetIP = arguments['targetIP']
         if checkIP(targetIP) == None:
-            print('error: The indicated IPs must be in the format <X.X.X.X>!\n')
+            print( 'error: The indicated IPs must be in the format <X.X.X.X>!\n')
             exit(3)
         targetIPs = [targetIP]
     else:   # check file
         try:
             IPfile = open('DisNETPerf/input/' + arguments['filename'], 'r')
         except IOError:
-            print( "error: Could not open file '../input/" + arguments['filename'] + "'\n")
+            print( "error: Could not open file 'DisNETPerf/input/" + arguments['filename'] + "'\n")
             exit(2)
 
         # load IPs from file
@@ -445,7 +446,7 @@ if __name__ == '__main__':
     # launch measurements and get psboxes
     if arguments['recovery'] and arguments['recovery'] == 1:
         if not os.path.exists('DisNETPerf/logs/current_ping_measurementIDs.log'):
-            print( "error: Could not launch recovery-mode!\n")
+            print( 'error: Could not launch recovery-mode!\n')
             exit(5)
         psBoxMap = find_psboxes(targetIPs, True, True)
     else:

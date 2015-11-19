@@ -17,7 +17,7 @@ def parseProbeListOutput(output, verbose, mapp=None):
             ASMap = open('DisNETPerf/logs/ID_To_AS.log', 'a')
         except IOError:
             if verbose:
-                print ("error: Could not open file '../logs/ID_To_AS.log'\n")
+                print("error: Could not open file 'DisNETPerf/logs/ID_To_AS.log'\n")
             return None
 
         for line in resultLines:
@@ -42,7 +42,7 @@ def findASNeighbourhood(ASN, verbose):
         file = open('DisNETPerf/lib/ASNeighbours.txt', 'r')
     except:
         if verbose:
-            print ("error: Could not open file '../lib/ASNeighbours.txt'\n")
+            print("error: Could not open file 'DisNETPerf/lib/ASNeighbours.txt'\n")
         return None
 
     neighbours = set()
