@@ -35,7 +35,7 @@ def launch_scheduled_traceroutes(destIP, probes, start, stop, interval, numberOf
     try:
         logFile = open('../logs/' + currentTime + '_current_scheduled_traceroutes.log', 'w', 0)
     except IOError:
-        print "error: Could not open/create '../logs/" + ts + "_current_scheduled_traceroutes.log'!\n"
+        print "error: Could not open/create '../logs/" + currentTime + "_current_scheduled_traceroutes.log'!\n"
         return
     nbOfConsecutiveFailures = 0
     giveUp = False
