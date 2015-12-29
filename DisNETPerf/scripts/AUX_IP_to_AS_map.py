@@ -44,7 +44,7 @@ def mapIPtoAS(IPListArg, IPtoASFilename, verbose):
                 IPtoASMap[ip] = ASdata[0][2:]
                 break
             elif lowerbound > IP: # no match found!
-                IPtoASMap[ip] = 'NA'
+                IPtoASMap[ip] = 'NA_MAP'
                 break
             else:
                 currentIndex += 1

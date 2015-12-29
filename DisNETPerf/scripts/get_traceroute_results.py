@@ -149,8 +149,6 @@ class TracerouteMeasurement:
 
             if ip[0] == 'NA_TR':
                 res = 'NA_TR'
-            elif ip[0] not in ASMapping:
-                res = 'NA_MAP'
             else:
                 res = ASMapping[ip[0]]
             if ASes.__len__() == 0 or res != ASes[ASes.__len__() - 1]:
@@ -287,7 +285,7 @@ if __name__ == '__main__':
         parser.error('error: You must specify the filename containing measurement-IDs!')
         exit(1)
 
-	if loadIPToPoPMapping('../lib/ip_to_pop_mapping.txt') == None:
+    if loadIPToPoPMapping('../lib/ip_to_pop_mapping.txt') == None:
         exit(2)
 
     retrieve_traceroute_results('../input/' + arguments["filename"], True)

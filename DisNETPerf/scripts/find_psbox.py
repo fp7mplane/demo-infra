@@ -79,9 +79,9 @@ def getSmallestPingProbe(measurementIDsDict, outputFileName):
             continue
         probeMinRTT = min(pingMeasurements, key=lambda tup: tup[2])
 
-        outputFileName.write(additionalInfoAboutMeasurements[IP] + '\t' + IP + '\t' + probeMinRTT[0]
-                            + '\t' + probeMinRTT[1] + '\t' + probeToASMap[probeMinRTT[0]]
-                            + '\t' + str(probeMinRTT[2]) + '\n')
+        outputFileName.write(IP + '\t' + probeMinRTT[0] + '\t' + probeMinRTT[1] + '\t'
+                             + probeToASMap[probeMinRTT[0]] + '\t' + str(probeMinRTT[2]) + '\t'
+                             + additionalInfoAboutMeasurements[IP] + '\n')
 
         IPToPSBoxMap[IP] = (probeMinRTT[0], probeMinRTT[1], probeToASMap[probeMinRTT[0]], str(probeMinRTT[2]))
 
@@ -223,7 +223,7 @@ def find_psboxes(IPs, verbose, recovery):
             print 'Starting to do measurements for IP: ' + IP + '...\n'
         AS = IPToASMap[IP]
 
-        if AS == 'NA':
+        if AS == 'NA_MAP':
             additionalInfoAboutMeasurements[IP] = '[NO_AS]'
             idx = random.sample(range(0, probeList.__len__()), 100)
             selectedProbes = [probeList[i][0] for i in idx]
@@ -304,7 +304,7 @@ def find_psboxes(IPs, verbose, recovery):
                 encounteredASes[AS] = ''
 
         # pinging neighbours - start
-        if AS != 'NA':
+        if AS != 'NA_MAP':
             probes = encounteredASes[AS]
 
         if not probes: # if no probes in neighbourhood, use randomly selected probes
@@ -326,7 +326,7 @@ def find_psboxes(IPs, verbose, recovery):
             ASMap.close()
 
             probes = [selectedProbes[i:i + 500] for i in range(0, selectedProbes.__len__(), 500)]
-        elif AS != 'NA':
+        elif AS != 'NA_MAP':
             additionalInfoAboutMeasurements[IP] = '[OK]'
 
         nbOfConsecutiveFailures = 0
@@ -454,9 +454,7 @@ if __name__ == '__main__':
     if psBoxMap != None and psBoxMap:
         for IP in targetIPs:
             if IP in psBoxMap:
-                print additionalInfoAboutMeasurements[IP] + '\t' + IP + '\t' \
-                      + '\t'.join(psBoxMap[IP]) + '\n'
-
+                print IP + '\t' + '\t'.join(psBoxMap[IP]) + '\t' + additionalInfoAboutMeasurements[IP] + '\n'
     if psBoxMap == None:
         exit(4)
     else:

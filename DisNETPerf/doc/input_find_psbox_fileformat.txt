@@ -1,2 +1,0 @@
-When you want to the find_psbox.py script to read target-IPs (please use the parameter -n to do that), the file should
-contain one IP per line. An IP should be in the usual format, i.e. X.X.X.X where X is an integer >= 0.
