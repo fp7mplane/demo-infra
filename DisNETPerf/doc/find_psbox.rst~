@@ -24,7 +24,7 @@ The output file of the script ``find_psbox.py`` contains information about the t
 closest boxes. The naming scheme of such an output-file is ``<timestamp>_psbox.txt`` where ``<timestamp>`` refers to the timestamp
 indicating when ``find_psbox.py`` was launched. This file is saved into the folder *output*.
 
-| The lines of an output-file follow the format:
+The lines of an output-file follow the format:
 
 | *<targetIP> <psBox ID> <psBox IP> <AS number> <min RTT> <label>*
 

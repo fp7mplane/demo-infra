@@ -1,8 +1,0 @@
-When you want to give a file as a parameter to the script launch_traceroutes.py (via -n), the file can be in 2 formats:
-
-(1) One IP per line (the IP should be in the standard format i.e. X.X.X.X where X is an integer >= 0).
-    In that case, the closest RIPE Atlas boxes to the IPs will be computed before launching traceroutes
-
-(2) Lines can be the following format:
-    <IP>    <RIPE Atlas box IP> (tab-separated)
-    In that case, the traceroutes will directly be launched from the indicated boxes to the given destination
