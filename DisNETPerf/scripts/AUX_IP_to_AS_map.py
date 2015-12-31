@@ -4,18 +4,21 @@ import csv
 
 def IPToInt(ip):
     """
-    :param ip: a string representing an IP
-    :return: ip converted into an integer
+    Returns the integer corresponding th the IP address <ip>
+    :param ip:  a string representing an IP
+    :return:    <ip> converted into an integer
     """
     parts = map(int, ip.split('.'))
     return (16777216 * parts[0]) + (65536 * parts[1]) + (256 * parts[2]) + parts[3]
 
 def mapIPtoAS(IPListArg, IPtoASFilename, verbose):
     """
-    :param IPList: list containing the IPs to be analysed
-    :param IPtoASFilename: CSV-file containing IP-to-AS mappings (IPs given in range).
+    Returns a dictionary containing the IP-to-AS mappings
+    :param IPList:          list containing the IPs to be analysed
+    :param IPtoASFilename:  CSV-file containing IP-to-AS mappings (IPs given in ranges).
                             Line-format: <IP lower bound> <IP upper bound> <AS>
-    :return: a dictionary with an IP as key and the corresponding AS as value
+    :param verbose:         if true, an error-message gets displayed when an internal problem occurs; otherwise not
+    :return:                a dictionary with an IP as key and the corresponding AS as value
     """
     IPtoASMap = dict()
 

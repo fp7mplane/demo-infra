@@ -31,7 +31,7 @@ class TracerouteMeasurement:
 
         # list of tuples where each tuple has the form (<IP>, <INFO>)
         # if the IP-address is known, <IP> = given address; 'NA_TR' otherwise
-        # <INFO> = 'init' if the tuple describes the source-IP address; to the RTT if the analysed IP corresponds to the
+        # <INFO> = 'init' if the tuple describes the source-IP address; the RTT if the analysed IP corresponds to the
         # one of a hop; the empty-string if RTT is unknown for a hop-IP
         self.IPInfos = list()
 
@@ -63,9 +63,8 @@ class TracerouteMeasurement:
 
     def completeASPath(self, ASPathArg):
         """
-        Tries to fill the missing parts in the ASPath <ASPathArg> as much as possible. This done with the help of
-        RouteViews data.
-        Returns the completed ASPath.
+        Tries to fill the missing parts in the ASPath <ASPathArg> as much as possible. This is done with the help of
+        RouteViews data. Returns the completed ASPath.
         (Example: if <ASPathArg> = [A, NA_TR/NA_MAP, C]; this method tries to find out which ASes are traversed between
         A and C)
         :param ASPathArg:   a list representing the ASPath to be analysed
@@ -121,10 +120,9 @@ class TracerouteMeasurement:
         """
         Writes the information about this measurement to the file '<timestamp>_scheduled_traceroutes.txt' in the output-folder.
         For the exact format of the output-file, please check the documentation.
-        :param ASMapping:   a dictionary. A keys is an IP and the corresponding value is the AS in which it is located in.
+        :param ASMapping:   a dictionary. A key is an IP and the corresponding value is the AS which it is located in.
                             The IP2AS-mapping is done through a database provided by MaxMind
         :param currentTime: the timestamp to use in the name of the output-file
-        :return:            /
         """
         try:
             pointerToFile = open('../output/' + currentTime + '_scheduled_traceroutes.txt', 'a', 0)
@@ -169,7 +167,7 @@ class TracerouteMeasurement:
 
 def loadIPToPoPMapping(filename):
     """
-    Fills the dictionary 'IPToPoPMapping'. A key corresponds to an IP and the value to the PoP in which it is located.
+    Fills the dictionary <IPToPoPMapping>. A key corresponds to an IP and the value to the PoP in which it is located.
     The IP-to-PoP-mapping is performed through a database provided by the iPlane-project
     :param filename:    name of the file containing the mappings
     :return:            None if a problem occurred; True otherwise

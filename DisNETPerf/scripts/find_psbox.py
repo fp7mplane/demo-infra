@@ -25,8 +25,9 @@ additionalInfoAboutMeasurements = dict()
 
 def checkIP(ip):
     """
+    Checks whether the IP address <ip> has the correct format
     :param ip: a string representing an IP
-    :return: ip converted into an integer, None if ip not a valid IP
+    :return: <ip> converted into an integer, None if <ip> not a valid IP
     """
     try:
         parts = map(int, ip.split('.'))
@@ -36,14 +37,15 @@ def checkIP(ip):
 
 def getSmallestPingProbe(measurementIDsDict, outputFileName):
     """
-    Retrieve closest RIPE atlas boxes to target-IPs and store results
+    Retrieves closest RIPE atlas boxes to target-IPs and stores results
     :param measurementIDsDict:  a dictionary whose keys are RIPE user-defined measurement (udm) IDs and the corresponding
                                 values are the targets of the udms
-    :param outputFileName:      name of the file to which the results of the analysis should be written to.
+    :param outputFileName:      name of the file which the results of the analysis should be written to.
                                 A line of the file has the format:
-                                "<Label> <target-IP> <RIPE probe ID> <RIPE probe IP> <RIPE probe AS> <min RTT>"
+                                "<target-IP> <RIPE probe ID> <RIPE probe IP> <RIPE probe AS> <min RTT> <Label> "
                                 <Label> is [RANDOM] when the candidate-boxes have been selected randomly,
-                                [NO_AS] if no AS could be associated to the target-IP and [OK] associated
+                                [NO_AS] if no AS could be associated to the target-IP and [OK] if the candidate-boxes were
+                                found either in the same AS as the target-IP or in neighbour ASes
     :return: a dictionary whose keys are target-IPs and values are tuples in the form (<probeID>, <probeIP>, <probeAS>, <minRTT>)
     """
     IPToPSBoxMap = dict()
@@ -92,11 +94,11 @@ def find_psboxes(IPs, verbose, recovery):
     Finds the closest box to each IP in <IPs>, displays the results on the screen and stores them in a file in the
     'output' folder and whose naming-scheme is '<timestamp_of_creation_time>_psbox.txt'
     :param IPs:      a list containing all the IPs a closest box should be found to
-    :param verbose:  if true, an error-message gets displayed when an internal problem occurs, otherwise not
+    :param verbose:  if true, an error-message gets displayed when an internal problem occurs; otherwise not
     :param recovery: if true, the recovery-modus will be enabled (for more infos, please see the docs in the folder
                      'doc')
-    :return:         a dictionary whose values are the IPs and the keys are the corresponding cloesest boxes. If there
-                     is not entry for a given IP, no box has been found
+    :return:         a dictionary whose values are the IPs and the keys are the corresponding closest boxes. If there
+                     is no entry for a given IP, no box has been found
     """
 
     currentTime = datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d-%H-%M-%S')
@@ -400,6 +402,7 @@ def find_psboxes(IPs, verbose, recovery):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Find the closest RIPE Atlas box to a set of IPs')
     parser.add_argument('-v', action="version", version="version 1.0")
+    parser.add_argument('-k', action="store", dest="api-key", help="An API key with 'Measurement creation' permissions", required=True)
     parser.add_argument('-n', action="store", dest="filename", help="File containing the IPs for which you want to find the closest box."
                                                                     "The file has to be stored in the folder 'input'")
     parser.add_argument('-o', action="store", dest="targetIP", help="The IP for which you want to find the closest box.")
@@ -415,6 +418,8 @@ if __name__ == '__main__':
     if not arguments['targetIP'] and not arguments['filename']:
         parser.error("error: You must either specify an IP or a filename of a file containing IPs!")
         exit(1)
+
+    API_KEY = arguments['api-key']
 
     # if an IP is specified, we always go for the IP
     if arguments['targetIP']:

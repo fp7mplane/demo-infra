@@ -16,18 +16,18 @@ INTERVAL_DEFAULT = 600
 
 def launch_scheduled_traceroutes(destIP, probes, start, stop, interval, numberOfTraceroutes):
     """
-    launch traceroutes.
-    The list of probes 'probes' will be used as sources and the destination is 'destIP'
+    Launches traceroutes.
+    The list of probes <probes> will be used as sources and the destination is <destIP>
     When no start time is specified, traceroutes will be launched as soon as possible
     It is not possible to specify a start time, but not a stop time and vice-versa
     When no interval is given, a default interval of 600 seconds is used
     Either a stop-time or a number of traceroutes to be scheduled has to be given. When a stop-time
     is indicated, the number of traceroutes will be ignored
-    :param destIP:              the IP at which tracroutes should be launched
+    :param destIP:              the IP towards which tracroutes should be launched
     :param probes:              the list of RIPE Atlas probes which should be used as sources
     :param start:               the start time (UNIX timestamp) at which first tracroute should be launched
-    :param stop:                time (UNIX timestamp) at which no more traceroute should be launched
-    :param interval:            time between 2 consecutive traceroutes
+    :param stop:                time (UNIX timestamp) at which no more traceroutes should be launched
+    :param interval:            time between 2 consecutive traceroutes (in seconds)
     :param numberOfTraceroutes: number of traceroutes to be scheduled
     """
     probes = [probes[i:i + 500] for i in range(0, len(probes), 500)]
@@ -98,6 +98,7 @@ def launch_scheduled_traceroutes(destIP, probes, start, stop, interval, numberOf
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Launch traceroutes from the closest RIPE Atlas boxes'
                                                  ' to a set of IPs to a specified destination')
+    parser.add_argument('-k', action="store", dest="api-key", help="An API key with 'Measurement creation' permissions", required=True)
     parser.add_argument('-v', action="version", version="version 1.0")
     parser.add_argument('-n', action="store", dest="filename", help="Filename of file containing the IPs "
                                                                     "for which traceroutes from the corresponding "
@@ -114,7 +115,7 @@ if __name__ == '__main__':
                                                                                           "are computed before launching traceroutes",
                                                                                     required=True)
     parser.add_argument('-m', action="store", dest="nbTraceroutes", type=int, help="Total number of traceroutes to be launched")
-    parser.add_argument('-t', action="store", dest="interval", type=int, help="Time between two consecutive traceroutes")
+    parser.add_argument('-t', action="store", dest="interval", type=int, help="Time between two consecutive traceroutes (in seconds")
     parser.add_argument('-s', action="store", dest="start", type=int, help="Time when the first traceroute should be launched")
     parser.add_argument('-p', action="store", dest="stop", type=int, help="Time when traceroutes should be stopped")
 
@@ -142,6 +143,7 @@ if __name__ == '__main__':
         exit(1)
     # check parameters - end
 
+    API_KEY = arguments['api-key']
     flag = arguments['flag']
 
     # when the user indicated an IP (-o), always go for it

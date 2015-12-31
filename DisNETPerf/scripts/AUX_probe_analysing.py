@@ -2,9 +2,12 @@
 
 def parseProbeListOutput(output, verbose, map=None):
     """
-    :param output: the output of probe-list.pl [args]
-    :return: a string in the format 'probe1,probe2,...,probeN' probeN corresponding
-             to the probe_ID
+    Parses the output of the script 'probe-list.pl', i.e. the script which retrieves a list of RIPE Atlas probes, and
+    returns a list of the found probe IDs
+    :param output:  the output of probe-list.pl
+    :param verbose: if true, an error-message gets displayed when an internal problem occurs, otherwise not
+    :param map:     if != none, the key-value pairs (probeID, AS) will be saved to the dictionary <map>
+    :return:        a list of sublists in which each sublist contains at most 500 probe IDs
     """
     if not output:
         return ''
@@ -22,7 +25,7 @@ def parseProbeListOutput(output, verbose, map=None):
             if not line:
                 continue
             elements = line.split('\t')
-            probes.append(elements[0])
+            probes.append(elements[0]) # append probe ID
             ASMap.write(elements[0] + '\t' + elements[3] + '\n')
             if map != None: #save AS to dict
                 map[elements[0]] = elements[3]
@@ -32,9 +35,9 @@ def parseProbeListOutput(output, verbose, map=None):
 def findASNeighbourhood(ASN, verbose):
     """
     Finds neighbours of AS with ASN <ASN> according to CAIDA's relationship dataset.
-    :param ASN: the ASN of the AS you want to find the neighbours for
+    :param ASN:     the ASN of the AS you want to find the neighbours for
     :param verbose: if true, an error message in case of an internal problem will be displayed, otherwise not
-    :return: a list of the detected neighbours
+    :return:        a list of the detected neighbours
     """
     try:
         file = open('../lib/ASNeighbours.txt', 'r')

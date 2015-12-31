@@ -4,6 +4,12 @@ import subprocess
 from time import sleep
 
 def checkMeasurements(measurementIDs, verbose):
+    """
+    Check whether measurements are completed
+    :param measurementIDs:  a list of the measurement IDs of the measurements you want to check
+    :param verbose:         if true, an error-message gets displayed when an internal problem occurs; otherwise not
+    :return:                True if every measurement completed; False otherwise
+    """
     stopped = 0
     total = 0
 
