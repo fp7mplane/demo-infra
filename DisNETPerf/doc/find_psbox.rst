@@ -9,10 +9,10 @@ This script locates the closest RIPE Atlas probes (called *proximity services bo
 
 .. code:: bash
 
- python find psbox.py [-n <IP filename>] [-o <targetIP>] [-r {0,1}]
+ python find psbox.py -k <API-KEY> [-n <IP filename>] [-o <targetIP>] [-r {0,1}]
 
-<IP filename> refers to the name of the file in which the IP addresses DisNETPerf should locate the closest RIPE Atlas box to are listed. **This file has to be stored in the 'input' folder.** The file should
-contain one IP per line. An IP should be in the usual format, i.e. X.X.X.X where X is an integer >= 0.
+| <API-Key> points to a RIPE Atlas API Key with *Measurement creation* permissions. Such a key can easily be created through the Web interface of RIPE Atlas.
+| <IP filename> refers to the name of the file in which the IP addresses DisNETPerf should locate the closest RIPE Atlas box to are listed. **This file has to be stored in the 'input' folder.** The file should contain one IP per line. An IP should be in the usual format, i.e. X.X.X.X where X is an integer >= 0.
 
 | If you want to analyze only a single IP, you can also use the -o parameter and replace <targetIP> with that particular IP.
 

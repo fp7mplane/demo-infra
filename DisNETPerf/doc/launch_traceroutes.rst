@@ -7,10 +7,11 @@ launch_traceroutes.py
 
 .. code:: bash
  
- python launch traceroutes.py [-n <IP filename>] [-o <targetIP>] -d <dest IP> [-b <psBox ID>] -f f0, 1g [-m <nb traceroutes>] [-t <interval>] [-s <starttime>] [-p <stoptime>]
+ python launch traceroutes.py -k <API-Key> [-n <IP filename>] [-o <targetIP>] -d <dest IP> [-b <psBox ID>] -f f0, 1g [-m <nb traceroutes>] [-t <interval>] [-s <starttime>] [-p <stoptime>]
 
 where:
-    - -n <IP filename>: the name of the file containing the IP addresses which DisNETPerf should locate the closest probe for. **This file has to be stored in the 'input' folder.**
+    - -k <API-Key>: points to a RIPE Atlas API Key with *Measurement creation* permissions. Such a key can easily be created through the Web interface of RIPE Atlas
+    - -n <IP filename>: the name of the file containing the IP addresses which DisNETPerf should locate the closest probe for. **This file has to be stored in the 'input' folder**
     - -o <targetIP>: the IP address which DisNETPerf should locate the proximity service box for
     - -d <dest IP>: the IP address the traceroute measurements are issued to
     - -b <psBox ID>: the ID of the probe the measurements should be launched from
