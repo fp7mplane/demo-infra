@@ -19,7 +19,7 @@ def checkMeasurements(measurementIDs, verbose):
         total += 1
         while True:
             try:
-                statusInfo = subprocess.check_output(['udm-status.pl', '--udm', udm])
+                statusInfo = subprocess.check_output(['../contrib/udm-status.pl', '--udm', udm])
                 nbOfConsecutiveFailures = 0
                 break
             except subprocess.CalledProcessError:

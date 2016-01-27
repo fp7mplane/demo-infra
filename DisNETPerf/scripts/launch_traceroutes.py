@@ -53,17 +53,17 @@ def launch_scheduled_traceroutes(destIP, probes, start, stop, interval, numberOf
                         i = interval
                     else:
                         i = INTERVAL_DEFAULT
-                    udmCreateInfo = subprocess.check_output(['udm-create.pl', '--api', API_KEY, '--type',  'traceroute', '--target',
+                    udmCreateInfo = subprocess.check_output(['../contrib/udm-create.pl', '--api', API_KEY, '--type',  'traceroute', '--target',
                                                             destIP, '--probe-list', ','.join(probesToUse), '--start', str(startTime),
                                                             '--stop', str(stop), '--interval', str(i)])
                     nbOfConsecutiveFailures = 0
                 elif not start and not interval and not numberOfTraceroutes:
-                    udmCreateInfo = subprocess.check_output(['udm-create.pl', '--api', API_KEY, '--type',  'traceroute', '--target',
+                    udmCreateInfo = subprocess.check_output(['../contrib/udm-create.pl', '--api', API_KEY, '--type',  'traceroute', '--target',
                                                             destIP, '--probe-list', ','.join(probesToUse)])
                     nbOfConsecutiveFailures = 0
                 elif numberOfTraceroutes and interval and not start:
                     startTime = time.time()
-                    udmCreateInfo = subprocess.check_output(['udm-create.pl', '--api', API_KEY, '--type',  'traceroute', '--target',
+                    udmCreateInfo = subprocess.check_output(['../contrib/udm-create.pl', '--api', API_KEY, '--type',  'traceroute', '--target',
                                                          destIP, '--probe-list', ','.join(probesToUse), '--interval', str(interval), '--start', str(startTime),
                                                          '--stop', str(startTime + numberOfTraceroutes * interval)])
                     nbOfConsecutiveFailures = 0
@@ -72,7 +72,7 @@ def launch_scheduled_traceroutes(destIP, probes, start, stop, interval, numberOf
                         startTime = start
                     else:
                         startTime = time.time()
-                    udmCreateInfo = subprocess.check_output(['udm-create.pl', '--api', API_KEY, '--type',  'traceroute', '--target',
+                    udmCreateInfo = subprocess.check_output(['../contrib/udm-create.pl', '--api', API_KEY, '--type',  'traceroute', '--target',
                                                             destIP, '--probe-list', ','.join(probesToUse), '--interval', str(INTERVAL_DEFAULT),
                                                             '--start', str(startTime), '--stop', str(startTime + numberOfTraceroutes * INTERVAL_DEFAULT)])
                     nbOfConsecutiveFailures = 0

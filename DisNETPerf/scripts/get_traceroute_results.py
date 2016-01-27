@@ -212,7 +212,7 @@ def retrieve_traceroute_results(filename, verbose):
         dstIP = data[data.__len__() - 1]
 
         for udm in udms:
-            resultInfo = subprocess.check_output(['udm-result.pl', '--udm', data[0]])
+            resultInfo = subprocess.check_output(['../contrib/udm-result.pl', '--udm', data[0]])
             if not resultInfo.rstrip('\r\n'):
                 continue
             resultInfo = resultInfo.split('\n')
