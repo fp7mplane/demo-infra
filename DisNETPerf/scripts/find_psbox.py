@@ -230,6 +230,9 @@ def find_psboxes(IPs, verbose, recovery):
             idx = random.sample(range(0, probeList.__len__()), 100)
             selectedProbes = [probeList[i][0] for i in idx]
 
+            for i in idx:
+                probeToASMap[probeList[i][0]] = probeList[i][1]
+
             try:
                 ASMap = open('../logs/ID_To_AS.log', 'a', 0)
             except IOError:
@@ -314,6 +317,9 @@ def find_psboxes(IPs, verbose, recovery):
 
             idx = random.sample(range(0, probeList.__len__()), 100)
             selectedProbes = [probeList[i][0] for i in idx]
+
+            for i in idx:
+                probeToASMap[probeList[i][0]] = probeList[i][1]
 
             try:
                 ASMap = open('../logs/ID_To_AS.log', 'a', 0)
