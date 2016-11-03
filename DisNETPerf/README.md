@@ -1,5 +1,7 @@
 [![mPlane](http://www.ict-mplane.eu/sites/default/files//public/mplane_final_256x_0.png)](http://www.ict-mplane.eu/)
 
+### Caution: this version of DisNETPerf is deprecated! The maintained version can be found here: <https://github.com/SAWassermann/DisNETPerf>
+
 DisNETPerf
 ==============
 DisNETPerf - a Distributed Internet Paths Performance Analyzer - is a tool that allows one to locate the closest RIPE Atlas box (in terms of minimum RTT) to a given IP. You can either run DisNETPerf for a single IP or for a set of IPs.
